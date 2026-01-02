@@ -15,6 +15,7 @@ import {
 import { StudentProfile, Team, TeamMember } from '../types';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getStudentTeam } from '../services';
 
 interface TeamWithDetails extends Team {
     memberProfiles: StudentProfile[];
@@ -27,38 +28,40 @@ export function MyTeamsPage() {
 
     useEffect(() => {
         async function fetchTeams() {
-            const studentProfile = userProfile as StudentProfile;
-            if (!studentProfile?.teamAssignments || studentProfile.teamAssignments.length === 0) {
+            if (!userProfile?.uid) {
                 setLoading(false);
                 return;
             }
 
             try {
-                const teamPromises = studentProfile.teamAssignments.map(async (teamId: string) => {
-                    const teamDoc = await getDoc(doc(db, 'teams', teamId));
-                    if (teamDoc.exists()) {
-                        const teamData = teamDoc.data() as Team;
-                        
-                        // Fetch member profiles
-                        const memberProfiles = await Promise.all(
-                            teamData.members.map(async (member) => {
-                                const userDoc = await getDoc(doc(db, 'users', member.userId));
-                                return userDoc.exists() ? userDoc.data() as StudentProfile : null;
-                            })
-                        );
+                // Use the getStudentTeam function to fetch the student's team
+                const result = await getStudentTeam(userProfile.uid);
+                
+                // Check if student is assigned to a team
+                if ('status' in result && result.status === 'not_assigned') {
+                    setTeams([]);
+                    setLoading(false);
+                    return;
+                }
 
-                        return {
-                            ...teamData,
-                            memberProfiles: memberProfiles.filter((p): p is StudentProfile => p !== null)
-                        };
-                    }
-                    return null;
-                });
+                // Student has a team - fetch member profiles
+                const teamData = result as Team;
+                const memberProfiles = await Promise.all(
+                    teamData.members.map(async (member) => {
+                        const userDoc = await getDoc(doc(db, 'users', member.userId));
+                        return userDoc.exists() ? userDoc.data() as StudentProfile : null;
+                    })
+                );
 
-                const fetchedTeams = (await Promise.all(teamPromises)).filter((t): t is TeamWithDetails => t !== null);
-                setTeams(fetchedTeams);
+                const teamWithDetails: TeamWithDetails = {
+                    ...teamData,
+                    memberProfiles: memberProfiles.filter((p): p is StudentProfile => p !== null)
+                };
+
+                setTeams([teamWithDetails]);
             } catch (error) {
                 console.error('Error fetching teams:', error);
+                setTeams([]);
             } finally {
                 setLoading(false);
             }

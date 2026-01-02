@@ -590,3 +590,47 @@ export async function getAllStrategiesComparison(
         }
     };
 }
+
+/**
+ * Get the team assigned to a specific student
+ * @param studentId - The UID of the student
+ * @returns The team data if found, or {status: "not_assigned"} if not found
+ */
+export async function getStudentTeam(studentId: string): Promise<Team | { status: 'not_assigned' }> {
+    try {
+        // Query all teams from Firestore
+        const teamsCollection = collection(db, 'teams');
+        const teamsSnapshot = await getDocs(teamsCollection);
+
+        // Search through all teams
+        for (const teamDoc of teamsSnapshot.docs) {
+            const teamData = teamDoc.data() as Team;
+            
+            // Check if this team contains the student ID
+            const isMember = teamData.members.some(member => member.userId === studentId);
+            
+            if (isMember) {
+                // Return the team data with proper date conversion
+                return {
+                    ...teamData,
+                    id: teamDoc.id,
+                    createdAt: teamData.createdAt instanceof Date 
+                        ? teamData.createdAt 
+                        : (teamData.createdAt as any)?.toDate?.() || new Date(),
+                    members: teamData.members.map(member => ({
+                        ...member,
+                        joinedAt: member.joinedAt instanceof Date
+                            ? member.joinedAt
+                            : (member.joinedAt as any)?.toDate?.() || new Date()
+                    }))
+                };
+            }
+        }
+
+        // Student not found in any team
+        return { status: 'not_assigned' };
+    } catch (error) {
+        console.error('Error fetching student team:', error);
+        return { status: 'not_assigned' };
+    }
+}
