@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardBody, CardHeader, Button, SkillBar } from '../components/ui';
-import { 
-    Users, 
-    Mail, 
-    MessageSquare, 
+import {
+    Users,
+    Mail,
+    MessageSquare,
     Video,
     ExternalLink,
     Sparkles,
@@ -36,7 +36,7 @@ export function MyTeamsPage() {
             try {
                 // Use the getStudentTeam function to fetch the student's team
                 const result = await getStudentTeam(userProfile.uid);
-                
+
                 // Check if student is assigned to a team
                 if ('status' in result && result.status === 'not_assigned') {
                     setTeams([]);
@@ -86,7 +86,7 @@ export function MyTeamsPage() {
             <DashboardLayout>
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-2xl font-bold text-gray-900 mb-6">My Teams</h1>
-                    
+
                     <Card>
                         <CardBody className="p-12 text-center">
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -105,7 +105,7 @@ export function MyTeamsPage() {
                                     </Button>
                                 )}
                                 {(userProfile as StudentProfile)?.assessmentHistory?.length === 0 && (
-                                    <Button 
+                                    <Button
                                         variant={userProfile?.profileCompleted ? "primary" : "outline"}
                                         onClick={() => window.location.href = '/assessment'}
                                     >
@@ -166,18 +166,17 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                                     <Award className="w-3 h-3" />
                                     Balance Score: {Math.round(team.balanceScore)}
                                 </span>
-                                <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium capitalize ${
-                                    team.status === 'active' ? 'bg-green-50 text-green-700' :
+                                <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium capitalize ${team.status === 'active' ? 'bg-green-50 text-green-700' :
                                     team.status === 'draft' ? 'bg-yellow-50 text-yellow-700' :
-                                    'bg-gray-50 text-gray-700'
-                                }`}>
+                                        'bg-gray-50 text-gray-700'
+                                    }`}>
                                     {team.status}
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <Button 
-                        variant="ghost" 
+                    <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => setExpanded(!expanded)}
                     >
@@ -194,34 +193,34 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                         Team Skill Distribution
                     </h4>
                     <div className="space-y-3">
-                        <SkillBar 
-                            label="Leadership" 
-                            score={skillAverages.leadership} 
+                        <SkillBar
+                            label="Leadership"
+                            score={skillAverages.leadership}
                             confidence="medium"
                         />
-                        <SkillBar 
-                            label="Analytical Thinking" 
-                            score={skillAverages.analyticalThinking} 
+                        <SkillBar
+                            label="Analytical Thinking"
+                            score={skillAverages.analyticalThinking}
                             confidence="medium"
                         />
-                        <SkillBar 
-                            label="Creativity" 
-                            score={skillAverages.creativity} 
+                        <SkillBar
+                            label="Creativity"
+                            score={skillAverages.creativity}
                             confidence="medium"
                         />
-                        <SkillBar 
-                            label="Execution Strength" 
-                            score={skillAverages.executionStrength} 
+                        <SkillBar
+                            label="Execution Strength"
+                            score={skillAverages.executionStrength}
                             confidence="medium"
                         />
-                        <SkillBar 
-                            label="Communication" 
-                            score={skillAverages.communication} 
+                        <SkillBar
+                            label="Communication"
+                            score={skillAverages.communication}
                             confidence="medium"
                         />
-                        <SkillBar 
-                            label="Teamwork" 
-                            score={skillAverages.teamwork} 
+                        <SkillBar
+                            label="Teamwork"
+                            score={skillAverages.teamwork}
                             confidence="medium"
                         />
                     </div>
@@ -234,8 +233,8 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                         Communication & Collaboration
                     </h4>
                     <div className="flex flex-wrap gap-3">
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => {
                                 const emails = team.memberProfiles.map(p => p.email).join(',');
@@ -245,8 +244,8 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                             <Mail className="w-4 h-4 mr-2" />
                             Email Team
                         </Button>
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => window.open('https://discord.com', '_blank')}
                         >
@@ -254,8 +253,8 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                             Discord
                             <ExternalLink className="w-3 h-3 ml-1" />
                         </Button>
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => window.open('https://meet.google.com', '_blank')}
                         >
@@ -263,8 +262,8 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                             Google Meet
                             <ExternalLink className="w-3 h-3 ml-1" />
                         </Button>
-                        <Button 
-                            variant="outline" 
+                        <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => window.open('https://slack.com', '_blank')}
                         >
@@ -284,8 +283,8 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {team.memberProfiles.map((member) => (
-                                <MemberCard 
-                                    key={member.uid} 
+                                <MemberCard
+                                    key={member.uid}
                                     member={member}
                                     teamMember={team.members.find(m => m.userId === member.uid)!}
                                     isCurrentUser={member.uid === currentUserId}
@@ -316,26 +315,25 @@ function TeamCard({ team, currentUserId }: { team: TeamWithDetails; currentUserI
     );
 }
 
-function MemberCard({ 
-    member, 
+function MemberCard({
+    member,
     teamMember,
-    isCurrentUser 
-}: { 
-    member: StudentProfile; 
+    isCurrentUser
+}: {
+    member: StudentProfile;
     teamMember: TeamMember;
     isCurrentUser: boolean;
 }) {
     return (
-        <div className={`p-4 rounded-lg border-2 ${
-            isCurrentUser 
-                ? 'border-primary-200 bg-primary-50' 
-                : 'border-gray-200 bg-white'
-        }`}>
+        <div className={`p-4 rounded-lg border-2 ${isCurrentUser
+            ? 'border-primary-200 bg-primary-50'
+            : 'border-gray-200 bg-white'
+            }`}>
             <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center flex-shrink-0">
                     {member.photoURL ? (
-                        <img 
-                            src={member.photoURL} 
+                        <img
+                            src={member.photoURL}
                             alt={member.displayName}
                             className="w-10 h-10 rounded-full"
                         />
@@ -357,13 +355,13 @@ function MemberCard({
                     <p className="text-xs text-gray-500 capitalize mt-0.5">
                         {teamMember.role}
                     </p>
-                    
+
                     {/* Member Skills */}
                     <div className="mt-3 space-y-1.5">
                         <div className="flex items-center gap-2">
                             <span className="text-xs text-gray-500 w-16">Leadership</span>
                             <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                <div 
+                                <div
                                     className="h-full bg-blue-500 rounded-full"
                                     style={{ width: `${member.skills?.leadership?.score || 0}%` }}
                                 />
@@ -375,7 +373,7 @@ function MemberCard({
                         <div className="flex items-center gap-2">
                             <span className="text-xs text-gray-500 w-16">Analytical</span>
                             <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                <div 
+                                <div
                                     className="h-full bg-purple-500 rounded-full"
                                     style={{ width: `${member.skills?.analyticalThinking?.score || 0}%` }}
                                 />
@@ -387,7 +385,7 @@ function MemberCard({
                         <div className="flex items-center gap-2">
                             <span className="text-xs text-gray-500 w-16">Creativity</span>
                             <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                <div 
+                                <div
                                     className="h-full bg-pink-500 rounded-full"
                                     style={{ width: `${member.skills?.creativity?.score || 0}%` }}
                                 />
@@ -400,7 +398,7 @@ function MemberCard({
 
                     {/* Contact */}
                     {member.email && (
-                        <a 
+                        <a
                             href={`mailto:${member.email}`}
                             className="text-xs text-primary-600 hover:text-primary-700 mt-2 inline-flex items-center gap-1"
                         >

@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db, googleProvider, githubProvider } from '../config/firebase';
-import { User, UserRole, StudentProfile, FacultyProfile } from '../types';
+import { User, UserRole } from '../types';
 
 interface AuthContextType {
     currentUser: FirebaseUser | null;
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         displayName: string
     ): Promise<void> {
         const now = new Date();
-        const baseProfile: Omit<User, 'photoURL'> & { photoURL?: string } = {
+        const baseProfile: Partial<User> = {
             uid: user.uid,
             email: user.email || '',
             displayName: displayName || user.displayName || 'User',
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             baseProfile.photoURL = user.photoURL;
         }
 
-        let profile: typeof baseProfile;
+        let profile: any;
 
         if (role === 'student') {
             profile = {

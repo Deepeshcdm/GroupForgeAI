@@ -605,17 +605,17 @@ export async function getStudentTeam(studentId: string): Promise<Team | { status
         // Search through all teams
         for (const teamDoc of teamsSnapshot.docs) {
             const teamData = teamDoc.data() as Team;
-            
+
             // Check if this team contains the student ID
             const isMember = teamData.members.some(member => member.userId === studentId);
-            
+
             if (isMember) {
                 // Return the team data with proper date conversion
                 return {
                     ...teamData,
                     id: teamDoc.id,
-                    createdAt: teamData.createdAt instanceof Date 
-                        ? teamData.createdAt 
+                    createdAt: teamData.createdAt instanceof Date
+                        ? teamData.createdAt
                         : (teamData.createdAt as any)?.toDate?.() || new Date(),
                     members: teamData.members.map(member => ({
                         ...member,

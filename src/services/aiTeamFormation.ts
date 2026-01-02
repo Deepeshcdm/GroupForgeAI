@@ -3,6 +3,7 @@
 
 import { collection, getDocs, doc, setDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { teamFormationModel } from '../config/gemini';
 import { Team } from '../types';
 import { StudentProfile } from '../types';
 
@@ -225,7 +226,6 @@ Remember:
         }
 
         // Fallback to Gemini
-        const { teamFormationModel } = await import('../config/gemini');
         const result = await teamFormationModel.generateContent([
             { text: SYSTEM_PROMPT },
             { text: userPrompt },
