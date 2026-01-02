@@ -16,6 +16,7 @@ import {
     AIFormationResult,
 } from '../services/aiTeamFormation';
 import { useAuth } from '../contexts/AuthContext';
+import { DashboardLayout } from '../components/layout';
 import { Team } from '../types';
 
 interface StrategyResult {
@@ -204,8 +205,9 @@ const TeamFormationPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 p-6">
-            <div className="max-w-7xl mx-auto space-y-6">
+        <DashboardLayout>
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 p-6">
+                <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header Section */}
                 <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
                     <div className="flex items-center justify-between">
@@ -870,6 +872,7 @@ const TeamFormationPage: React.FC = () => {
             )}
             </div>
         </div>
+        </DashboardLayout>
     );
 };
 

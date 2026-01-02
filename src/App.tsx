@@ -47,11 +47,6 @@ function App() {
                                 <MyTeamsPage />
                             </ProtectedRoute>
                         } />
-                        <Route path="/courses" element={
-                            <ProtectedRoute>
-                                <DashboardPage />
-                            </ProtectedRoute>
-                        } />
                         <Route path="/team-formation" element={
                             <ProtectedRoute>
                                 <TeamFormationPage />
