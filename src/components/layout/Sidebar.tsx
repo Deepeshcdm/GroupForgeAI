@@ -9,7 +9,8 @@ import {
     BookOpen,
     BarChart3,
     User,
-    Lock
+    Lock,
+    Sparkles
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -28,7 +29,8 @@ export function Sidebar() {
     const facultyLinks = [
         { to: '/dashboard', icon: Home, label: 'Dashboard', requiresProfile: true },
         { to: '/courses', icon: BookOpen, label: 'Courses', requiresProfile: true },
-        { to: '/teams', icon: Users, label: 'Team Formation', requiresProfile: true },
+        { to: '/team-formation', icon: Sparkles, label: 'Team Formation', requiresProfile: true },
+        { to: '/teams', icon: Users, label: 'All Teams', requiresProfile: true },
         { to: '/analytics', icon: BarChart3, label: 'Analytics', requiresProfile: true },
         { to: '/settings', icon: Settings, label: 'Settings', requiresProfile: true },
     ];
