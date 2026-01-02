@@ -94,17 +94,17 @@ const GENERIC_QUESTIONS: MCQQuestion[] = [
 function getDefaultQuestions(skills: string[], count: number): MCQQuestion[] {
     const questions: MCQQuestion[] = [];
     const questionsPerSkill = Math.ceil(count / skills.length);
-    
+
     skills.forEach((skill) => {
         // Find matching skill questions (case-insensitive)
         const skillKey = Object.keys(DEFAULT_QUESTIONS).find(
             key => key.toLowerCase() === skill.toLowerCase()
         );
-        
-        const skillQuestions = skillKey 
-            ? DEFAULT_QUESTIONS[skillKey] 
+
+        const skillQuestions = skillKey
+            ? DEFAULT_QUESTIONS[skillKey]
             : GENERIC_QUESTIONS.map(q => ({ ...q, skill }));
-        
+
         // Add questions for this skill
         for (let i = 0; i < questionsPerSkill && questions.length < count; i++) {
             const q = skillQuestions[i % skillQuestions.length];
@@ -115,7 +115,7 @@ function getDefaultQuestions(skills: string[], count: number): MCQQuestion[] {
             });
         }
     });
-    
+
     // Shuffle questions
     return questions.sort(() => Math.random() - 0.5).slice(0, count);
 }
@@ -166,8 +166,8 @@ export function AssessmentPage() {
     }, [allSkillsAndTools]);
 
     const toggleSkillSelection = (skill: string) => {
-        setSelectedSkills(prev => 
-            prev.includes(skill) 
+        setSelectedSkills(prev =>
+            prev.includes(skill)
                 ? prev.filter(s => s !== skill)
                 : [...prev, skill]
         );
@@ -216,21 +216,21 @@ Return ONLY the JSON array, no other text.`;
                 temperature: 0.7,
                 maxTokens: 4096,
             });
-            
+
             // Try to extract JSON array
             const jsonMatch = text.match(/\[[\s\S]*\]/);
             if (jsonMatch) {
                 const questions = JSON.parse(jsonMatch[0]);
                 // Validate questions
-                const validQuestions = questions.filter((q: MCQQuestion) => 
-                    q.question && 
-                    q.options && 
+                const validQuestions = questions.filter((q: MCQQuestion) =>
+                    q.question &&
+                    q.options &&
                     q.options.length === 4 &&
                     typeof q.correctAnswer === 'number' &&
-                    q.correctAnswer >= 0 && 
+                    q.correctAnswer >= 0 &&
                     q.correctAnswer <= 3
                 );
-                
+
                 if (validQuestions.length > 0) {
                     return validQuestions;
                 }
@@ -256,7 +256,7 @@ Return ONLY the JSON array, no other text.`;
 
         try {
             const questions = await generateQuizQuestions();
-            
+
             if (questions.length === 0) {
                 throw new Error('No valid questions generated');
             }
@@ -394,7 +394,7 @@ Return ONLY the JSON array, no other text.`;
 
     const generateRecommendations = (breakdown: QuizResults['skillBreakdown']): string[] => {
         const recommendations: string[] = [];
-        
+
         breakdown.forEach(skill => {
             if (skill.percentage < 50) {
                 recommendations.push(`Consider reviewing fundamentals of ${skill.skill}`);
@@ -447,14 +447,13 @@ Return ONLY the JSON array, no other text.`;
                 <div className="max-w-3xl mx-auto space-y-6">
                     <Card>
                         <CardBody className="py-8 text-center">
-                            <Trophy className={`w-20 h-20 mx-auto mb-4 ${
-                                quizResults.score >= 80 ? 'text-yellow-500' :
-                                quizResults.score >= 60 ? 'text-blue-500' :
-                                'text-gray-400'
-                            }`} />
+                            <Trophy className={`w-20 h-20 mx-auto mb-4 ${quizResults.score >= 80 ? 'text-yellow-500' :
+                                    quizResults.score >= 60 ? 'text-blue-500' :
+                                        'text-gray-400'
+                                }`} />
                             <h1 className="text-3xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
                             <p className="text-gray-500 mb-6">Here's how you performed</p>
-                            
+
                             <div className="flex justify-center gap-8 mb-8">
                                 <div className="text-center">
                                     <p className="text-4xl font-bold text-primary-600">{quizResults.score}%</p>
@@ -486,13 +485,12 @@ Return ONLY the JSON array, no other text.`;
                                             </span>
                                         </div>
                                         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                                            <div 
-                                                className={`h-full transition-all ${
-                                                    skill.percentage >= 80 ? 'bg-green-500' :
-                                                    skill.percentage >= 60 ? 'bg-blue-500' :
-                                                    skill.percentage >= 40 ? 'bg-yellow-500' :
-                                                    'bg-red-500'
-                                                }`}
+                                            <div
+                                                className={`h-full transition-all ${skill.percentage >= 80 ? 'bg-green-500' :
+                                                        skill.percentage >= 60 ? 'bg-blue-500' :
+                                                            skill.percentage >= 40 ? 'bg-yellow-500' :
+                                                                'bg-red-500'
+                                                    }`}
                                                 style={{ width: `${skill.percentage}%` }}
                                             />
                                         </div>
@@ -548,7 +546,7 @@ Return ONLY the JSON array, no other text.`;
                             <span>Score: {quizSession.score}/{quizSession.answers.length}</span>
                         </div>
                         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div 
+                            <div
                                 className="h-full bg-primary-600 transition-all duration-300"
                                 style={{ width: `${progress}%` }}
                             />
@@ -562,11 +560,10 @@ Return ONLY the JSON array, no other text.`;
                                 <span className="px-3 py-1 bg-primary-100 text-primary-700 text-sm font-medium rounded-full">
                                     {currentQuestion.skill}
                                 </span>
-                                <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                                    currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
-                                    currentQuestion.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                                    'bg-red-100 text-red-700'
-                                }`}>
+                                <span className={`px-3 py-1 text-sm font-medium rounded-full ${currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
+                                        currentQuestion.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                                            'bg-red-100 text-red-700'
+                                    }`}>
                                     {currentQuestion.difficulty}
                                 </span>
                             </div>
@@ -601,19 +598,17 @@ Return ONLY the JSON array, no other text.`;
                                             disabled={showResult}
                                             className={`w-full flex items-center gap-4 p-4 border-2 rounded-lg text-left transition-colors ${optionClass}`}
                                         >
-                                            <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-medium ${
-                                                showCorrectness && isCorrect ? 'border-green-500 bg-green-500 text-white' :
-                                                showCorrectness && isSelected && !isCorrect ? 'border-red-500 bg-red-500 text-white' :
-                                                isSelected ? 'border-primary-500 bg-primary-500 text-white' :
-                                                'border-gray-300 text-gray-500'
-                                            }`}>
+                                            <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-medium ${showCorrectness && isCorrect ? 'border-green-500 bg-green-500 text-white' :
+                                                    showCorrectness && isSelected && !isCorrect ? 'border-red-500 bg-red-500 text-white' :
+                                                        isSelected ? 'border-primary-500 bg-primary-500 text-white' :
+                                                            'border-gray-300 text-gray-500'
+                                                }`}>
                                                 {String.fromCharCode(65 + index)}
                                             </div>
-                                            <span className={`flex-1 ${
-                                                showCorrectness && isCorrect ? 'text-green-700 font-medium' :
-                                                showCorrectness && isSelected && !isCorrect ? 'text-red-700' :
-                                                'text-gray-700'
-                                            }`}>
+                                            <span className={`flex-1 ${showCorrectness && isCorrect ? 'text-green-700 font-medium' :
+                                                    showCorrectness && isSelected && !isCorrect ? 'text-red-700' :
+                                                        'text-gray-700'
+                                                }`}>
                                                 {option}
                                             </span>
                                             {showCorrectness && isCorrect && (
@@ -626,11 +621,10 @@ Return ONLY the JSON array, no other text.`;
 
                             {/* Explanation (shown after answering) */}
                             {showResult && (
-                                <div className={`p-4 rounded-lg ${
-                                    selectedAnswer === currentQuestion.correctAnswer
+                                <div className={`p-4 rounded-lg ${selectedAnswer === currentQuestion.correctAnswer
                                         ? 'bg-green-50 border border-green-200'
                                         : 'bg-yellow-50 border border-yellow-200'
-                                }`}>
+                                    }`}>
                                     <p className="font-medium text-gray-900 mb-1">
                                         {selectedAnswer === currentQuestion.correctAnswer ? '✓ Correct!' : '✗ Incorrect'}
                                     </p>
@@ -641,7 +635,7 @@ Return ONLY the JSON array, no other text.`;
                             {/* Actions */}
                             <div className="flex justify-end gap-3 pt-4">
                                 {!showResult ? (
-                                    <Button 
+                                    <Button
                                         onClick={submitAnswer}
                                         disabled={selectedAnswer === null}
                                     >
@@ -650,8 +644,8 @@ Return ONLY the JSON array, no other text.`;
                                     </Button>
                                 ) : (
                                     <Button onClick={nextQuestion}>
-                                        {quizSession.currentIndex >= quizSession.questions.length - 1 
-                                            ? 'Finish Quiz' 
+                                        {quizSession.currentIndex >= quizSession.questions.length - 1
+                                            ? 'Finish Quiz'
                                             : 'Next Question'}
                                         <ArrowRight className="w-4 h-4 ml-2" />
                                     </Button>
@@ -697,19 +691,18 @@ Return ONLY the JSON array, no other text.`;
                             {allSkillsAndTools.map(skill => {
                                 const isSelected = selectedSkills.includes(skill);
                                 const userSkill = userSkills.find(s => s.name === skill);
-                                
+
                                 return (
                                     <button
                                         key={skill}
                                         onClick={() => toggleSkillSelection(skill)}
                                         disabled={!isSelected && selectedSkills.length >= 5}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                                            isSelected 
-                                                ? 'bg-primary-600 text-white' 
+                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isSelected
+                                                ? 'bg-primary-600 text-white'
                                                 : selectedSkills.length >= 5
                                                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                        }`}
+                                            }`}
                                     >
                                         {skill}
                                         {userSkill && (
@@ -769,8 +762,8 @@ Return ONLY the JSON array, no other text.`;
                     <p className="text-sm text-gray-500">
                         Questions are generated by AI based on your skill levels
                     </p>
-                    <Button 
-                        onClick={startQuiz} 
+                    <Button
+                        onClick={startQuiz}
                         size="lg"
                         disabled={selectedSkills.length === 0 || isGenerating}
                     >

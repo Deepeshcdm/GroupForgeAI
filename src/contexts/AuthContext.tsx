@@ -21,6 +21,7 @@ interface AuthContextType {
     signUpWithEmail: (email: string, password: string, role: UserRole, displayName: string) => Promise<void>;
     logout: () => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
+    refreshUserProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -193,6 +194,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }
 
+    // Refresh user profile
+    async function refreshUserProfile() {
+        if (currentUser) {
+            const profile = await fetchUserProfile(currentUser.uid);
+            setUserProfile(profile);
+        }
+    }
+
     // Listen for auth state changes
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -221,6 +230,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signUpWithEmail,
         logout,
         resetPassword,
+        refreshUserProfile,
     };
 
     return (

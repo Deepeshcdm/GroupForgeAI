@@ -8,35 +8,37 @@ import {
     LogOut,
     BookOpen,
     BarChart3,
-    User
+    User,
+    Lock
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export function Sidebar() {
     const { userProfile, logout } = useAuth();
     const location = useLocation();
+    const isProfileComplete = userProfile?.profileCompleted === true;
 
     const studentLinks = [
-        { to: '/dashboard', icon: Home, label: 'Dashboard' },
-        { to: '/assessment', icon: ClipboardCheck, label: 'Assessment' },
-        { to: '/my-teams', icon: Users, label: 'My Teams' },
-        { to: '/profile', icon: User, label: 'Profile' },
+        { to: '/dashboard', icon: Home, label: 'Dashboard', requiresProfile: true },
+        { to: '/assessment', icon: ClipboardCheck, label: 'Assessment', requiresProfile: true },
+        { to: '/my-teams', icon: Users, label: 'My Teams', requiresProfile: true },
+        { to: '/profile', icon: User, label: 'Profile', requiresProfile: false },
     ];
 
     const facultyLinks = [
-        { to: '/dashboard', icon: Home, label: 'Dashboard' },
-        { to: '/courses', icon: BookOpen, label: 'Courses' },
-        { to: '/teams', icon: Users, label: 'Team Formation' },
-        { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-        { to: '/settings', icon: Settings, label: 'Settings' },
+        { to: '/dashboard', icon: Home, label: 'Dashboard', requiresProfile: true },
+        { to: '/courses', icon: BookOpen, label: 'Courses', requiresProfile: true },
+        { to: '/teams', icon: Users, label: 'Team Formation', requiresProfile: true },
+        { to: '/analytics', icon: BarChart3, label: 'Analytics', requiresProfile: true },
+        { to: '/settings', icon: Settings, label: 'Settings', requiresProfile: true },
     ];
 
     const adminLinks = [
-        { to: '/dashboard', icon: Home, label: 'Dashboard' },
-        { to: '/institutions', icon: BookOpen, label: 'Institutions' },
-        { to: '/users', icon: Users, label: 'Users' },
-        { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-        { to: '/settings', icon: Settings, label: 'Settings' },
+        { to: '/dashboard', icon: Home, label: 'Dashboard', requiresProfile: true },
+        { to: '/institutions', icon: BookOpen, label: 'Institutions', requiresProfile: true },
+        { to: '/users', icon: Users, label: 'Users', requiresProfile: true },
+        { to: '/analytics', icon: BarChart3, label: 'Analytics', requiresProfile: true },
+        { to: '/settings', icon: Settings, label: 'Settings', requiresProfile: true },
     ];
 
     const links = userProfile?.role === 'faculty'
@@ -65,6 +67,20 @@ export function Sidebar() {
                 {links.map((link) => {
                     const Icon = link.icon;
                     const isActive = location.pathname === link.to;
+                    const isLocked = link.requiresProfile && !isProfileComplete;
+
+                    if (isLocked) {
+                        return (
+                            <div
+                                key={link.to}
+                                className="flex items-center gap-3 px-4 py-3 rounded-lg opacity-50 cursor-not-allowed"
+                                title="Complete your profile to access this section"
+                            >
+                                <Lock className="w-5 h-5 text-gray-400" />
+                                <span className="font-medium text-gray-400">{link.label}</span>
+                            </div>
+                        );
+                    }
 
                     return (
                         <Link

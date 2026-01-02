@@ -104,7 +104,7 @@ const STEPS = [
 ];
 
 export function ProfilePage() {
-    const { currentUser, userProfile, loading: authLoading } = useAuth();
+    const { currentUser, userProfile, loading: authLoading, refreshUserProfile } = useAuth();
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [isEditing, setIsEditing] = useState(false);
@@ -385,6 +385,9 @@ export function ProfilePage() {
             setIsEditing(false);
             setIsNewUser(false);
 
+            // Refresh the user profile in AuthContext to update profileCompleted status
+            await refreshUserProfile();
+
             setTimeout(() => {
                 setSuccess(false);
                 navigate('/dashboard');
@@ -428,6 +431,17 @@ export function ProfilePage() {
                             ? 'Tell us about yourself so we can match you with the perfect team'
                             : 'Update your profile information'}
                     </p>
+                    {isNewUser && (
+                        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
+                            <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                            <div className="text-sm text-blue-800">
+                                <p className="font-medium">Complete all steps to unlock features</p>
+                                <p className="mt-1 text-blue-700">
+                                    After completing your profile, you'll be able to access the dashboard, take assessments, and join teams.
+                                </p>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Progress Steps */}
