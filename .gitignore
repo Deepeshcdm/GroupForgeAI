@@ -1,0 +1,38 @@
+# Environment variables (a.k.a. secrets waiting to leak)
+.env
+.env.*
+.env.example
+
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+logs/
+*.log
+tmp/
+temp/
+.cache/
+dist/
+build/
+
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains
+.idea/

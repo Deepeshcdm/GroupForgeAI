@@ -1,0 +1,6 @@
+export { LoginPage } from './LoginPage';
+export { SignupPage } from './SignupPage';
+export { LandingPage } from './LandingPage';
+export { DashboardPage } from './DashboardPage';
+export { AssessmentPage } from './AssessmentPage';
+export { ProfilePage } from './ProfilePage';
