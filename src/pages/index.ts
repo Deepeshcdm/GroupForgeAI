@@ -4,3 +4,4 @@ export { LandingPage } from './LandingPage';
 export { DashboardPage } from './DashboardPage';
 export { AssessmentPage } from './AssessmentPage';
 export { ProfilePage } from './ProfilePage';
+export { MyTeamsPage } from './MyTeamsPage';

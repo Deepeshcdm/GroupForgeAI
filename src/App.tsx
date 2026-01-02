@@ -7,7 +7,8 @@ import {
     SignupPage,
     DashboardPage,
     AssessmentPage,
-    ProfilePage
+    ProfilePage,
+    MyTeamsPage
 } from './pages';
 import './index.css';
 
@@ -42,7 +43,7 @@ function App() {
                         } />
                         <Route path="/my-teams" element={
                             <ProtectedRoute>
-                                <DashboardPage />
+                                <MyTeamsPage />
                             </ProtectedRoute>
                         } />
                         <Route path="/courses" element={
