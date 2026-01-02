@@ -741,8 +741,8 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                 type="button"
                                 onClick={() => toggleSkill(skill)}
                                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${isSelected
-                                        ? 'bg-primary-600 text-white'
-                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    ? 'bg-primary-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                     }`}
                             >
                                 {skill}
@@ -766,10 +766,10 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                                 type="button"
                                                 onClick={() => updateSkillLevel(skill.name, level)}
                                                 className={`px-3 py-1 rounded text-xs font-medium capitalize ${skill.level === level
-                                                        ? level === 'beginner' ? 'bg-yellow-100 text-yellow-700' :
-                                                            level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
-                                                                'bg-green-100 text-green-700'
-                                                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                                    ? level === 'beginner' ? 'bg-yellow-100 text-yellow-700' :
+                                                        level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
+                                                            'bg-green-100 text-green-700'
+                                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                                                     }`}
                                             >
                                                 {level}
@@ -797,8 +797,8 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                 type="button"
                                 onClick={() => toggleTool(tool)}
                                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${isSelected
-                                        ? 'bg-accent-600 text-white'
-                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    ? 'bg-accent-600 text-white'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                     }`}
                             >
                                 {tool}
@@ -906,8 +906,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.learningStyle === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -937,8 +937,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.workStyle === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -968,8 +968,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.communicationPreference === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -999,8 +999,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.meetingPreference === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -1069,8 +1069,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.goalPreference === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -1100,8 +1100,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.commitmentLevel === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -1131,8 +1131,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.teamPreference === option.value
-                                    ? 'border-primary-500 bg-primary-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-gray-200 hover:border-gray-300'
                                 }`}
                         >
                             <input
@@ -1269,8 +1269,8 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                     <span
                                         key={skill.name}
                                         className={`px-3 py-1 rounded-full text-sm font-medium ${skill.level === 'advanced' ? 'bg-green-100 text-green-700' :
-                                                skill.level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
-                                                    'bg-yellow-100 text-yellow-700'
+                                            skill.level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
+                                                'bg-yellow-100 text-yellow-700'
                                             }`}
                                     >
                                         {skill.name} ({skill.level})

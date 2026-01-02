@@ -295,7 +295,7 @@ async function getAllStudentsWithAssessments(): Promise<StudentWithSkills[]> {
 
     for (const userDoc of usersSnapshot.docs) {
         const userData = userDoc.data() as StudentProfile;
-        
+
         // Check if user has completed assessment
         if (userData.skills && userData.profileCompleted) {
             students.push({
