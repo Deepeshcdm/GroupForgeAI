@@ -104,8 +104,10 @@ export interface StudentProfile extends User {
 
 export interface FacultyProfile extends User {
     role: 'faculty';
-    employeeId?: string;
+    designation?: 'Assistant Professor' | 'Associate Professor' | 'Professor';
     department?: string;
+    employeeId?: string;
+    contactNumber?: string;
     coursesManaged: string[]; // Course IDs
 }
 

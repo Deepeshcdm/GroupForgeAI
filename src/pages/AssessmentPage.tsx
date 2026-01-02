@@ -146,7 +146,7 @@ export function AssessmentPage() {
     const [quizSession, setQuizSession] = useState<QuizSession | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [showResult, setShowResult] = useState(false);
-    const [, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState('');
     const [quizResults, setQuizResults] = useState<QuizResults | null>(null);
@@ -303,10 +303,14 @@ Return ONLY the JSON array, no other text.`;
         setShowResult(true);
 
         // Update in Firestore
-        await updateDoc(doc(db, 'quizzes', quizSession.id), {
-            answers: updatedSession.answers,
-            score: updatedSession.score,
-        });
+        try {
+            await updateDoc(doc(db, 'quizzes', quizSession.id), {
+                answers: updatedSession.answers,
+                score: updatedSession.score,
+            });
+        } catch (err) {
+            console.error('Error updating quiz answer:', err);
+        }
     };
 
     const nextQuestion = () => {
@@ -316,10 +320,11 @@ Return ONLY the JSON array, no other text.`;
             // Quiz complete
             completeQuiz();
         } else {
-            setQuizSession({
+            const updatedSession = {
                 ...quizSession,
                 currentIndex: quizSession.currentIndex + 1,
-            });
+            };
+            setQuizSession(updatedSession);
             setSelectedAnswer(null);
             setShowResult(false);
         }
@@ -330,66 +335,82 @@ Return ONLY the JSON array, no other text.`;
 
         setIsLoading(true);
 
-        // Calculate results
-        const skillBreakdown: { skill: string; correct: number; total: number; percentage: number }[] = [];
-        const skillStats: Record<string, { correct: number; total: number }> = {};
+        try {
+            // Calculate results
+            const skillBreakdown: { skill: string; correct: number; total: number; percentage: number }[] = [];
+            const skillStats: Record<string, { correct: number; total: number }> = {};
 
-        quizSession.questions.forEach((q, i) => {
-            if (!skillStats[q.skill]) {
-                skillStats[q.skill] = { correct: 0, total: 0 };
-            }
-            skillStats[q.skill].total++;
-            if (quizSession.answers[i] === q.correctAnswer) {
-                skillStats[q.skill].correct++;
-            }
-        });
+            // Make sure we have all answers
+            const totalAnswers = quizSession.answers.length;
+            const totalQuestions = quizSession.questions.length;
 
-        Object.entries(skillStats).forEach(([skill, stats]) => {
-            skillBreakdown.push({
-                skill,
-                correct: stats.correct,
-                total: stats.total,
-                percentage: Math.round((stats.correct / stats.total) * 100),
+            if (totalAnswers !== totalQuestions) {
+                console.error('Mismatch: answers=', totalAnswers, 'questions=', totalQuestions);
+                setIsLoading(false);
+                setError('Error completing quiz. Please try again.');
+                return;
+            }
+
+            quizSession.questions.forEach((q, i) => {
+                if (!skillStats[q.skill]) {
+                    skillStats[q.skill] = { correct: 0, total: 0 };
+                }
+                skillStats[q.skill].total++;
+                if (quizSession.answers[i] === q.correctAnswer) {
+                    skillStats[q.skill].correct++;
+                }
             });
-        });
 
-        const results: QuizResults = {
-            totalQuestions: quizSession.questions.length,
-            correctAnswers: quizSession.score,
-            score: Math.round((quizSession.score / quizSession.questions.length) * 100),
-            skillBreakdown,
-            recommendations: generateRecommendations(skillBreakdown),
-        };
+            Object.entries(skillStats).forEach(([skill, stats]) => {
+                skillBreakdown.push({
+                    skill,
+                    correct: stats.correct,
+                    total: stats.total,
+                    percentage: Math.round((stats.correct / stats.total) * 100),
+                });
+            });
 
-        setQuizResults(results);
+            const results: QuizResults = {
+                totalQuestions: quizSession.questions.length,
+                correctAnswers: quizSession.score,
+                score: Math.round((quizSession.score / quizSession.questions.length) * 100),
+                skillBreakdown,
+                recommendations: generateRecommendations(skillBreakdown),
+            };
 
-        // Update quiz in Firestore
-        await updateDoc(doc(db, 'quizzes', quizSession.id), {
-            status: 'completed',
-            completedAt: new Date().toISOString(),
-            results,
-        });
+            setQuizResults(results);
 
-        // Update user's assessment history
-        await updateDoc(doc(db, 'users', currentUser.uid), {
-            assessmentHistory: arrayUnion({
-                id: quizSession.id,
-                type: 'skill_quiz',
-                startedAt: quizSession.startedAt,
-                completedAt: new Date(),
+            // Update quiz in Firestore
+            await updateDoc(doc(db, 'quizzes', quizSession.id), {
                 status: 'completed',
-                score: results.score,
-                skills: quizSession.skills,
-            }),
-        });
+                completedAt: new Date().toISOString(),
+                results,
+            });
 
-        setQuizSession({
-            ...quizSession,
-            status: 'completed',
-            completedAt: new Date(),
-        });
+            // Update user's assessment history
+            await updateDoc(doc(db, 'users', currentUser.uid), {
+                assessmentHistory: arrayUnion({
+                    id: quizSession.id,
+                    type: 'skill_quiz',
+                    startedAt: quizSession.startedAt,
+                    completedAt: new Date(),
+                    status: 'completed',
+                    score: results.score,
+                    skills: quizSession.skills,
+                }),
+            });
 
-        setIsLoading(false);
+            setQuizSession({
+                ...quizSession,
+                status: 'completed',
+                completedAt: new Date(),
+            });
+        } catch (err: any) {
+            console.error('Error completing quiz:', err);
+            setError('Failed to save quiz results. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const generateRecommendations = (breakdown: QuizResults['skillBreakdown']): string[] => {
@@ -539,6 +560,13 @@ Return ONLY the JSON array, no other text.`;
         return (
             <DashboardLayout>
                 <div className="max-w-3xl mx-auto space-y-6">
+                    {/* Error Display */}
+                    {error && (
+                        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                            {error}
+                        </div>
+                    )}
+
                     {/* Progress */}
                     <div>
                         <div className="flex justify-between text-sm text-gray-500 mb-2">
@@ -643,11 +671,23 @@ Return ONLY the JSON array, no other text.`;
                                         <ArrowRight className="w-4 h-4 ml-2" />
                                     </Button>
                                 ) : (
-                                    <Button onClick={nextQuestion}>
-                                        {quizSession.currentIndex >= quizSession.questions.length - 1
-                                            ? 'Finish Quiz'
-                                            : 'Next Question'}
-                                        <ArrowRight className="w-4 h-4 ml-2" />
+                                    <Button 
+                                        onClick={nextQuestion}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? (
+                                            <>
+                                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                Finishing...
+                                            </>
+                                        ) : (
+                                            <>
+                                                {quizSession.currentIndex >= quizSession.questions.length - 1
+                                                    ? 'Finish Quiz'
+                                                    : 'Next Question'}
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </>
+                                        )}
                                     </Button>
                                 )}
                             </div>

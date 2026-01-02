@@ -105,7 +105,7 @@ const TeamFormationPage: React.FC = () => {
             <div>
                 <h1 className="text-3xl font-bold text-gray-900">Team Formation</h1>
                 <p className="text-gray-600 mt-2">
-                    Create balanced teams using AI-powered skill matching
+                    Form your project teams using AI-powered skill matching algorithms
                 </p>
             </div>
 
@@ -175,7 +175,7 @@ const TeamFormationPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {(Object.keys(strategyInfo) as TeamFormationStrategy[]).map((strategy) => {
-                            const info = strategyInfo[strategy];
+                            const info = strategyInfo[strategy as keyof typeof strategyInfo];
                             const result = comparisonResults[strategy];
                             const Icon = info.icon;
                             const isSelected = selectedStrategy === strategy;
@@ -184,8 +184,8 @@ const TeamFormationPage: React.FC = () => {
                                 <Card
                                     key={strategy}
                                     className={`p-6 cursor-pointer transition-all ${isSelected
-                                            ? 'ring-2 ring-blue-500 shadow-lg'
-                                            : 'hover:shadow-md'
+                                        ? 'ring-2 ring-blue-500 shadow-lg'
+                                        : 'hover:shadow-md'
                                         }`}
                                     onClick={() => handleSelectStrategy(strategy)}
                                 >
