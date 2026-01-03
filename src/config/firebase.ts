@@ -31,14 +31,14 @@ const app = firebaseConfig.apiKey?.toString().trim() && firebaseConfig.projectId
     ? initializeApp(firebaseConfig)
     : null;
 
-// Initialize services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export const functions = getFunctions(app);
+// Initialize services with null checks
+export const auth = app ? getAuth(app) : (null as any);
+export const db = app ? getFirestore(app) : (null as any);
+export const storage = app ? getStorage(app) : (null as any);
+export const functions = app ? getFunctions(app) : (null as any);
 
-// Auth providers
-export const googleProvider = new GoogleAuthProvider();
-export const githubProvider = new GithubAuthProvider();
+// Auth providers - only create if app exists
+export const googleProvider = app ? new GoogleAuthProvider() : (null as any);
+export const githubProvider = app ? new GithubAuthProvider() : (null as any);
 
 export default app;
