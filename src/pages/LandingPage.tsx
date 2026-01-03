@@ -9,6 +9,8 @@ import {
     BarChart3,
     Shield
 } from 'lucide-react';
+import Squares from '../components/Squares';
+
 
 export function LandingPage() {
     const features = [
@@ -42,9 +44,23 @@ export function LandingPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="relative min-h-screen">
+            {/* Animated background */}
+            <div className="fixed inset-0 z-0 pointer-events-auto">
+                <Squares
+                    speed={0.5}
+                    direction="diagonal"
+                    borderColor="#6a85f4ff"
+                    hoverFillColor="#000000ff"
+                />
+            </div>
+
+            {/* Content overlay */}
+            <div className="relative z-10 min-h-screen pointer-events-none">
+                <div className="pointer-events-auto">
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+           
+            <header className="fixed top-0 left-0 right-0 bg-white/85 backdrop-blur-md z-50 border-b border-white/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-3">
@@ -66,8 +82,9 @@ export function LandingPage() {
             </header>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-primary-50 via-white to-accent-50">
+            <section className="pt-32 pb-20 px-4">
                 <div className="max-w-7xl mx-auto text-center">
+                     
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-6">
                         <Sparkles className="w-4 h-4" />
                         Powered by Google Gemini AI
@@ -129,7 +146,7 @@ export function LandingPage() {
             </section>
 
             {/* Problem Section */}
-            <section className="py-20 px-4 bg-gray-50">
+            <section className="py-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -143,7 +160,7 @@ export function LandingPage() {
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {problems.map((problem, i) => (
-                            <div key={i} className="bg-white p-6 rounded-xl border border-gray-200">
+                            <div key={i} className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-white/40">
                                 <div className="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-xl">✗</span>
                                 </div>
@@ -170,7 +187,7 @@ export function LandingPage() {
                         {features.map((feature, i) => {
                             const Icon = feature.icon;
                             return (
-                                <div key={i} className="flex gap-6 p-6 rounded-2xl hover:bg-gray-50 transition-colors">
+                                <div key={i} className="flex gap-6 p-6 rounded-2xl hover:bg-white/60 hover:backdrop-blur-sm transition-colors">
                                     <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center">
                                         <Icon className="w-7 h-7 text-white" />
                                     </div>
@@ -186,7 +203,7 @@ export function LandingPage() {
             </section>
 
             {/* Process Section */}
-            <section className="py-20 px-4 bg-gradient-to-br from-primary-900 to-gray-900 text-white">
+            <section className="py-20 px-4 bg-gray-900/80 backdrop-blur-md text-white">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl font-bold mb-4">Simple 3-Step Process</h2>
@@ -228,7 +245,7 @@ export function LandingPage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 px-4">
+            <footer className="bg-gray-900/85 backdrop-blur-md text-gray-400 py-12 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -241,6 +258,8 @@ export function LandingPage() {
                     </div>
                 </div>
             </footer>
+        </div>
+            </div>
         </div>
     );
 }

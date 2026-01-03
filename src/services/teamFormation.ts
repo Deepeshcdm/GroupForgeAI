@@ -5,7 +5,7 @@ import {
     TeamFormationResult,
     SkillSummary
 } from '../types';
-import { teamFormationModel } from '../config/gemini';
+import { getTeamFormationModel } from '../config/gemini';
 import { collection, getDocs, doc, setDoc, query, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { StudentProfile } from '../types';
@@ -226,6 +226,7 @@ Return a JSON object:
 Return ONLY the JSON object.`;
 
     try {
+        const teamFormationModel = getTeamFormationModel();
         const result = await teamFormationModel.generateContent(prompt);
         const text = result.response.text();
         const jsonMatch = text.match(/\{[\s\S]*\}/);

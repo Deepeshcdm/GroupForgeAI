@@ -1,12 +1,24 @@
 // Groq AI configuration using OpenAI-compatible API
 import OpenAI from 'openai';
 
-// Initialize Groq client using OpenAI SDK with custom base URL
-export const groqClient = new OpenAI({
-    apiKey: import.meta.env.VITE_GROQ_API_KEY,
-    baseURL: 'https://api.groq.com/openai/v1',
-    dangerouslyAllowBrowser: true, // Required for client-side usage
-});
+// Lazy initialization to avoid loading SDK at module import time
+let groqClientInstance: OpenAI | null = null;
+
+// Factory to get Groq client instance
+export function getGroqClient(): OpenAI {
+    if (!groqClientInstance) {
+        const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+        if (!apiKey) {
+            throw new Error('VITE_GROQ_API_KEY is not configured');
+        }
+        groqClientInstance = new OpenAI({
+            apiKey,
+            baseURL: 'https://api.groq.com/openai/v1',
+            dangerouslyAllowBrowser: true, // Required for client-side usage
+        });
+    }
+    return groqClientInstance;
+}
 
 // Helper function to generate content using Groq
 export async function generateWithGroq(prompt: string, options?: {
@@ -14,7 +26,7 @@ export async function generateWithGroq(prompt: string, options?: {
     temperature?: number;
     maxTokens?: number;
 }): Promise<string> {
-    const response = await groqClient.chat.completions.create({
+    const response = await getGroqClient().chat.completions.create({
         model: options?.model || 'llama-3.3-70b-versatile',
         messages: [
             {

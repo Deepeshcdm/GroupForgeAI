@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts';
 import { Button, Input, Card, CardBody } from '../components/ui';
 import { Users, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import Squares from '../components/Squares';
 
 export function LoginPage() {
     const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ export function LoginPage() {
     const [loading, setLoading] = useState(false);
 
     const { signInWithEmail, signInWithGoogle, signInWithGitHub } = useAuth();
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const handleEmailLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -58,8 +59,20 @@ export function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
+        <div className="relative min-h-screen overflow-hidden">
+            {/* Animated background */}
+            <div className="fixed inset-0 z-0 pointer-events-auto">
+                <Squares
+                    speed={0.5}
+                    direction="diagonal"
+                    borderColor="#6a85f4ff"
+                    hoverFillColor="#000000ff"
+                />
+            </div>
+
+            {/* Content overlay */}
+            <div className="relative z-10 min-h-screen flex items-center justify-center p-4 pointer-events-none">
+                <div className="w-full max-w-md pointer-events-auto">
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4">
@@ -69,7 +82,8 @@ export function LoginPage() {
                     <p className="text-gray-500 mt-1">Intelligent Team Formation</p>
                 </div>
 
-                <Card>
+                {/* Card with transparent background */}
+                <Card className="bg-white/85 backdrop-blur-md border border-white/30">
                     <CardBody className="p-8">
                         <h2 className="text-xl font-semibold text-gray-900 mb-6">Sign in to your account</h2>
 
@@ -170,5 +184,6 @@ export function LoginPage() {
                 </Card>
             </div>
         </div>
+            </div>
     );
 }

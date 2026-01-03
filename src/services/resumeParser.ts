@@ -1,5 +1,5 @@
 // Resume parsing service using Gemini
-import { resumeAnalysisModel } from '../config/gemini';
+import { getResumeAnalysisModel } from '../config/gemini';
 import { SkillProfile } from '../types';
 import { storage } from '../config/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -106,6 +106,7 @@ Base skill scores on:
 Return ONLY the JSON object.`;
 
     try {
+        const resumeAnalysisModel = getResumeAnalysisModel();
         const result = await resumeAnalysisModel.generateContent(prompt);
         const text = result.response.text();
         const jsonMatch = text.match(/\{[\s\S]*\}/);

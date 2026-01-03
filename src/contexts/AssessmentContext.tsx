@@ -7,7 +7,7 @@ import {
     AssessmentType,
     SkillProfile
 } from '../types';
-import { assessmentModel } from '../config/gemini';
+import { getAssessmentModel } from '../config/gemini';
 import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
@@ -64,6 +64,7 @@ Make questions practical, scenario-based, and relevant to college students worki
 Return ONLY the JSON array, no other text.`;
 
         try {
+            const assessmentModel = getAssessmentModel();
             const result = await assessmentModel.generateContent(prompt);
             const text = result.response.text();
             const jsonMatch = text.match(/\[[\s\S]*\]/);
@@ -117,6 +118,7 @@ Return a single JSON object:
 Return ONLY the JSON object.`;
 
         try {
+            const assessmentModel = getAssessmentModel();
             const result = await assessmentModel.generateContent(prompt);
             const text = result.response.text();
             const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -214,6 +216,7 @@ Be fair but critical. Base scores on actual demonstrated ability in responses.
 Return ONLY the JSON object.`;
 
         try {
+            const assessmentModel = getAssessmentModel();
             const result = await assessmentModel.generateContent(prompt);
             const text = result.response.text();
             const jsonMatch = text.match(/\{[\s\S]*\}/);

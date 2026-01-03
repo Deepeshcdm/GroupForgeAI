@@ -4,6 +4,7 @@ import { useAuth } from '../contexts';
 import { Button, Input, Card, CardBody } from '../components/ui';
 import { Users, ArrowRight, GraduationCap, BookOpen, Eye, EyeOff } from 'lucide-react';
 import { UserRole } from '../types';
+import Squares from '../components/Squares';
 
 export function SignupPage() {
     const [step, setStep] = useState(1);
@@ -90,8 +91,20 @@ export function SignupPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
+        <div className="relative min-h-screen overflow-hidden">
+            {/* Animated background */}
+            <div className="fixed inset-0 z-0 pointer-events-auto">
+                <Squares
+                    speed={0.5}
+                    direction="diagonal"
+                    borderColor="#6a85f4ff"
+                    hoverFillColor="#000000ff"
+                />
+            </div>
+
+            {/* Content overlay */}
+            <div className="relative z-10 min-h-screen flex items-center justify-center p-4 pointer-events-none">
+                <div className="w-full max-w-md pointer-events-auto">
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4">
@@ -101,7 +114,7 @@ export function SignupPage() {
                     <p className="text-gray-500 mt-1">Create your account</p>
                 </div>
 
-                <Card>
+                <Card className="bg-white/85 backdrop-blur-md border border-white/30">
                     <CardBody className="p-8">
                         {/* Progress indicator */}
                         <div className="flex items-center justify-center gap-2 mb-6">
@@ -287,5 +300,6 @@ export function SignupPage() {
                 </Card>
             </div>
         </div>
+            </div>
     );
 }

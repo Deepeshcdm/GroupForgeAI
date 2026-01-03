@@ -16,8 +16,20 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Validate required Firebase env vars
+const requiredEnvVars = ['VITE_FIREBASE_API_KEY', 'VITE_FIREBASE_PROJECT_ID'];
+const missingVars = requiredEnvVars.filter(
+    key => !import.meta.env[key]?.toString().trim()
+);
+
+if (missingVars.length > 0) {
+    console.warn(`Missing Firebase environment variables: ${missingVars.join(', ')}. Firebase features will be disabled.`);
+}
+
+// Initialize Firebase only if required config is present
+const app = firebaseConfig.apiKey?.toString().trim() && firebaseConfig.projectId?.toString().trim()
+    ? initializeApp(firebaseConfig)
+    : null;
 
 // Initialize services
 export const auth = getAuth(app);

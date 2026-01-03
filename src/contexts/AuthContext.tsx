@@ -204,20 +204,44 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Listen for auth state changes
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setCurrentUser(user);
+        console.log('AuthProvider: Setting up auth listener');
+        let unsubscribe: () => void;
 
-            if (user) {
-                const profile = await fetchUserProfile(user.uid);
-                setUserProfile(profile);
-            } else {
-                setUserProfile(null);
-            }
+        try {
+            unsubscribe = onAuthStateChanged(auth, async (user) => {
+                console.log('AuthProvider: Auth state changed', user ? 'User logged in' : 'No user');
+                setCurrentUser(user);
 
+                if (user) {
+                    const profile = await fetchUserProfile(user.uid);
+                    setUserProfile(profile);
+                } else {
+                    setUserProfile(null);
+                }
+
+                setLoading(false);
+            });
+        } catch (error) {
+            console.error('AuthProvider: Error setting up auth listener', error);
             setLoading(false);
-        });
+            return () => {};
+        }
 
-        return unsubscribe;
+        // Safety timeout in case Firebase fails to initialize or respond
+        const timeoutId = setTimeout(() => {
+            setLoading((prevLoading) => {
+                if (prevLoading) {
+                    console.warn('AuthProvider: Auth listener timed out, forcing loading=false. Check Firebase config.');
+                    return false;
+                }
+                return prevLoading;
+            });
+        }, 2000);
+
+        return () => {
+            if (unsubscribe) unsubscribe();
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     const value: AuthContextType = {

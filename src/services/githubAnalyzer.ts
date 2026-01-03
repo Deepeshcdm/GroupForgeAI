@@ -1,5 +1,5 @@
 // GitHub profile analyzer using Gemini and GitHub REST API
-import { resumeAnalysisModel } from '../config/gemini';
+import { getResumeAnalysisModel } from '../config/gemini';
 import { SkillProfile } from '../types';
 
 interface GitHubProfile {
@@ -163,6 +163,7 @@ Scoring criteria:
 Return ONLY the JSON object.`;
 
     try {
+        const resumeAnalysisModel = getResumeAnalysisModel();
         const result = await resumeAnalysisModel.generateContent(prompt);
         const text = result.response.text();
         const jsonMatch = text.match(/\{[\s\S]*\}/);
