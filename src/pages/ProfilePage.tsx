@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import {
     StudentProfile,
+    FacultyProfile,
     SkillLevel,
     LearningStyle,
     WorkStyle,
@@ -60,14 +61,19 @@ interface ProfileFormData {
     displayName: string;
     institutionId: string;
     department: string;
+
+    // Student-specific fields
     major: string;
     year: number | undefined;
     enrollmentNumber: string;
-
-    // Course & Project
     courses: string;
     projectTopics: string;
     preferredGroupSize: number | undefined;
+
+    // Faculty-specific fields
+    designation: 'Assistant Professor' | 'Associate Professor' | 'Professor' | '';
+    employeeId: string;
+    contactNumber: string;
 
     // Availability
     timezone: string;
@@ -79,13 +85,13 @@ interface ProfileFormData {
     portfolioUrl: string;
     linkedinUrl: string;
 
-    // Work & Learning Style
+    // Work & Learning Style (Student-specific)
     learningStyle: LearningStyle | '';
     workStyle: WorkStyle | '';
     communicationPreference: CommunicationPreference | '';
     meetingPreference: MeetingPreference | '';
 
-    // Goals & Preferences
+    // Goals & Preferences (Student-specific)
     goalPreference: GoalPreference | '';
     commitmentLevel: CommitmentLevel | '';
     teamPreference: TeamPreference | '';
@@ -96,11 +102,15 @@ interface ProfileFormData {
     languages: string;
 }
 
-const STEPS = [
+const STUDENT_STEPS = [
     { id: 1, title: 'Basic Info', icon: User },
     { id: 2, title: 'Skills & Tools', icon: Briefcase },
     { id: 3, title: 'Work Style', icon: MessageSquare },
     { id: 4, title: 'Goals', icon: Target },
+];
+
+const FACULTY_STEPS = [
+    { id: 1, title: 'Basic Info', icon: User },
 ];
 
 export function ProfilePage() {
@@ -123,6 +133,9 @@ export function ProfilePage() {
         courses: '',
         projectTopics: '',
         preferredGroupSize: undefined,
+        designation: '',
+        employeeId: '',
+        contactNumber: '',
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         selectedSkills: [],
         tools: [],
@@ -154,34 +167,71 @@ export function ProfilePage() {
             setIsNewUser(isNew);
             setIsEditing(isNew);
 
-            const studentProfile = userProfile as StudentProfile;
-            setFormData({
-                displayName: userProfile.displayName || '',
-                institutionId: userProfile.institutionId || '',
-                department: studentProfile.department || '',
-                major: studentProfile.major || '',
-                year: studentProfile.year,
-                enrollmentNumber: studentProfile.enrollmentNumber || '',
-                courses: studentProfile.courses?.join(', ') || '',
-                projectTopics: studentProfile.projectTopics?.join(', ') || '',
-                preferredGroupSize: studentProfile.preferredGroupSize,
-                timezone: studentProfile.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
-                selectedSkills: studentProfile.userSkills || [],
-                tools: studentProfile.tools || [],
-                githubUsername: studentProfile.githubUsername || '',
-                portfolioUrl: studentProfile.portfolioUrl || '',
-                linkedinUrl: studentProfile.linkedinUrl || '',
-                learningStyle: studentProfile.learningStyle || '',
-                workStyle: studentProfile.workStyle || '',
-                communicationPreference: studentProfile.communicationPreference || '',
-                meetingPreference: studentProfile.meetingPreference || '',
-                goalPreference: studentProfile.goalPreference || '',
-                commitmentLevel: studentProfile.commitmentLevel || '',
-                teamPreference: studentProfile.teamPreference || '',
-                bio: studentProfile.bio || '',
-                icebreakerPrompt: studentProfile.icebreakerPrompt || '',
-                languages: studentProfile.languages?.join(', ') || '',
-            });
+            if (userProfile.role === 'student') {
+                const studentProfile = userProfile as StudentProfile;
+                setFormData({
+                    displayName: userProfile.displayName || '',
+                    institutionId: userProfile.institutionId || '',
+                    department: studentProfile.department || '',
+                    major: studentProfile.major || '',
+                    year: studentProfile.year,
+                    enrollmentNumber: studentProfile.enrollmentNumber || '',
+                    designation: '',
+                    employeeId: '',
+                    contactNumber: '',
+                    courses: studentProfile.courses?.join(', ') || '',
+                    projectTopics: studentProfile.projectTopics?.join(', ') || '',
+                    preferredGroupSize: studentProfile.preferredGroupSize,
+                    timezone: studentProfile.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    selectedSkills: studentProfile.userSkills || [],
+                    tools: studentProfile.tools || [],
+                    githubUsername: studentProfile.githubUsername || '',
+                    portfolioUrl: studentProfile.portfolioUrl || '',
+                    linkedinUrl: studentProfile.linkedinUrl || '',
+                    learningStyle: studentProfile.learningStyle || '',
+                    workStyle: studentProfile.workStyle || '',
+                    communicationPreference: studentProfile.communicationPreference || '',
+                    meetingPreference: studentProfile.meetingPreference || '',
+                    goalPreference: studentProfile.goalPreference || '',
+                    commitmentLevel: studentProfile.commitmentLevel || '',
+                    teamPreference: studentProfile.teamPreference || '',
+                    bio: studentProfile.bio || '',
+                    icebreakerPrompt: studentProfile.icebreakerPrompt || '',
+                    languages: studentProfile.languages?.join(', ') || '',
+                });
+            } else if (userProfile.role === 'faculty') {
+                const facultyProfile = userProfile as FacultyProfile;
+                setFormData({
+                    displayName: userProfile.displayName || '',
+                    institutionId: userProfile.institutionId || '',
+                    department: facultyProfile.department || '',
+                    designation: facultyProfile.designation || '',
+                    employeeId: facultyProfile.employeeId || '',
+                    contactNumber: facultyProfile.contactNumber || '',
+                    major: '',
+                    year: undefined,
+                    enrollmentNumber: '',
+                    courses: '',
+                    projectTopics: '',
+                    preferredGroupSize: undefined,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    selectedSkills: [],
+                    tools: [],
+                    githubUsername: '',
+                    portfolioUrl: '',
+                    linkedinUrl: '',
+                    learningStyle: '',
+                    workStyle: '',
+                    communicationPreference: '',
+                    meetingPreference: '',
+                    goalPreference: '',
+                    commitmentLevel: '',
+                    teamPreference: '',
+                    bio: '',
+                    icebreakerPrompt: '',
+                    languages: '',
+                });
+            }
         } else if (currentUser) {
             setIsNewUser(true);
             setIsEditing(true);
@@ -239,6 +289,7 @@ export function ProfilePage() {
 
     const validateStep = (step: number): boolean => {
         setError('');
+        const isFaculty = userProfile?.role === 'faculty';
 
         switch (step) {
             case 1:
@@ -254,22 +305,35 @@ export function ProfilePage() {
                     setError('Department is required');
                     return false;
                 }
-                if (!formData.major.trim()) {
-                    setError('Major/Program is required');
-                    return false;
-                }
-                if (!formData.year) {
-                    setError('Year of study is required');
-                    return false;
+                if (isFaculty) {
+                    if (!formData.designation) {
+                        setError('Designation is required');
+                        return false;
+                    }
+                    if (!formData.employeeId.trim()) {
+                        setError('Employee ID is required');
+                        return false;
+                    }
+                } else {
+                    if (!formData.major.trim()) {
+                        setError('Major/Program is required');
+                        return false;
+                    }
+                    if (!formData.year) {
+                        setError('Year of study is required');
+                        return false;
+                    }
                 }
                 return true;
             case 2:
+                // Skills validation only for students
                 if (formData.selectedSkills.length === 0) {
                     setError('Please select at least one skill');
                     return false;
                 }
                 return true;
             case 3:
+                // Step 3 only exists for students
                 if (!formData.learningStyle) {
                     setError('Please select your learning style');
                     return false;
@@ -284,6 +348,7 @@ export function ProfilePage() {
                 }
                 return true;
             case 4:
+                // Step 4 only exists for students
                 if (!formData.goalPreference) {
                     setError('Please select your primary goal');
                     return false;
@@ -310,7 +375,7 @@ export function ProfilePage() {
     };
 
     const handleSave = async () => {
-        if (!currentUser) return;
+        if (!currentUser || !userProfile) return;
         if (!validateStep(currentStep)) return;
 
         setError('');
@@ -320,65 +385,94 @@ export function ProfilePage() {
             const userRef = doc(db, 'users', currentUser.uid);
             const now = new Date();
 
-            // Build the complete profile data
-            const profileData: Partial<StudentProfile> = {
-                uid: currentUser.uid,
-                email: currentUser.email || '',
-                displayName: formData.displayName,
-                role: 'student',
-                institutionId: formData.institutionId,
-                profileCompleted: true,
-                updatedAt: now,
+            if (userProfile.role === 'student') {
+                // Build the complete student profile data
+                const profileData: Partial<StudentProfile> = {
+                    uid: currentUser.uid,
+                    email: currentUser.email || '',
+                    displayName: formData.displayName,
+                    role: 'student',
+                    institutionId: formData.institutionId,
+                    profileCompleted: true,
+                    updatedAt: now,
 
-                // Basic Info
-                department: formData.department,
-                major: formData.major,
-                year: formData.year,
-                enrollmentNumber: formData.enrollmentNumber || undefined,
+                    // Basic Info
+                    department: formData.department,
+                    major: formData.major,
+                    year: formData.year,
+                    enrollmentNumber: formData.enrollmentNumber || undefined,
 
-                // Course & Project
-                courses: formData.courses ? formData.courses.split(',').map(s => s.trim()).filter(Boolean) : [],
-                projectTopics: formData.projectTopics ? formData.projectTopics.split(',').map(s => s.trim()).filter(Boolean) : [],
-                preferredGroupSize: formData.preferredGroupSize,
+                    // Course & Project
+                    courses: formData.courses ? formData.courses.split(',').map(s => s.trim()).filter(Boolean) : [],
+                    projectTopics: formData.projectTopics ? formData.projectTopics.split(',').map(s => s.trim()).filter(Boolean) : [],
+                    preferredGroupSize: formData.preferredGroupSize,
 
-                // Availability
-                timezone: formData.timezone,
+                    // Availability
+                    timezone: formData.timezone,
 
-                // Skills & Experience
-                userSkills: formData.selectedSkills,
-                tools: formData.tools,
-                githubUsername: formData.githubUsername || undefined,
-                githubConnected: !!formData.githubUsername,
-                portfolioUrl: formData.portfolioUrl || undefined,
-                linkedinUrl: formData.linkedinUrl || undefined,
+                    // Skills & Experience
+                    userSkills: formData.selectedSkills,
+                    tools: formData.tools,
+                    githubUsername: formData.githubUsername || undefined,
+                    githubConnected: !!formData.githubUsername,
+                    portfolioUrl: formData.portfolioUrl || undefined,
+                    linkedinUrl: formData.linkedinUrl || undefined,
 
-                // Work & Learning Style
-                learningStyle: formData.learningStyle || undefined,
-                workStyle: formData.workStyle || undefined,
-                communicationPreference: formData.communicationPreference || undefined,
-                meetingPreference: formData.meetingPreference || undefined,
+                    // Work & Learning Style
+                    learningStyle: formData.learningStyle || undefined,
+                    workStyle: formData.workStyle || undefined,
+                    communicationPreference: formData.communicationPreference || undefined,
+                    meetingPreference: formData.meetingPreference || undefined,
 
-                // Goals & Preferences
-                goalPreference: formData.goalPreference || undefined,
-                commitmentLevel: formData.commitmentLevel || undefined,
-                teamPreference: formData.teamPreference || undefined,
+                    // Goals & Preferences
+                    goalPreference: formData.goalPreference || undefined,
+                    commitmentLevel: formData.commitmentLevel || undefined,
+                    teamPreference: formData.teamPreference || undefined,
 
-                // Optional
-                bio: formData.bio || undefined,
-                icebreakerPrompt: formData.icebreakerPrompt || undefined,
-                languages: formData.languages ? formData.languages.split(',').map(s => s.trim()).filter(Boolean) : [],
-            };
+                    // Optional
+                    bio: formData.bio || undefined,
+                    icebreakerPrompt: formData.icebreakerPrompt || undefined,
+                    languages: formData.languages ? formData.languages.split(',').map(s => s.trim()).filter(Boolean) : [],
+                };
 
-            // Remove undefined values to avoid Firebase errors
-            const cleanData = Object.fromEntries(
-                Object.entries(profileData).filter(([_, v]) => v !== undefined)
-            );
+                // Remove undefined values to avoid Firebase errors
+                const cleanData = Object.fromEntries(
+                    Object.entries(profileData).filter(([_, v]) => v !== undefined)
+                );
 
-            if (isNewUser) {
-                // For new users, merge with existing data
-                await setDoc(userRef, cleanData, { merge: true });
-            } else {
-                await updateDoc(userRef, cleanData);
+                if (isNewUser) {
+                    await setDoc(userRef, cleanData, { merge: true });
+                } else {
+                    await updateDoc(userRef, cleanData);
+                }
+            } else if (userProfile.role === 'faculty') {
+                // Build the complete faculty profile data
+                const profileData: Partial<FacultyProfile> = {
+                    uid: currentUser.uid,
+                    email: currentUser.email || '',
+                    displayName: formData.displayName,
+                    role: 'faculty',
+                    institutionId: formData.institutionId,
+                    profileCompleted: true,
+                    updatedAt: now,
+
+                    // Faculty-specific fields
+                    department: formData.department,
+                    designation: formData.designation || undefined,
+                    employeeId: formData.employeeId || undefined,
+                    contactNumber: formData.contactNumber || undefined,
+                };
+
+                // Remove undefined values to avoid Firebase errors
+                const cleanData = Object.fromEntries(
+                    Object.entries(profileData).filter(([_, v]) => v !== undefined)
+                );
+
+                if (isNewUser) {
+                    await setDoc(userRef, cleanData, { merge: true });
+                } else {
+                    await updateDoc(userRef, cleanData);
+                }
             }
 
             setSuccess(true);
@@ -413,10 +507,13 @@ export function ProfilePage() {
     // View mode for existing users
     if (!isEditing && !isNewUser) {
         return <ProfileViewMode
-            userProfile={userProfile as StudentProfile}
+            userProfile={userProfile}
             onEdit={() => setIsEditing(true)}
         />;
     }
+
+    const isFaculty = userProfile?.role === 'faculty';
+    const steps = isFaculty ? FACULTY_STEPS : STUDENT_STEPS;
 
     return (
         <DashboardLayout>
@@ -428,7 +525,9 @@ export function ProfilePage() {
                     </h1>
                     <p className="text-gray-500 mt-1">
                         {isNewUser
-                            ? 'Tell us about yourself so we can match you with the perfect team'
+                            ? isFaculty
+                                ? 'Tell us about yourself so you can manage courses and teams effectively'
+                                : 'Tell us about yourself so we can match you with the perfect team'
                             : 'Update your profile information'}
                     </p>
                     {isNewUser && (
@@ -437,7 +536,9 @@ export function ProfilePage() {
                             <div className="text-sm text-blue-800">
                                 <p className="font-medium">Complete all steps to unlock features</p>
                                 <p className="mt-1 text-blue-700">
-                                    After completing your profile, you'll be able to access the dashboard, take assessments, and join teams.
+                                    {isFaculty
+                                        ? 'After completing your profile, you\'ll be able to create courses and manage teams.'
+                                        : 'After completing your profile, you\'ll be able to access the dashboard, take assessments, and join teams.'}
                                 </p>
                             </div>
                         </div>
@@ -447,7 +548,7 @@ export function ProfilePage() {
                 {/* Progress Steps */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
-                        {STEPS.map((step, index) => {
+                        {steps.map((step, index) => {
                             const Icon = step.icon;
                             const isActive = currentStep === step.id;
                             const isCompleted = currentStep > step.id;
@@ -467,7 +568,7 @@ export function ProfilePage() {
                                             {step.title}
                                         </span>
                                     </div>
-                                    {index < STEPS.length - 1 && (
+                                    {index < steps.length - 1 && (
                                         <div className={`w-full h-1 mx-4 ${isCompleted ? 'bg-green-500' : 'bg-gray-200'}`}
                                             style={{ minWidth: '60px' }} />
                                     )}
@@ -496,27 +597,35 @@ export function ProfilePage() {
                 <Card>
                     <CardBody className="p-8">
                         {currentStep === 1 && (
-                            <Step1BasicInfo
-                                formData={formData}
-                                onChange={handleInputChange}
-                            />
+                            isFaculty ? (
+                                <Step1BasicInfoFaculty
+                                    formData={formData}
+                                    onChange={handleInputChange}
+                                />
+                            ) : (
+                                <Step1BasicInfo
+                                    formData={formData}
+                                    onChange={handleInputChange}
+                                />
+                            )
                         )}
-                        {currentStep === 2 && (
+                        {!isFaculty && currentStep === 2 && (
                             <Step2SkillsTools
                                 formData={formData}
                                 onChange={handleInputChange}
                                 toggleSkill={toggleSkill}
                                 updateSkillLevel={updateSkillLevel}
                                 toggleTool={toggleTool}
+                                isFaculty={isFaculty}
                             />
                         )}
-                        {currentStep === 3 && (
+                        {!isFaculty && currentStep === 3 && (
                             <Step3WorkStyle
                                 formData={formData}
                                 onChange={handleInputChange}
                             />
                         )}
-                        {currentStep === 4 && (
+                        {!isFaculty && currentStep === 4 && (
                             <Step4Goals
                                 formData={formData}
                                 onChange={handleInputChange}
@@ -536,7 +645,7 @@ export function ProfilePage() {
                         Previous
                     </Button>
 
-                    {currentStep === STEPS.length ? (
+                    {currentStep === steps.length ? (
                         <Button onClick={handleSave} disabled={saving}>
                             {saving ? (
                                 <span className="flex items-center gap-2">
@@ -707,13 +816,123 @@ function Step1BasicInfo({ formData, onChange }: {
     );
 }
 
+// Step 1: Basic Information for Faculty
+function Step1BasicInfoFaculty({ formData, onChange }: {
+    formData: ProfileFormData;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+}) {
+    return (
+        <div className="space-y-6">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                    <User className="w-5 h-5 text-primary-600" />
+                </div>
+                <div>
+                    <h2 className="text-lg font-semibold text-gray-900">Basic Information</h2>
+                    <p className="text-sm text-gray-500">Tell us about yourself and your professional background</p>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                    label="Full Name *"
+                    name="displayName"
+                    value={formData.displayName}
+                    onChange={onChange}
+                    placeholder="Dr. Jane Smith"
+                    required
+                />
+                <Input
+                    label="University / Campus *"
+                    name="institutionId"
+                    value={formData.institutionId}
+                    onChange={onChange}
+                    placeholder="e.g., Stanford University"
+                    required
+                />
+                <Input
+                    label="Department *"
+                    name="department"
+                    value={formData.department}
+                    onChange={onChange}
+                    placeholder="e.g., Computer Science"
+                    required
+                />
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Designation *
+                    </label>
+                    <select
+                        name="designation"
+                        value={formData.designation}
+                        onChange={onChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        required
+                    >
+                        <option value="">Select designation</option>
+                        <option value="Assistant Professor">Assistant Professor</option>
+                        <option value="Associate Professor">Associate Professor</option>
+                        <option value="Professor">Professor</option>
+                    </select>
+                </div>
+                <Input
+                    label="Employee ID *"
+                    name="employeeId"
+                    value={formData.employeeId}
+                    onChange={onChange}
+                    placeholder="e.g., EMP2024001"
+                    required
+                />
+                <Input
+                    label="Contact Number"
+                    name="contactNumber"
+                    value={formData.contactNumber}
+                    onChange={onChange}
+                    placeholder="+1 234 567 8900"
+                />
+            </div>
+
+            <div className="border-t pt-4 mt-6">
+                <h3 className="text-md font-medium text-gray-900 mb-4 flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    Additional Information
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <Clock className="w-4 h-4 inline mr-1" />
+                            Timezone
+                        </label>
+                        <select
+                            name="timezone"
+                            value={formData.timezone}
+                            onChange={onChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        >
+                            <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                            <option value="America/New_York">America/New_York (EST)</option>
+                            <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                            <option value="Europe/London">Europe/London (GMT)</option>
+                            <option value="Europe/Paris">Europe/Paris (CET)</option>
+                            <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+                            <option value="Asia/Singapore">Asia/Singapore (SGT)</option>
+                            <option value="Australia/Sydney">Australia/Sydney (AEST)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 // Step 2: Skills & Tools
-function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, toggleTool }: {
+function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, toggleTool, isFaculty }: {
     formData: ProfileFormData;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     toggleSkill: (skill: string) => void;
     updateSkillLevel: (skill: string, level: SkillLevel) => void;
     toggleTool: (tool: string) => void;
+    isFaculty?: boolean;
 }) {
     return (
         <div className="space-y-6">
@@ -730,7 +949,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
             {/* Skills Selection */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Skills * (Select at least one)
+                    Skills {!isFaculty && '* (Select at least one)'}
                 </label>
                 <div className="flex flex-wrap gap-2 mb-4">
                     {COMMON_SKILLS.map(skill => {
@@ -1204,9 +1423,15 @@ function Step4Goals({ formData, onChange }: {
 
 // View Mode Component for existing users
 function ProfileViewMode({ userProfile, onEdit }: {
-    userProfile: StudentProfile | null;
+    userProfile: StudentProfile | FacultyProfile | null;
     onEdit: () => void;
 }) {
+    if (!userProfile) return null;
+
+    const isFaculty = userProfile.role === 'faculty';
+    const studentProfile = userProfile as StudentProfile;
+    const facultyProfile = userProfile as FacultyProfile;
+
     return (
         <DashboardLayout>
             <div className="max-w-4xl mx-auto space-y-6">
@@ -1235,7 +1460,11 @@ function ProfileViewMode({ userProfile, onEdit }: {
                             </div>
                             <div className="flex-1">
                                 <h2 className="text-xl font-semibold text-gray-900">{userProfile?.displayName}</h2>
-                                <p className="text-gray-500">{userProfile?.major} • {userProfile?.year && `Year ${userProfile.year}`}</p>
+                                {isFaculty ? (
+                                    <p className="text-gray-500">{facultyProfile?.designation} • {userProfile?.department}</p>
+                                ) : (
+                                    <p className="text-gray-500">{studentProfile?.major} • {studentProfile?.year && `Year ${studentProfile.year}`}</p>
+                                )}
                                 <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
                                     <span className="flex items-center gap-1">
                                         <Mail className="w-4 h-4" />
@@ -1246,16 +1475,26 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                         {userProfile?.institutionId}
                                     </span>
                                 </div>
-                                {userProfile?.bio && (
-                                    <p className="mt-3 text-gray-600">{userProfile.bio}</p>
+                                {isFaculty && facultyProfile?.employeeId && (
+                                    <div className="mt-2 text-sm text-gray-500">
+                                        Employee ID: {facultyProfile.employeeId}
+                                    </div>
+                                )}
+                                {isFaculty && facultyProfile?.contactNumber && (
+                                    <div className="mt-1 text-sm text-gray-500">
+                                        Contact: {facultyProfile.contactNumber}
+                                    </div>
+                                )}
+                                {!isFaculty && studentProfile?.bio && (
+                                    <p className="mt-3 text-gray-600">{studentProfile.bio}</p>
                                 )}
                             </div>
                         </div>
                     </CardBody>
                 </Card>
 
-                {/* Skills */}
-                {userProfile?.userSkills && userProfile.userSkills.length > 0 && (
+                {/* Skills - show only if available */}
+                {!isFaculty && studentProfile?.userSkills && studentProfile.userSkills.length > 0 && (
                     <Card>
                         <CardHeader>
                             <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
@@ -1265,7 +1504,7 @@ function ProfileViewMode({ userProfile, onEdit }: {
                         </CardHeader>
                         <CardBody className="p-6">
                             <div className="flex flex-wrap gap-2">
-                                {userProfile.userSkills.map(skill => (
+                                {studentProfile.userSkills.map(skill => (
                                     <span
                                         key={skill.name}
                                         className={`px-3 py-1 rounded-full text-sm font-medium ${skill.level === 'advanced' ? 'bg-green-100 text-green-700' :
@@ -1281,64 +1520,68 @@ function ProfileViewMode({ userProfile, onEdit }: {
                     </Card>
                 )}
 
-                {/* Work Style */}
-                <Card>
-                    <CardHeader>
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                            <MessageSquare className="w-5 h-5 text-primary-600" />
-                            Work & Communication Style
-                        </h3>
-                    </CardHeader>
-                    <CardBody className="p-6">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div>
-                                <p className="text-sm text-gray-500">Learning Style</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.learningStyle || 'Not set'}</p>
+                {/* Work Style - only for students */}
+                {!isFaculty && (
+                    <Card>
+                        <CardHeader>
+                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                <MessageSquare className="w-5 h-5 text-primary-600" />
+                                Work & Communication Style
+                            </h3>
+                        </CardHeader>
+                        <CardBody className="p-6">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div>
+                                    <p className="text-sm text-gray-500">Learning Style</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.learningStyle || 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Work Style</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.workStyle || 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Communication</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.communicationPreference || 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Meetings</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.meetingPreference || 'Not set'}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Work Style</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.workStyle || 'Not set'}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Communication</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.communicationPreference || 'Not set'}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Meetings</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.meetingPreference || 'Not set'}</p>
-                            </div>
-                        </div>
-                    </CardBody>
-                </Card>
+                        </CardBody>
+                    </Card>
+                )}
 
-                {/* Goals */}
-                <Card>
-                    <CardHeader>
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                            <Target className="w-5 h-5 text-primary-600" />
-                            Goals & Preferences
-                        </h3>
-                    </CardHeader>
-                    <CardBody className="p-6">
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <div>
-                                <p className="text-sm text-gray-500">Primary Goal</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.goalPreference || 'Not set'}</p>
+                {/* Goals - only for students */}
+                {!isFaculty && (
+                    <Card>
+                        <CardHeader>
+                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                <Target className="w-5 h-5 text-primary-600" />
+                                Goals & Preferences
+                            </h3>
+                        </CardHeader>
+                        <CardBody className="p-6">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                <div>
+                                    <p className="text-sm text-gray-500">Primary Goal</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.goalPreference || 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Commitment Level</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.commitmentLevel || 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500">Team Preference</p>
+                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.teamPreference?.replace('-', ' ') || 'Not set'}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Commitment Level</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.commitmentLevel || 'Not set'}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Team Preference</p>
-                                <p className="font-medium text-gray-900 capitalize">{userProfile?.teamPreference?.replace('-', ' ') || 'Not set'}</p>
-                            </div>
-                        </div>
-                    </CardBody>
-                </Card>
+                        </CardBody>
+                    </Card>
+                )}
 
                 {/* Links */}
-                {(userProfile?.githubUsername || userProfile?.portfolioUrl || userProfile?.linkedinUrl) && (
+                {!isFaculty && (studentProfile?.githubUsername || studentProfile?.portfolioUrl || studentProfile?.linkedinUrl) && (
                     <Card>
                         <CardHeader>
                             <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
@@ -1348,20 +1591,20 @@ function ProfileViewMode({ userProfile, onEdit }: {
                         </CardHeader>
                         <CardBody className="p-6">
                             <div className="flex flex-wrap gap-4">
-                                {userProfile?.githubUsername && (
+                                {studentProfile?.githubUsername && (
                                     <a
-                                        href={`https://github.com/${userProfile.githubUsername}`}
+                                        href={`https://github.com/${studentProfile.githubUsername}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
                                     >
                                         <Github className="w-5 h-5" />
-                                        {userProfile.githubUsername}
+                                        {studentProfile.githubUsername}
                                     </a>
                                 )}
-                                {userProfile?.linkedinUrl && (
+                                {studentProfile?.linkedinUrl && (
                                     <a
-                                        href={userProfile.linkedinUrl}
+                                        href={studentProfile.linkedinUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
@@ -1370,9 +1613,9 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                         LinkedIn
                                     </a>
                                 )}
-                                {userProfile?.portfolioUrl && (
+                                {studentProfile?.portfolioUrl && (
                                     <a
-                                        href={userProfile.portfolioUrl}
+                                        href={studentProfile.portfolioUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
