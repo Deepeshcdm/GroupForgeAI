@@ -150,6 +150,9 @@ groupforge-ai/
 └── vite.config.ts
 ```
 
+## we use 3 algorithms for teamformation
+
+
 ## License
 
 MIT
