@@ -12,6 +12,7 @@ import {
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db, googleProvider, githubProvider } from '../config/firebase';
 import { User, UserRole } from '../types';
+import { incrementUserCount } from '../services/metaService';
 
 interface AuthContextType {
     currentUser: FirebaseUser | null;
@@ -122,6 +123,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 // New user - redirect to role selection
                 // For now, default to student
                 await createUserProfile(result.user, 'student', result.user.displayName || 'User');
+                // Increment user count in meta collection
+                await incrementUserCount();
             }
         } catch (error) {
             console.error('Google sign-in error:', error);
@@ -140,6 +143,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             if (!existingProfile) {
                 // New user - default to student
                 await createUserProfile(result.user, 'student', result.user.displayName || 'User');
+                // Increment user count in meta collection
+                await incrementUserCount();
             }
         } catch (error) {
             console.error('GitHub sign-in error:', error);
@@ -167,6 +172,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         try {
             const result = await createUserWithEmailAndPassword(auth, email, password);
             await createUserProfile(result.user, role, displayName);
+            // Increment user count in meta collection
+            await incrementUserCount();
         } catch (error) {
             console.error('Email sign-up error:', error);
             throw error;
@@ -204,7 +211,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Listen for auth state changes
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        return onAuthStateChanged(auth, async (user) => {
             setCurrentUser(user);
 
             if (user) {
@@ -216,8 +223,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
             setLoading(false);
         });
-
-        return unsubscribe;
     }, []);
 
     const value: AuthContextType = {

@@ -96,6 +96,7 @@ export interface StudentProfile extends User {
     // Assessment Data
     skills: SkillProfile;
     assessmentHistory: AssessmentRecord[];
+    hasCompletedAssessment?: boolean;
     githubConnected: boolean;
     githubUsername?: string;
     resumeUploaded: boolean;

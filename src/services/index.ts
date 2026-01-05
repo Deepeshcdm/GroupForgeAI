@@ -16,3 +16,5 @@ export {
 
 export * from './resumeParser';
 export * from './githubAnalyzer';
+export * from './metaService';
+export * from './userManagement';
