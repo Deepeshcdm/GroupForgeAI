@@ -211,7 +211,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Listen for auth state changes
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        return onAuthStateChanged(auth, async (user) => {
             setCurrentUser(user);
 
             if (user) {
@@ -223,8 +223,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
             setLoading(false);
         });
-
-        return unsubscribe;
     }, []);
 
     const value: AuthContextType = {
