@@ -466,46 +466,46 @@ Return ONLY the JSON array, no other text.`;
         return (
             <DashboardLayout>
                 <div className="max-w-3xl mx-auto space-y-6">
-                    <Card>
+                    <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-primary-50/70 dark:from-gray-900 dark:to-gray-800">
                         <CardBody className="py-8 text-center">
                             <Trophy className={`w-20 h-20 mx-auto mb-4 ${quizResults.score >= 80 ? 'text-yellow-500' :
                                 quizResults.score >= 60 ? 'text-blue-500' :
                                     'text-gray-400'
                                 }`} />
-                            <h1 className="text-3xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
-                            <p className="text-gray-500 mb-6">Here's how you performed</p>
+                            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Quiz Complete!</h1>
+                            <p className="text-gray-500 dark:text-gray-300 mb-6">Here's how you performed</p>
 
                             <div className="flex justify-center gap-8 mb-8">
                                 <div className="text-center">
-                                    <p className="text-4xl font-bold text-primary-600">{quizResults.score}%</p>
-                                    <p className="text-sm text-gray-500">Overall Score</p>
+                                    <p className="text-4xl font-bold text-primary-600 dark:text-primary-300">{quizResults.score}%</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Overall Score</p>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-4xl font-bold text-gray-900">
+                                    <p className="text-4xl font-bold text-gray-900 dark:text-white">
                                         {quizResults.correctAnswers}/{quizResults.totalQuestions}
                                     </p>
-                                    <p className="text-sm text-gray-500">Correct Answers</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Correct Answers</p>
                                 </div>
                             </div>
                         </CardBody>
                     </Card>
 
                     {/* Skill Breakdown */}
-                    <Card>
-                        <CardHeader>
-                            <h2 className="text-lg font-semibold text-gray-900">Skill Breakdown</h2>
+                    <Card className="border-0 shadow-lg bg-white dark:bg-gray-900">
+                        <CardHeader className="border-b border-gray-100 dark:border-gray-800">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Skill Breakdown</h2>
                         </CardHeader>
                         <CardBody>
                             <div className="space-y-4">
                                 {quizResults.skillBreakdown.map(skill => (
                                     <div key={skill.skill}>
                                         <div className="flex justify-between text-sm mb-1">
-                                            <span className="font-medium text-gray-700">{skill.skill}</span>
-                                            <span className="text-gray-500">
+                                            <span className="font-medium text-gray-700 dark:text-gray-200">{skill.skill}</span>
+                                            <span className="text-gray-500 dark:text-gray-400">
                                                 {skill.correct}/{skill.total} ({skill.percentage}%)
                                             </span>
                                         </div>
-                                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                        <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                                             <div
                                                 className={`h-full transition-all ${skill.percentage >= 80 ? 'bg-green-500' :
                                                     skill.percentage >= 60 ? 'bg-blue-500' :
@@ -522,14 +522,14 @@ Return ONLY the JSON array, no other text.`;
                     </Card>
 
                     {/* Recommendations */}
-                    <Card>
-                        <CardHeader>
-                            <h2 className="text-lg font-semibold text-gray-900">Recommendations</h2>
+                    <Card className="border-0 shadow-lg bg-white dark:bg-gray-900">
+                        <CardHeader className="border-b border-gray-100 dark:border-gray-800">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recommendations</h2>
                         </CardHeader>
                         <CardBody>
                             <ul className="space-y-2">
                                 {quizResults.recommendations.map((rec, i) => (
-                                    <li key={i} className="flex items-start gap-2 text-gray-600">
+                                    <li key={i} className="flex items-start gap-2 text-gray-600 dark:text-gray-300">
                                         <Target className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
                                         {rec}
                                     </li>
@@ -568,36 +568,36 @@ Return ONLY the JSON array, no other text.`;
                     )}
 
                     {/* Progress */}
-                    <div>
-                        <div className="flex justify-between text-sm text-gray-500 mb-2">
+                    <div className="p-4 rounded-xl bg-white/80 dark:bg-gray-900/70 border border-gray-200 dark:border-gray-800 shadow-sm">
+                        <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
                             <span>Question {quizSession.currentIndex + 1} of {quizSession.questions.length}</span>
                             <span>Score: {quizSession.score}/{quizSession.answers.length}</span>
                         </div>
-                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-2.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-primary-600 transition-all duration-300"
+                                className="h-full bg-gradient-to-r from-primary-500 via-indigo-500 to-accent-500 transition-all duration-300"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
                     </div>
 
                     {/* Question Card */}
-                    <Card>
-                        <CardHeader>
+                    <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+                        <CardHeader className="border-b border-gray-200 dark:border-gray-800">
                             <div className="flex items-center gap-2">
-                                <span className="px-3 py-1 bg-primary-100 text-primary-700 text-sm font-medium rounded-full">
+                                <span className="px-3 py-1 bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-200 text-sm font-semibold rounded-full">
                                     {currentQuestion.skill}
                                 </span>
-                                <span className={`px-3 py-1 text-sm font-medium rounded-full ${currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700' :
-                                    currentQuestion.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' :
-                                        'bg-red-100 text-red-700'
+                                <span className={`px-3 py-1 text-sm font-semibold rounded-full ${currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-200' :
+                                    currentQuestion.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-200' :
+                                        'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-200'
                                     }`}>
                                     {currentQuestion.difficulty}
                                 </span>
                             </div>
                         </CardHeader>
                         <CardBody className="space-y-6">
-                            <h2 className="text-lg font-medium text-gray-900 whitespace-pre-wrap">
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white whitespace-pre-wrap leading-relaxed">
                                 {currentQuestion.question}
                             </h2>
 
@@ -608,15 +608,15 @@ Return ONLY the JSON array, no other text.`;
                                     const isCorrect = index === currentQuestion.correctAnswer;
                                     const showCorrectness = showResult;
 
-                                    let optionClass = 'border-gray-200 hover:border-gray-300';
+                                    let optionClass = 'border-gray-200 hover:border-gray-300 bg-white text-gray-900 dark:bg-gray-800/80 dark:border-gray-700 dark:text-gray-100 hover:dark:border-gray-500';
                                     if (showCorrectness) {
                                         if (isCorrect) {
-                                            optionClass = 'border-green-500 bg-green-50';
+                                            optionClass = 'border-green-500 bg-green-50 dark:bg-green-500/15 text-gray-900 dark:text-green-50';
                                         } else if (isSelected && !isCorrect) {
-                                            optionClass = 'border-red-500 bg-red-50';
+                                            optionClass = 'border-red-500 bg-red-50 dark:bg-red-500/15 text-gray-900 dark:text-red-50';
                                         }
                                     } else if (isSelected) {
-                                        optionClass = 'border-primary-500 bg-primary-50';
+                                        optionClass = 'border-primary-500 bg-primary-50 dark:bg-primary-500/20 shadow-primary-500/30 shadow text-gray-900 dark:text-white';
                                     }
 
                                     return (
@@ -624,18 +624,18 @@ Return ONLY the JSON array, no other text.`;
                                             key={index}
                                             onClick={() => !showResult && setSelectedAnswer(index)}
                                             disabled={showResult}
-                                            className={`w-full flex items-center gap-4 p-4 border-2 rounded-lg text-left transition-colors ${optionClass}`}
+                                            className={`w-full flex items-center gap-4 p-4 border-2 rounded-lg text-left transition-all shadow-sm hover:shadow-md ${optionClass}`}
                                         >
                                             <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-medium ${showCorrectness && isCorrect ? 'border-green-500 bg-green-500 text-white' :
                                                 showCorrectness && isSelected && !isCorrect ? 'border-red-500 bg-red-500 text-white' :
                                                     isSelected ? 'border-primary-500 bg-primary-500 text-white' :
-                                                        'border-gray-300 text-gray-500'
+                                                        'border-gray-300 text-gray-500 dark:border-gray-500 dark:text-gray-300'
                                                 }`}>
                                                 {String.fromCharCode(65 + index)}
                                             </div>
-                                            <span className={`flex-1 ${showCorrectness && isCorrect ? 'text-green-700 font-medium' :
-                                                showCorrectness && isSelected && !isCorrect ? 'text-red-700' :
-                                                    'text-gray-700'
+                                            <span className={`flex-1 ${showCorrectness && isCorrect ? 'text-green-700 dark:text-green-100 font-semibold' :
+                                                showCorrectness && isSelected && !isCorrect ? 'text-red-700 dark:text-red-100' :
+                                                    'text-gray-800 dark:text-gray-100'
                                                 }`}>
                                                 {option}
                                             </span>
@@ -649,14 +649,14 @@ Return ONLY the JSON array, no other text.`;
 
                             {/* Explanation (shown after answering) */}
                             {showResult && (
-                                <div className={`p-4 rounded-lg ${selectedAnswer === currentQuestion.correctAnswer
-                                    ? 'bg-green-50 border border-green-200'
-                                    : 'bg-yellow-50 border border-yellow-200'
+                                <div className={`p-4 rounded-lg border shadow-sm ${selectedAnswer === currentQuestion.correctAnswer
+                                    ? 'bg-green-50 dark:bg-green-500/10 border-green-200 dark:border-green-600/50'
+                                    : 'bg-yellow-50 dark:bg-yellow-500/10 border-yellow-200 dark:border-yellow-600/50'
                                     }`}>
-                                    <p className="font-medium text-gray-900 mb-1">
+                                    <p className="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                         {selectedAnswer === currentQuestion.correctAnswer ? '✓ Correct!' : '✗ Incorrect'}
                                     </p>
-                                    <p className="text-sm text-gray-600">{currentQuestion.explanation}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{currentQuestion.explanation}</p>
                                 </div>
                             )}
 
@@ -702,11 +702,19 @@ Return ONLY the JSON array, no other text.`;
     return (
         <DashboardLayout>
             <div className="max-w-3xl mx-auto space-y-8">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Skill Assessment Quiz</h1>
-                    <p className="text-gray-500 mt-1">
-                        Test your knowledge with AI-generated questions based on your skills
-                    </p>
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-600 via-indigo-600 to-accent-500 text-white p-6 shadow-lg">
+                    <div className="relative z-10 flex flex-col gap-2">
+                        <div className="inline-flex items-center gap-2 text-sm font-semibold bg-white/10 px-3 py-1 rounded-full w-fit">
+                            <Brain className="w-4 h-4" />
+                            Adaptive Skill Lab
+                        </div>
+                        <h1 className="text-3xl font-bold leading-tight">Skill Assessment Quiz</h1>
+                        <p className="text-white/80 text-sm max-w-2xl">
+                            Test your knowledge with AI-generated questions tailored to your skill profile. Curated difficulty, instant feedback, and beautiful progress visuals.
+                        </p>
+                    </div>
+                    <div className="absolute right-4 bottom-4 w-28 h-28 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute -left-8 -top-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
                 </div>
 
                 {error && (
@@ -716,16 +724,16 @@ Return ONLY the JSON array, no other text.`;
                 )}
 
                 {/* Select Skills */}
-                <Card>
-                    <CardHeader>
-                        <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                            <Brain className="w-5 h-5 text-primary-600" />
+                <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-primary-50/50 dark:from-gray-900 dark:to-gray-800">
+                    <CardHeader className="border-b border-primary-100/60 dark:border-gray-800">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <Brain className="w-5 h-5 text-primary-500" />
                             Select Skills to Test
                         </h2>
                     </CardHeader>
                     <CardBody>
-                        <p className="text-sm text-gray-500 mb-4">
-                            Choose which skills and tools you want to be tested on (select up to 5)
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                            Pick up to five focus areas. We will blend difficulties and scenarios for each.
                         </p>
                         <div className="flex flex-wrap gap-2">
                             {allSkillsAndTools.map(skill => {
@@ -737,11 +745,11 @@ Return ONLY the JSON array, no other text.`;
                                         key={skill}
                                         onClick={() => toggleSkillSelection(skill)}
                                         disabled={!isSelected && selectedSkills.length >= 5}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isSelected
-                                            ? 'bg-primary-600 text-white'
+                                        className={`px-4 py-2 rounded-full text-sm font-semibold transition-all shadow-sm ${isSelected
+                                            ? 'bg-primary-600 text-white shadow-primary-500/30'
                                             : selectedSkills.length >= 5
-                                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800 dark:text-gray-500'
+                                                : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700'
                                             }`}
                                     >
                                         {skill}
@@ -761,51 +769,55 @@ Return ONLY the JSON array, no other text.`;
                 </Card>
 
                 {/* Quiz Settings */}
-                <Card>
-                    <CardHeader>
-                        <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-primary-600" />
+                <Card className="border-0 shadow-xl bg-gradient-to-br from-white to-indigo-50/60 dark:from-gray-900 dark:to-gray-800">
+                    <CardHeader className="border-b border-indigo-100/60 dark:border-gray-800">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <Clock className="w-5 h-5 text-primary-500" />
                             Quiz Settings
                         </h2>
                     </CardHeader>
                     <CardBody>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
                                     Number of Questions
                                 </label>
-                                <select
-                                    value={questionCount}
-                                    onChange={(e) => setQuestionCount(parseInt(e.target.value))}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                                >
-                                    <option value={5}>5 Questions (~5 min)</option>
-                                    <option value={10}>10 Questions (~10 min)</option>
-                                    <option value={15}>15 Questions (~15 min)</option>
-                                    <option value={20}>20 Questions (~20 min)</option>
-                                </select>
+                                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+                                    <select
+                                        value={questionCount}
+                                        onChange={(e) => setQuestionCount(parseInt(e.target.value))}
+                                        className="w-full px-4 py-3 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 rounded-xl border border-transparent"
+                                    >
+                                        <option value={5}>5 Questions · ~5 min</option>
+                                        <option value={10}>10 Questions · ~10 min</option>
+                                        <option value={15}>15 Questions · ~15 min</option>
+                                        <option value={20}>20 Questions · ~20 min</option>
+                                    </select>
+                                </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
                                     Selected Skills
                                 </label>
-                                <p className="text-gray-600 py-2">
+                                <div className="px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm text-gray-700 dark:text-gray-200">
                                     {selectedSkills.length} skill{selectedSkills.length !== 1 ? 's' : ''} selected
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </CardBody>
                 </Card>
 
                 {/* Start Quiz */}
-                <div className="flex justify-between items-center">
-                    <p className="text-sm text-gray-500">
-                        Questions are generated by AI based on your skill levels
-                    </p>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 shadow-lg backdrop-blur">
+                    <div>
+                        <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">AI-tailored assessment</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Questions adapt to your selected skills and proficiency hints.</p>
+                    </div>
                     <Button
                         onClick={startQuiz}
                         size="lg"
                         disabled={selectedSkills.length === 0 || isGenerating}
+                        className="shadow-primary-500/30 shadow-lg"
                     >
                         {isGenerating ? (
                             <>

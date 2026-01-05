@@ -206,21 +206,21 @@ const TeamFormationPage: React.FC = () => {
 
     return (
         <DashboardLayout>
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 p-6">
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-6">
                 <div className="max-w-7xl mx-auto space-y-6">
                     {/* Header Section */}
-                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="bg-white dark:bg-gray-900/80 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-8 border border-gray-100 dark:border-gray-800">
                         <div className="flex items-center justify-between">
                             <div>
                                 <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                                     Team Formation Studio
                                 </h1>
-                                <p className="text-gray-600 mt-2 text-lg">
+                                <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
                                     AI-powered team building with human oversight
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="bg-gradient-to-br from-blue-500 to-purple-500 p-4 rounded-2xl shadow-lg">
+                                <div className="bg-gradient-to-br from-blue-500 to-purple-500 p-4 rounded-2xl shadow-lg shadow-blue-500/20">
                                     <Brain className="w-8 h-8 text-white" />
                                 </div>
                             </div>
@@ -293,17 +293,17 @@ const TeamFormationPage: React.FC = () => {
                     </div>
 
                     {/* Configuration Panel */}
-                    <Card className="p-8 shadow-lg border-0 bg-white rounded-2xl">
+                    <Card className="p-8 shadow-lg border-0 bg-white dark:bg-gray-900/80 rounded-2xl">
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-1">Formation Settings</h3>
-                                    <p className="text-sm text-gray-500">Configure your team parameters</p>
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Formation Settings</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Configure your team parameters</p>
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <div className="text-right">
-                                        <div className="text-sm text-gray-500">Team Size</div>
-                                        <div className="text-3xl font-bold text-blue-600">{teamSize}</div>
+                                        <div className="text-sm text-gray-500 dark:text-gray-400">Team Size</div>
+                                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{teamSize}</div>
                                     </div>
                                     <input
                                         type="range"
@@ -311,7 +311,7 @@ const TeamFormationPage: React.FC = () => {
                                         max="8"
                                         value={teamSize}
                                         onChange={(e) => setTeamSize(parseInt(e.target.value))}
-                                        className="w-32 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                                        className="w-32 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600"
                                         disabled={loading || !!comparisonResults || !!aiResult}
                                     />
                                 </div>
@@ -355,8 +355,8 @@ const TeamFormationPage: React.FC = () => {
                                                 </>
                                             )}
                                         </Button>
-                                        <div className="flex items-center gap-2 text-sm text-gray-500 bg-purple-50 p-3 rounded-lg border border-purple-100">
-                                            <Shield className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                                        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 bg-purple-50 dark:bg-purple-900/30 p-3 rounded-lg border border-purple-100 dark:border-purple-800">
+                                            <Shield className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
                                             <span>AI proposals undergo validation and require your approval before finalizing</span>
                                         </div>
                                     </div>
@@ -367,16 +367,16 @@ const TeamFormationPage: React.FC = () => {
 
                     {/* Error/Success Messages */}
                     {error && (
-                        <div className="bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-300 rounded-2xl p-6 shadow-lg animate-in slide-in-from-top">
+                        <div className="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-900/20 border-2 border-red-300 dark:border-red-800 rounded-2xl p-6 shadow-lg animate-in slide-in-from-top">
                             <div className="flex items-start">
                                 <div className="p-2 bg-red-500 rounded-xl">
                                     <AlertCircle className="w-6 h-6 text-white" />
                                 </div>
                                 <div className="ml-4 flex-1">
-                                    <h3 className="font-bold text-red-900 text-lg">Error Occurred</h3>
-                                    <p className="text-red-700 mt-1">{error}</p>
+                                    <h3 className="font-bold text-red-900 dark:text-red-300 text-lg">Error Occurred</h3>
+                                    <p className="text-red-700 dark:text-red-400 mt-1">{error}</p>
                                 </div>
-                                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600">
+                                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600 dark:hover:text-red-300">
                                     <XCircle className="w-5 h-5" />
                                 </button>
                             </div>
@@ -384,14 +384,14 @@ const TeamFormationPage: React.FC = () => {
                     )}
 
                     {success && (
-                        <div className="bg-gradient-to-r from-green-50 to-emerald-100 border-2 border-green-300 rounded-2xl p-6 shadow-lg animate-in slide-in-from-top">
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/20 border-2 border-green-300 dark:border-green-800 rounded-2xl p-6 shadow-lg animate-in slide-in-from-top">
                             <div className="flex items-start">
                                 <div className="p-2 bg-green-500 rounded-xl">
                                     <CheckCircle className="w-6 h-6 text-white" />
                                 </div>
                                 <div className="ml-4 flex-1">
-                                    <h3 className="font-bold text-green-900 text-lg">Success!</h3>
-                                    <p className="text-green-700 mt-1">{success}</p>
+                                    <h3 className="font-bold text-green-900 dark:text-green-300 text-lg">Success!</h3>
+                                    <p className="text-green-700 dark:text-green-400 mt-1">{success}</p>
                                 </div>
                             </div>
                         </div>
@@ -402,8 +402,8 @@ const TeamFormationPage: React.FC = () => {
                         <div className="space-y-6">
                             {/* Validation Status Card */}
                             <Card className={`p-6 shadow-xl rounded-2xl border-2 ${aiResult.validation.valid
-                                ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300'
-                                : 'bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-300'
+                                ? 'bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/20 border-green-300 dark:border-green-800'
+                                : 'bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/20 border-yellow-300 dark:border-yellow-800'
                                 }`}>
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-start gap-4">
@@ -415,21 +415,21 @@ const TeamFormationPage: React.FC = () => {
                                             )}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-gray-900 text-xl">
+                                            <h3 className="font-bold text-gray-900 dark:text-white text-xl">
                                                 {aiResult.validation.valid ? '✓ Validation Passed' : '⚠ Validation Issues Found'}
                                             </h3>
-                                            <p className="text-gray-600 mt-1">
+                                            <p className="text-gray-600 dark:text-gray-300 mt-1">
                                                 {aiResult.validation.valid
                                                     ? 'All checks passed! Review teams and approve when ready.'
                                                     : 'Some issues detected. Review details and regenerate if needed.'}
                                             </p>
-                                            <p className="text-sm text-gray-500 mt-2 italic">AI proposes. You decide.</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">AI proposes. You decide.</p>
                                         </div>
                                     </div>
                                     <Button
                                         variant="ghost"
                                         onClick={() => setShowValidation(!showValidation)}
-                                        className="text-sm bg-white/50 hover:bg-white"
+                                        className="text-sm bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-700"
                                     >
                                         <Eye className="w-4 h-4 mr-2" />
                                         {showValidation ? 'Hide' : 'Show'} Details
@@ -530,14 +530,14 @@ const TeamFormationPage: React.FC = () => {
                             </div>
 
                             {swapMode && (
-                                <div className="bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-300 rounded-2xl p-6 shadow-lg">
+                                <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/30 border-2 border-purple-300 dark:border-purple-700 rounded-2xl p-6 shadow-lg">
                                     <div className="flex items-center gap-3">
                                         <div className="p-2 bg-purple-500 rounded-lg">
                                             <ArrowRightLeft className="w-5 h-5 text-white" />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-purple-900">Swap Mode Active</p>
-                                            <p className="text-sm text-purple-700">
+                                            <p className="font-bold text-purple-900 dark:text-purple-200">Swap Mode Active</p>
+                                            <p className="text-sm text-purple-700 dark:text-purple-300">
                                                 Click a member to select, then click another team to move them.
                                                 {swapFrom && <span className="ml-2 font-semibold">• Selected from {swapFrom.teamId}</span>}
                                             </p>
@@ -548,18 +548,18 @@ const TeamFormationPage: React.FC = () => {
 
                             {/* AI Teams Preview */}
                             <div className="space-y-6">
-                                <div className="flex items-center justify-between bg-white rounded-2xl p-6 shadow-lg">
+                                <div className="flex items-center justify-between bg-white dark:bg-gray-900/80 rounded-2xl p-6 shadow-lg">
                                     <div>
                                         <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                                             AI-Generated Teams
                                         </h2>
-                                        <p className="text-gray-600 mt-1">Review, modify, and approve your team formations</p>
+                                        <p className="text-gray-600 dark:text-gray-400 mt-1">Review, modify, and approve your team formations</p>
                                     </div>
                                     <div className="text-right">
-                                        <div className="text-sm text-gray-500">Average Balance Score</div>
-                                        <div className="text-4xl font-bold text-purple-600">
+                                        <div className="text-sm text-gray-500 dark:text-gray-400">Average Balance Score</div>
+                                        <div className="text-4xl font-bold text-purple-600 dark:text-purple-400">
                                             {(aiResult.teams.reduce((sum, t) => sum + t.balanceScore, 0) / aiResult.teams.length).toFixed(0)}
-                                            <span className="text-2xl text-gray-400">/100</span>
+                                            <span className="text-2xl text-gray-400 dark:text-gray-500">/100</span>
                                         </div>
                                     </div>
                                 </div>
@@ -589,14 +589,14 @@ const TeamFormationPage: React.FC = () => {
                                             </div>
 
                                             {/* Team Members */}
-                                            <div className="p-6 bg-white space-y-3">
+                                            <div className="p-6 bg-white dark:bg-gray-900/90 space-y-3">
                                                 {team.members.map((member, memberIdx) => (
                                                     <div
                                                         key={memberIdx}
                                                         className={`border-2 rounded-xl p-4 transition-all ${swapMode
-                                                                ? 'cursor-pointer hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:border-purple-300'
-                                                                : 'border-gray-200'
-                                                            } ${swapFrom?.studentId === member.userId ? 'bg-purple-100 border-purple-400 shadow-lg' : 'bg-gray-50'}`}
+                                                                ? 'cursor-pointer hover:bg-gradient-to-r hover:from-purple-50 dark:hover:from-purple-900/30 hover:to-pink-50 dark:hover:to-pink-900/20 hover:border-purple-300 dark:hover:border-purple-700'
+                                                                : 'border-gray-200 dark:border-gray-700'
+                                                            } ${swapFrom?.studentId === member.userId ? 'bg-purple-100 dark:bg-purple-900/50 border-purple-400 dark:border-purple-600 shadow-lg' : 'bg-gray-50 dark:bg-gray-800/50'}`}
                                                         onClick={() => swapMode && handleSwapMember(team.id, member.userId)}
                                                     >
                                                         <div className="flex items-center justify-between mb-3">
@@ -608,22 +608,22 @@ const TeamFormationPage: React.FC = () => {
                                                                     }`}>
                                                                     {member.displayName.charAt(0).toUpperCase()}
                                                                 </div>
-                                                                <span className="font-semibold text-gray-900">{member.displayName}</span>
+                                                                <span className="font-semibold text-gray-900 dark:text-white">{member.displayName}</span>
                                                             </div>
-                                                            <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border border-purple-300">
+                                                            <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/50 dark:to-pink-900/50 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-700">
                                                                 {member.role}
                                                             </span>
                                                         </div>
 
                                                         <div className="grid grid-cols-2 gap-2">
                                                             {Object.entries(member.skillSnapshot).map(([skill, score]) => (
-                                                                <div key={skill} className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-200">
-                                                                    <span className="text-xs text-gray-600 font-medium capitalize">
+                                                                <div key={skill} className="flex items-center justify-between bg-white dark:bg-gray-800/70 p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                                                                    <span className="text-xs text-gray-600 dark:text-gray-400 font-medium capitalize">
                                                                         {skill.replace(/([A-Z])/g, ' $1').trim()}
                                                                     </span>
                                                                     <div className="flex items-center gap-1">
                                                                         <div className={`w-2 h-2 rounded-full ${getSkillColor(score)}`}></div>
-                                                                        <span className="text-sm font-bold text-gray-900">{score}</span>
+                                                                        <span className="text-sm font-bold text-gray-900 dark:text-white">{score}</span>
                                                                     </div>
                                                                 </div>
                                                             ))}
@@ -634,10 +634,10 @@ const TeamFormationPage: React.FC = () => {
 
                                             {/* AI Reasoning Footer */}
                                             {team.aiRationale && (
-                                                <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-t-2 border-gray-200">
+                                                <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800/30 border-t-2 border-gray-200 dark:border-gray-700">
                                                     <div className="flex items-start gap-2">
-                                                        <Brain className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
-                                                        <p className="text-xs text-gray-700 italic leading-relaxed">{team.aiRationale}</p>
+                                                        <Brain className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                                                        <p className="text-xs text-gray-700 dark:text-gray-300 italic leading-relaxed">{team.aiRationale}</p>
                                                     </div>
                                                 </div>
                                             )}
@@ -651,11 +651,11 @@ const TeamFormationPage: React.FC = () => {
                     {/* Algorithmic Strategy Comparison */}
                     {comparisonResults && (
                         <div className="space-y-6">
-                            <div className="bg-white rounded-2xl p-6 shadow-lg">
+                            <div className="bg-white dark:bg-gray-900/80 rounded-2xl p-6 shadow-lg">
                                 <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">
                                     Strategy Comparison
                                 </h2>
-                                <p className="text-gray-600">Compare different algorithmic approaches side by side</p>
+                                <p className="text-gray-600 dark:text-gray-400">Compare different algorithmic approaches side by side</p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -668,7 +668,7 @@ const TeamFormationPage: React.FC = () => {
                                     return (
                                         <div
                                             key={strategy}
-                                            className={`group relative bg-white rounded-2xl shadow-xl overflow-hidden transition-all hover:scale-105 cursor-pointer ${isSelected ? 'ring-4 ring-blue-500 scale-105' : ''}`}
+                                            className={`group relative bg-white dark:bg-gray-900/80 rounded-2xl shadow-xl overflow-hidden transition-all hover:scale-105 cursor-pointer ${isSelected ? 'ring-4 ring-blue-500 scale-105' : ''}`}
                                             onClick={() => handleSelectStrategy(strategy)}
                                         >
                                             {/* Strategy Header */}
@@ -689,35 +689,35 @@ const TeamFormationPage: React.FC = () => {
                                             {/* Strategy Stats */}
                                             <div className="p-6 space-y-4">
                                                 {/* Teams Count */}
-                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700">
                                                     <div className="flex items-center gap-2">
-                                                        <Users className="w-5 h-5 text-gray-600" />
-                                                        <span className="text-sm font-medium text-gray-700">Teams</span>
+                                                        <Users className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Teams</span>
                                                     </div>
-                                                    <span className="text-2xl font-bold text-gray-900">{result.teams.length}</span>
+                                                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{result.teams.length}</span>
                                                 </div>
 
                                                 {/* Average Balance */}
-                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700">
                                                     <div className="flex items-center gap-2">
-                                                        <BarChart3 className="w-5 h-5 text-gray-600" />
-                                                        <span className="text-sm font-medium text-gray-700">Avg Balance</span>
+                                                        <BarChart3 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Avg Balance</span>
                                                     </div>
-                                                    <span className="text-2xl font-bold text-gray-900">{result.averageBalanceScore.toFixed(1)}</span>
+                                                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{result.averageBalanceScore.toFixed(1)}</span>
                                                 </div>
 
                                                 {/* Unassigned Students */}
-                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                                                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800/30 rounded-xl border border-gray-200 dark:border-gray-700">
                                                     <div className="flex items-center gap-2">
-                                                        <AlertCircle className="w-5 h-5 text-gray-600" />
-                                                        <span className="text-sm font-medium text-gray-700">Unassigned</span>
+                                                        <AlertCircle className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Unassigned</span>
                                                     </div>
-                                                    <span className="text-2xl font-bold text-gray-900">{result.unassignedStudents.length}</span>
+                                                    <span className="text-2xl font-bold text-gray-900 dark:text-white">{result.unassignedStudents.length}</span>
                                                 </div>
 
                                                 {isSelected && (
-                                                    <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-2 border-blue-400 text-center">
-                                                        <span className="text-sm font-bold text-blue-600 uppercase flex items-center justify-center gap-2">
+                                                    <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/50 dark:to-blue-900/30 rounded-xl border-2 border-blue-400 dark:border-blue-600 text-center">
+                                                        <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase flex items-center justify-center gap-2">
                                                             <CheckCircle2 className="w-4 h-4" />
                                                             Selected
                                                         </span>
@@ -732,12 +732,12 @@ const TeamFormationPage: React.FC = () => {
                             {/* Selected Strategy Details */}
                             {selectedResult && (
                                 <div className="space-y-6">
-                                    <div className="flex items-center justify-between bg-white rounded-2xl p-6 shadow-lg">
+                                    <div className="flex items-center justify-between bg-white dark:bg-gray-900/80 rounded-2xl p-6 shadow-lg">
                                         <div>
                                             <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                                                 Team Preview
                                             </h2>
-                                            <p className="text-gray-600 mt-1">Review your final team formations</p>
+                                            <p className="text-gray-600 dark:text-gray-400 mt-1">Review your final team formations</p>
                                         </div>
                                         <button
                                             onClick={handleSaveTeams}

@@ -31,15 +31,15 @@ export function SkillBar({ label, score, confidence, showValue = true, size = 'm
     return (
         <div className="w-full">
             <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-gray-700">{label}</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{label}</span>
                 {showValue && (
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
                         {score}
-                        <span className="text-xs ml-1 text-gray-400">({confidence})</span>
+                        <span className="text-xs ml-1 text-gray-500 dark:text-gray-400">({confidence})</span>
                     </span>
                 )}
             </div>
-            <div className={cn('w-full bg-gray-200 rounded-full overflow-hidden', heights[size])}>
+            <div className={cn('w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden', heights[size])}>
                 <div
                     className={cn(
                         'h-full rounded-full transition-all duration-500',
@@ -77,9 +77,9 @@ export function SkillSummaryGrid({ skills }: SkillRadarProps) {
     return (
         <div className="grid grid-cols-2 gap-4">
             {Object.entries(skills).map(([key, value]) => (
-                <div key={key} className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-2xl font-bold text-primary-600">{value}</div>
-                    <div className="text-xs text-gray-500">{skillLabels[key] || key}</div>
+                <div key={key} className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">{value}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">{skillLabels[key] || key}</div>
                 </div>
             ))}
         </div>

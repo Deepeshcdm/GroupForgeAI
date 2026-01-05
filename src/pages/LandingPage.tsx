@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from '../components/ui';
+import { Button, ThemeToggle } from '../components/ui';
 import {
     Users,
     Brain,
@@ -42,18 +42,19 @@ export function LandingPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-950">
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+            <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-950/90 backdrop-blur-md z-50 border-b border-gray-100 dark:border-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20">
                                 <Users className="w-6 h-6 text-white" />
                             </div>
-                            <span className="font-bold text-xl text-gray-900">GroupForge AI</span>
+                            <span className="font-bold text-xl text-gray-900 dark:text-white">GroupForge AI</span>
                         </div>
                         <div className="flex items-center gap-4">
+                            <ThemeToggle />
                             <Link to="/login">
                                 <Button variant="ghost">Sign in</Button>
                             </Link>
@@ -66,19 +67,19 @@ export function LandingPage() {
             </header>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-primary-50 via-white to-accent-50">
+            <section className="pt-32 pb-20 px-4 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
                 <div className="max-w-7xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium mb-6 border border-transparent dark:border-primary-800">
                         <Sparkles className="w-4 h-4" />
                         Powered by Google Gemini AI
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                    <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                         Form Teams That
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-600"> Actually Work</span>
                     </h1>
 
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+                    <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-10">
                         GroupForge AI uses intelligent skill assessments to create balanced, complementary
                         student teams. No more guesswork, favoritism, or free riders.
                     </p>
@@ -129,13 +130,13 @@ export function LandingPage() {
             </section>
 
             {/* Problem Section */}
-            <section className="py-20 px-4 bg-gray-50">
+            <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900/50">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                             The Problem with Traditional Group Formation
                         </h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                             Academic group projects often fail not because of the work itself,
                             but because teams are formed poorly.
                         </p>
@@ -143,11 +144,11 @@ export function LandingPage() {
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {problems.map((problem, i) => (
-                            <div key={i} className="bg-white p-6 rounded-xl border border-gray-200">
-                                <div className="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mb-4">
+                            <div key={i} className="bg-white dark:bg-gray-800/60 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
+                                <div className="w-10 h-10 bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center mb-4">
                                     <span className="text-xl">✗</span>
                                 </div>
-                                <p className="text-gray-700 font-medium">{problem}</p>
+                                <p className="text-gray-700 dark:text-gray-300 font-medium">{problem}</p>
                             </div>
                         ))}
                     </div>
@@ -158,10 +159,10 @@ export function LandingPage() {
             <section className="py-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                             How GroupForge AI Works
                         </h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                             Replace guesswork with intelligence, and group chaos with structured collaboration.
                         </p>
                     </div>
@@ -170,13 +171,13 @@ export function LandingPage() {
                         {features.map((feature, i) => {
                             const Icon = feature.icon;
                             return (
-                                <div key={i} className="flex gap-6 p-6 rounded-2xl hover:bg-gray-50 transition-colors">
-                                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center">
+                                <div key={i} className="flex gap-6 p-6 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20">
                                         <Icon className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                                        <p className="text-gray-600">{feature.description}</p>
+                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
                                     </div>
                                 </div>
                             );
@@ -212,10 +213,10 @@ export function LandingPage() {
             {/* CTA Section */}
             <section className="py-20 px-4">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                         Ready to Transform Group Work?
                     </h2>
-                    <p className="text-lg text-gray-600 mb-8">
+                    <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
                         Join institutions that are already using GroupForge AI to create better teams.
                     </p>
                     <Link to="/signup">
@@ -228,11 +229,11 @@ export function LandingPage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 px-4">
+            <footer className="bg-gray-900 dark:bg-gray-950 text-gray-400 py-12 px-4 border-t border-gray-800">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center">
+                            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20">
                                 <Users className="w-6 h-6 text-white" />
                             </div>
                             <span className="font-bold text-white">GroupForge AI</span>

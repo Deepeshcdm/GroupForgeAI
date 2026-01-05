@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts';
-import { Button, Input, Card, CardBody } from '../components/ui';
+import { Button, Input, Card, CardBody, ThemeToggle } from '../components/ui';
 import { Users, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 export function LoginPage() {
@@ -58,23 +58,28 @@ export function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center p-4 relative">
+            {/* Theme Toggle */}
+            <div className="absolute top-4 right-4">
+                <ThemeToggle />
+            </div>
+            
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4 shadow-lg shadow-primary-500/20">
                         <Users className="w-8 h-8 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">GroupForge AI</h1>
-                    <p className="text-gray-500 mt-1">Intelligent Team Formation</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">GroupForge AI</h1>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">Intelligent Team Formation</p>
                 </div>
 
                 <Card>
                     <CardBody className="p-8">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Sign in to your account</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Sign in to your account</h2>
 
                         {error && (
-                            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg text-sm">
                                 {error}
                             </div>
                         )}
@@ -101,7 +106,7 @@ export function LoginPage() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
+                                    className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
@@ -109,10 +114,10 @@ export function LoginPage() {
 
                             <div className="flex items-center justify-between">
                                 <label className="flex items-center gap-2">
-                                    <input type="checkbox" className="rounded border-gray-300 text-primary-600" />
-                                    <span className="text-sm text-gray-600">Remember me</span>
+                                    <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600 text-primary-600 bg-white dark:bg-gray-800" />
+                                    <span className="text-sm text-gray-600 dark:text-gray-400">Remember me</span>
                                 </label>
-                                <Link to="/forgot-password" className="text-sm text-primary-600 hover:text-primary-700">
+                                <Link to="/forgot-password" className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -125,10 +130,10 @@ export function LoginPage() {
 
                         <div className="relative my-6">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200" />
+                                <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                                <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Or continue with</span>
                             </div>
                         </div>
 
@@ -160,9 +165,9 @@ export function LoginPage() {
                             </Button>
                         </div>
 
-                        <p className="mt-6 text-center text-sm text-gray-600">
+                        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
                             Don't have an account?{' '}
-                            <Link to="/signup" className="text-primary-600 hover:text-primary-700 font-medium">
+                            <Link to="/signup" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium">
                                 Sign up
                             </Link>
                         </p>

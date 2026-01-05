@@ -16,7 +16,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
                 <div className="animate-spin w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full" />
             </div>
         );
@@ -27,16 +27,16 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-gray-100">
             <Sidebar />
-            <main className="ml-64">
+            <main className="ml-64 dark:bg-gradient-to-br dark:from-gray-950 dark:via-[#030712] dark:to-gray-950">
                 {/* Profile Completion Banner */}
                 {showProfileBanner && (
-                    <div className="bg-yellow-50 border-b border-yellow-200 px-8 py-4">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/30 border-b border-yellow-200 dark:border-yellow-800 px-8 py-4">
                         <div className="flex items-center gap-3">
-                            <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                            <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
                             <div className="flex-1">
-                                <p className="text-sm text-yellow-800">
+                                <p className="text-sm text-yellow-800 dark:text-yellow-200">
                                     <strong>Complete your profile</strong> to access all features and team formation capabilities.
                                 </p>
                             </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts';
-import { Button, Input, Card, CardBody } from '../components/ui';
+import { Button, Input, Card, CardBody, ThemeToggle } from '../components/ui';
 import { Users, ArrowRight, GraduationCap, BookOpen, Eye, EyeOff } from 'lucide-react';
 import { UserRole } from '../types';
 
@@ -90,32 +90,37 @@ export function SignupPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center p-4 relative">
+            {/* Theme Toggle */}
+            <div className="absolute top-4 right-4">
+                <ThemeToggle />
+            </div>
+            
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl mb-4 shadow-lg shadow-primary-500/20">
                         <Users className="w-8 h-8 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">Join GroupForge AI</h1>
-                    <p className="text-gray-500 mt-1">Create your account</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Join GroupForge AI</h1>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">Create your account</p>
                 </div>
 
                 <Card>
                     <CardBody className="p-8">
                         {/* Progress indicator */}
                         <div className="flex items-center justify-center gap-2 mb-6">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
                                 1
                             </div>
-                            <div className={`w-12 h-1 ${step >= 2 ? 'bg-primary-600' : 'bg-gray-200'}`} />
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                            <div className={`w-12 h-1 ${step >= 2 ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
                                 2
                             </div>
                         </div>
 
                         {error && (
-                            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+                            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg text-sm">
                                 {error}
                             </div>
                         )}
@@ -123,7 +128,7 @@ export function SignupPage() {
                         <form onSubmit={handleSubmit}>
                             {step === 1 ? (
                                 <div className="space-y-4">
-                                    <h3 className="text-lg font-medium text-gray-900 mb-4">Choose your role</h3>
+                                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Choose your role</h3>
 
                                     <div className="space-y-3">
                                         {roles.map((r) => {
@@ -132,8 +137,8 @@ export function SignupPage() {
                                                 <label
                                                     key={r.value}
                                                     className={`flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-colors ${role === r.value
-                                                        ? 'border-primary-500 bg-primary-50'
-                                                        : 'border-gray-200 hover:border-gray-300'
+                                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                                         }`}
                                                 >
                                                     <input
@@ -144,13 +149,13 @@ export function SignupPage() {
                                                         onChange={(e) => setRole(e.target.value as UserRole)}
                                                         className="sr-only"
                                                     />
-                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${role === r.value ? 'bg-primary-600' : 'bg-gray-100'
+                                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${role === r.value ? 'bg-primary-600' : 'bg-gray-100 dark:bg-gray-800'
                                                         }`}>
-                                                        <Icon className={`w-6 h-6 ${role === r.value ? 'text-white' : 'text-gray-500'}`} />
+                                                        <Icon className={`w-6 h-6 ${role === r.value ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`} />
                                                     </div>
                                                     <div>
-                                                        <p className="font-medium text-gray-900">{r.label}</p>
-                                                        <p className="text-sm text-gray-500">{r.description}</p>
+                                                        <p className="font-medium text-gray-900 dark:text-white">{r.label}</p>
+                                                        <p className="text-sm text-gray-500 dark:text-gray-400">{r.description}</p>
                                                     </div>
                                                 </label>
                                             );
@@ -167,7 +172,7 @@ export function SignupPage() {
                                     <button
                                         type="button"
                                         onClick={() => setStep(1)}
-                                        className="text-sm text-gray-500 hover:text-gray-700 mb-2"
+                                        className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-2"
                                     >
                                         ← Back
                                     </button>
@@ -204,7 +209,7 @@ export function SignupPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
+                                            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                                         >
                                             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -222,7 +227,7 @@ export function SignupPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
+                                            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                                         >
                                             {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -240,10 +245,10 @@ export function SignupPage() {
                             <>
                                 <div className="relative my-6">
                                     <div className="absolute inset-0 flex items-center">
-                                        <div className="w-full border-t border-gray-200" />
+                                        <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                                     </div>
                                     <div className="relative flex justify-center text-sm">
-                                        <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+                                        <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Or sign up with</span>
                                     </div>
                                 </div>
 
@@ -277,9 +282,9 @@ export function SignupPage() {
                             </>
                         )}
 
-                        <p className="mt-6 text-center text-sm text-gray-600">
+                        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
                             Already have an account?{' '}
-                            <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+                            <Link to="/login" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium">
                                 Sign in
                             </Link>
                         </p>
