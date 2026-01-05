@@ -10,7 +10,9 @@ import {
     AssessmentPage,
     ProfilePage,
     MyTeamsPage,
-    TeamFormationPage
+    TeamFormationPage,
+    AnalyticsPage,
+    SettingsPage
 } from './pages';
 import './index.css';
 
@@ -56,12 +58,12 @@ function App() {
                         } />
                         <Route path="/analytics" element={
                             <ProtectedRoute>
-                                <DashboardPage />
+                                <AnalyticsPage />
                             </ProtectedRoute>
                         } />
                         <Route path="/settings" element={
                             <ProtectedRoute>
-                                <DashboardPage />
+                                <SettingsPage />
                             </ProtectedRoute>
                         } />
 

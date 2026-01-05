@@ -287,6 +287,9 @@ export function ProfilePage() {
         }));
     };
 
+    const isFacultyUser = userProfile?.role === 'faculty';
+    const steps = isFacultyUser ? FACULTY_STEPS : STUDENT_STEPS;
+
     const validateStep = (step: number): boolean => {
         setError('');
         const isFaculty = userProfile?.role === 'faculty';
@@ -365,7 +368,7 @@ export function ProfilePage() {
 
     const handleNext = () => {
         if (validateStep(currentStep)) {
-            setCurrentStep(prev => Math.min(prev + 1, STEPS.length));
+            setCurrentStep(prev => Math.min(prev + 1, steps.length));
         }
     };
 
@@ -507,13 +510,12 @@ export function ProfilePage() {
     // View mode for existing users
     if (!isEditing && !isNewUser) {
         return <ProfileViewMode
-            userProfile={userProfile}
+            userProfile={userProfile as StudentProfile | FacultyProfile | null}
             onEdit={() => setIsEditing(true)}
         />;
     }
 
     const isFaculty = userProfile?.role === 'faculty';
-    const steps = isFaculty ? FACULTY_STEPS : STUDENT_STEPS;
 
     return (
         <DashboardLayout>
