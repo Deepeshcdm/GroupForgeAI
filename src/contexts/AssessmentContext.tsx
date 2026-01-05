@@ -8,9 +8,10 @@ import {
     SkillProfile
 } from '../types';
 import { assessmentModel } from '../config/gemini';
-import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
+import { incrementAssessedUsersCount } from '../services/metaService';
 
 interface AssessmentContextType {
     currentSession: AssessmentSession | null;
@@ -233,10 +234,15 @@ Return ONLY the JSON object.`;
                 overallConfidence: scores.overallConfidence,
             };
 
-            // Update user profile with new skills
-            await updateDoc(doc(db, 'users', currentUser.uid), {
+            // Update user profile with new skills and mark first-time completion
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            const alreadyCompleted = Boolean(userSnap.exists() && userSnap.data()?.hasCompletedAssessment);
+
+            await updateDoc(userRef, {
                 skills: skillProfile,
-                'assessmentHistory': arrayUnion({
+                hasCompletedAssessment: true,
+                assessmentHistory: arrayUnion({
                     id: currentSession.id,
                     type: currentSession.type,
                     startedAt: currentSession.startedAt,
@@ -244,6 +250,10 @@ Return ONLY the JSON object.`;
                     status: 'completed',
                 }),
             });
+
+            if (!alreadyCompleted) {
+                await incrementAssessedUsersCount();
+            }
 
             // Mark session as completed
             await updateDoc(doc(db, 'assessments', currentSession.id), {

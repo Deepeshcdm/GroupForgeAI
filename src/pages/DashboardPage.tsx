@@ -15,15 +15,15 @@ import {
     Brain,
     Sparkles,
     BarChart3,
-    Clock,
     CheckCircle2,
     Star,
     Activity
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { StudentProfile } from '../types';
-import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getMetaStats } from '../services/metaService';
 
 export function DashboardPage() {
     const { userProfile } = useAuth();
@@ -292,6 +292,26 @@ function StudentDashboard({ profile }: { profile: StudentProfile }) {
     );
 }
 
+interface CourseData {
+    id: string;
+    name: string;
+    code: string;
+    semester: string;
+    enrolledStudents: string[] | number;
+    teams: string[];
+    status: 'active' | 'archived';
+    createdAt?: any;
+}
+
+interface TeamData {
+    id: string;
+    name: string;
+    courseId: string;
+    members: Array<{ userId: string; displayName: string; role: string }>;
+    createdAt?: any;
+    status: 'active' | 'completed' | 'draft' | 'archived';
+}
+
 function FacultyDashboard() {
     const { userProfile } = useAuth();
     const [stats, setStats] = useState({
@@ -300,6 +320,8 @@ function FacultyDashboard() {
         teamsFormed: 0,
         assessmentRate: 0
     });
+    const [courses, setCourses] = useState<CourseData[]>([]);
+    const [recentTeams, setRecentTeams] = useState<TeamData[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -309,45 +331,158 @@ function FacultyDashboard() {
             try {
                 setLoading(true);
 
-                // Fetch courses managed by this faculty
-                const coursesRef = collection(db, 'courses');
-                const coursesQuery = query(coursesRef, where('facultyId', '==', userProfile.uid));
-                const coursesSnapshot = await getDocs(coursesQuery);
+                // Get all groups from database
+                const groupsSnapshot = await getDocs(collection(db, 'groups'));
+                console.log('Total groups in database:', groupsSnapshot.size);
 
-                let totalStudentsCount = 0;
-                let totalTeamsCount = 0;
-                let completedAssessments = 0;
+                // First, get all teams created by this faculty to find related groups
+                const allTeamsSnapshot = await getDocs(collection(db, 'teams'));
+                const facultyGroupIds = new Set<string>();
 
-                coursesSnapshot.forEach((doc) => {
-                    const courseData = doc.data();
-                    const enrolledCount = courseData.enrolledStudents?.length || 0;
-                    totalStudentsCount += enrolledCount;
-                    totalTeamsCount += courseData.teams?.length || 0;
-                });
-
-                // Calculate assessment completion rate
-                if (totalStudentsCount > 0) {
-                    const usersRef = collection(db, 'users');
-                    const studentsQuery = query(usersRef, where('role', '==', 'student'));
-                    const studentsSnapshot = await getDocs(studentsQuery);
-
-                    studentsSnapshot.forEach((doc) => {
-                        const studentData = doc.data();
-                        if (studentData.assessmentHistory?.length > 0) {
-                            completedAssessments++;
+                // Find groups that have teams created by this faculty
+                for (const teamDoc of allTeamsSnapshot.docs) {
+                    const teamData = teamDoc.data();
+                    if (teamData.createdBy === userProfile.uid) {
+                        // If team has a courseId that's not 'default', add it to faculty groups
+                        if (teamData.courseId && teamData.courseId !== 'default') {
+                            facultyGroupIds.add(teamData.courseId);
                         }
-                    });
+                        // Also check for groupId field
+                        if (teamData.groupId) {
+                            facultyGroupIds.add(teamData.groupId);
+                        }
+                    }
                 }
 
-                const assessmentRate = totalStudentsCount > 0
-                    ? Math.round((completedAssessments / totalStudentsCount) * 100)
+                console.log('Groups with faculty teams:', Array.from(facultyGroupIds));
+
+                const userGroups: CourseData[] = [];
+                const groupIds: string[] = [];
+
+                // Loop through all groups to find those created by this faculty OR that have faculty's teams
+                for (const groupDoc of groupsSnapshot.docs) {
+                    const groupData = groupDoc.data();
+                    console.log('Group document:', groupDoc.id, groupData);
+
+                    // Match groups by EITHER:
+                    // 1. Created by this faculty (creatorId matches)
+                    // 2. Has teams created by this faculty
+                    if (groupData.creatorId === userProfile.uid || facultyGroupIds.has(groupDoc.id)) {
+                        console.log('✓ Matched group:', groupDoc.id);
+                        groupIds.push(groupDoc.id);
+
+                        const courseData: CourseData = {
+                            id: groupDoc.id,
+                            name: groupData.name || 'Unnamed Group',
+                            code: groupData.code || '',
+                            semester: groupData.semester || '',
+                            enrolledStudents: groupData.members?.length || 0,
+                            teams: [],
+                            status: groupData.status || 'active',
+                            createdAt: groupData.createdAt,
+                        };
+                        userGroups.push(courseData);
+                    }
+                }
+
+                console.log('Matched groups:', userGroups);
+                console.log('Group IDs:', groupIds);
+                setCourses(userGroups);
+
+                // Calculate statistics
+                let totalTeams = 0;
+                let totalAssessments = 0;
+                let completedAssessments = 0;
+
+                // Get all teams from database
+                const teamsSnapshot = await getDocs(collection(db, 'teams'));
+                console.log('Total teams in database:', teamsSnapshot.size);
+
+                const matchedTeams: TeamData[] = [];
+
+                // Loop through all teams
+                for (const teamDoc of teamsSnapshot.docs) {
+                    const teamData = teamDoc.data();
+                    console.log('Team document:', teamDoc.id, JSON.stringify(teamData, null, 2));
+
+                    // Teams can be matched in two ways:
+                    // 1. If courseId matches a group ID
+                    // 2. If courseId is "default", match by createdBy (faculty UID)
+                    const teamGroupId = teamData.courseId;
+                    const teamCreatedBy = teamData.createdBy;
+                    
+                    console.log('Team courseId:', teamGroupId, 'Team createdBy:', teamCreatedBy);
+                    console.log('Faculty UID:', userProfile.uid, 'Group IDs:', groupIds);
+                    
+                    let isTeamMatched = false;
+                    
+                    // Check if team belongs to one of the faculty's groups
+                    if (teamGroupId && groupIds.includes(teamGroupId)) {
+                        console.log('✓ Matched team by courseId:', teamDoc.id);
+                        isTeamMatched = true;
+                    } 
+                    // Check if team was created by this faculty (courseId is "default")
+                    else if (teamGroupId === 'default' && teamCreatedBy === userProfile.uid) {
+                        console.log('✓ Matched team by createdBy (default courseId):', teamDoc.id);
+                        isTeamMatched = true;
+                    }
+                    
+                    if (isTeamMatched) {
+                        totalTeams++;
+
+                        const teamFormatData: TeamData = {
+                            id: teamDoc.id,
+                            name: teamData.name || 'Unnamed Team',
+                            courseId: teamGroupId,
+                            members: teamData.members || [],
+                            createdAt: teamData.createdAt,
+                            status: teamData.status || 'draft',
+                        };
+                        matchedTeams.push(teamFormatData);
+                    } else {
+                        console.log('✗ Team not matched:', teamDoc.id);
+                    }
+                }
+
+                console.log('Matched teams:', matchedTeams);
+
+                // Fetch aggregate counts from meta collection
+                const { usersCount, assessedUsersCount } = await getMetaStats();
+                totalAssessments = usersCount;
+                completedAssessments = assessedUsersCount;
+
+                console.log('Assessment stats (meta):', { totalAssessments, completedAssessments });
+
+                // Calculate assessment rate
+                const assessmentRate = totalAssessments > 0 
+                    ? Math.round((completedAssessments / totalAssessments) * 100)
                     : 0;
 
+                console.log('Statistics:', {
+                    activeCourses: userGroups.length,
+                    totalStudents: usersCount,
+                    totalTeams,
+                    totalAssessments,
+                    completedAssessments,
+                    assessmentRate,
+                });
+
+                // Update recent teams (most recent first, top 5)
+                const recentTeamsList = matchedTeams
+                    .sort((a, b) => {
+                        const dateA = a.createdAt?.toDate?.() || new Date(0);
+                        const dateB = b.createdAt?.toDate?.() || new Date(0);
+                        return dateB.getTime() - dateA.getTime();
+                    })
+                    .slice(0, 5);
+                
+                setRecentTeams(recentTeamsList);
+
                 setStats({
-                    activeCourses: coursesSnapshot.size,
-                    totalStudents: totalStudentsCount,
-                    teamsFormed: totalTeamsCount,
-                    assessmentRate
+                    activeCourses: userGroups.length,
+                    totalStudents: usersCount,
+                    teamsFormed: totalTeams,
+                    assessmentRate,
                 });
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
@@ -358,10 +493,9 @@ function FacultyDashboard() {
 
         fetchDashboardData();
 
-        // Set up real-time listener for courses
-        const coursesRef = collection(db, 'courses');
-        const coursesQuery = query(coursesRef, where('facultyId', '==', userProfile.uid));
-        const unsubscribe = onSnapshot(coursesQuery, () => {
+        // Set up real-time listener for groups
+        const groupsRef = collection(db, 'groups');
+        const unsubscribe = onSnapshot(groupsRef, () => {
             fetchDashboardData();
         });
 
@@ -480,20 +614,64 @@ function FacultyDashboard() {
                                 </div>
                             </CardHeader>
                             <CardBody className="p-6">
-                                <div className="text-center py-12">
-                                    <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
-                                        <BookOpen className="w-10 h-10 text-purple-600" />
+                                {loading ? (
+                                    <div className="text-center py-12">
+                                        <p className="text-gray-500">Loading courses...</p>
                                     </div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses yet</h3>
-                                    <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
-                                        Create your first course to start managing students and forming teams
-                                    </p>
-                                    <Button className="gap-2">
-                                        <Sparkles className="w-4 h-4" />
-                                        Create First Course
-                                        <ArrowRight className="w-4 h-4" />
-                                    </Button>
-                                </div>
+                                ) : courses.length > 0 ? (
+                                    <div className="space-y-3">
+                                        {courses.map((course) => (
+                                            <div
+                                                key={course.id}
+                                                className="flex items-center justify-between p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all group"
+                                            >
+                                                <div className="flex-1">
+                                                    <h3 className="font-semibold text-gray-900 group-hover:text-purple-700">
+                                                        {course.name}
+                                                    </h3>
+                                                    <div className="flex gap-4 mt-1 text-sm text-gray-600">
+                                                        <span className="flex items-center gap-1">
+                                                            <span className="font-medium">{course.code}</span>
+                                                        </span>
+                                                        <span className="flex items-center gap-1">
+                                                            <Users className="w-4 h-4" />
+                                                            {typeof course.enrolledStudents === 'number' ? course.enrolledStudents : course.enrolledStudents?.length || 0} students
+                                                        </span>
+                                                        <span className="flex items-center gap-1">
+                                                            <Target className="w-4 h-4" />
+                                                            {course.teams?.length || 0} teams
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                                                        course.status === 'active'
+                                                            ? 'bg-green-100 text-green-700'
+                                                            : 'bg-gray-100 text-gray-700'
+                                                    }`}>
+                                                        {course.status === 'active' ? 'Active' : 'Archived'}
+                                                    </span>
+                                                    <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-purple-600" />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-12">
+                                        <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+                                            <BookOpen className="w-10 h-10 text-purple-600" />
+                                        </div>
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses yet</h3>
+                                        <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
+                                            Create your first course to start managing students and forming teams
+                                        </p>
+                                        <Button className="gap-2">
+                                            <Sparkles className="w-4 h-4" />
+                                            Create First Course
+                                            <ArrowRight className="w-4 h-4" />
+                                        </Button>
+                                    </div>
+                                )}
                             </CardBody>
                         </Card>
                     </div>
@@ -550,20 +728,51 @@ function FacultyDashboard() {
                             </CardBody>
                         </Card>
 
-                        {/* Recent Activity */}
+                        {/* Recent Teams Activity */}
                         <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
                             <CardHeader className="border-b border-blue-100">
                                 <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                    <Clock className="w-5 h-5 text-blue-600" />
-                                    Recent Activity
+                                    <Users className="w-5 h-5 text-blue-600" />
+                                    Recent Teams
                                 </h3>
                             </CardHeader>
                             <CardBody className="p-5">
-                                <div className="text-center py-4">
-                                    <Calendar className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                                    <p className="text-sm text-gray-600">No recent activity</p>
-                                    <p className="text-xs text-gray-500 mt-1">Activity will appear here</p>
-                                </div>
+                                {loading ? (
+                                    <div className="text-center py-4">
+                                        <p className="text-sm text-gray-600">Loading teams...</p>
+                                    </div>
+                                ) : recentTeams.length > 0 ? (
+                                    <div className="space-y-3">
+                                        {recentTeams.map((team) => (
+                                            <div
+                                                key={team.id}
+                                                className="p-3 rounded-lg bg-white border border-blue-100 hover:border-blue-300 transition-all"
+                                            >
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <h4 className="font-semibold text-gray-900 text-sm">{team.name}</h4>
+                                                    <span className={`text-xs font-semibold px-2 py-1 rounded ${
+                                                        team.status === 'active'
+                                                            ? 'bg-green-100 text-green-700'
+                                                            : team.status === 'completed'
+                                                            ? 'bg-blue-100 text-blue-700'
+                                                            : 'bg-gray-100 text-gray-700'
+                                                    }`}>
+                                                        {team.status}
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-gray-600">
+                                                    {team.members?.length || 0} member{team.members?.length !== 1 ? 's' : ''}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-4">
+                                        <Calendar className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                                        <p className="text-sm text-gray-600">No teams formed yet</p>
+                                        <p className="text-xs text-gray-500 mt-1">Teams will appear here once created</p>
+                                    </div>
+                                )}
                             </CardBody>
                         </Card>
                     </div>

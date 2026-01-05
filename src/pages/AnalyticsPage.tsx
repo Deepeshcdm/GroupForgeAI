@@ -255,7 +255,7 @@ export function AnalyticsPage() {
                         <CardBody className="p-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Avg Team Size</p>
+                                    <p className="text-sm text-gray-500">Assessment Rate</p>
                                     <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.averageTeamSize}</p>
                                 </div>
                                 <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
