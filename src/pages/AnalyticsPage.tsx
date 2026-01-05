@@ -17,12 +17,13 @@ import {
 } from 'lucide-react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getMetaStats } from '../services/metaService';
 
 interface AnalyticsData {
     totalCourses: number;
     totalStudents: number;
     totalTeams: number;
-    averageTeamSize: number;
+    assessmentRate: number;
     completedAssessments: number;
     pendingAssessments: number;
     skillDistribution: { [key: string]: number };
@@ -40,7 +41,7 @@ export function AnalyticsPage() {
         totalCourses: 0,
         totalStudents: 0,
         totalTeams: 0,
-        averageTeamSize: 0,
+        assessmentRate: 0,
         completedAssessments: 0,
         pendingAssessments: 0,
         skillDistribution: {},
@@ -68,102 +69,73 @@ export function AnalyticsPage() {
             const coursesQuery = query(coursesRef, where('facultyId', '==', userProfile?.uid));
             const coursesSnapshot = await getDocs(coursesQuery);
 
-            let totalStudentsCount = 0;
-            let totalTeamsCount = 0;
+            // Fetch teams created by this faculty (align with dashboard "Teams Formed")
+            const teamsRef = collection(db, 'teams');
+            const teamsQuery = query(teamsRef, where('createdBy', '==', userProfile?.uid));
+            const teamsSnapshot = await getDocs(teamsQuery);
+            const totalTeamsCount = teamsSnapshot.size;
+
             let allStudentIds = new Set<string>();
-            let completedAssessmentsCount = 0;
 
             // Collect all student IDs from courses
             coursesSnapshot.forEach((doc) => {
                 const courseData = doc.data();
                 const enrolledStudents = courseData.enrolledStudents || [];
                 enrolledStudents.forEach((id: string) => allStudentIds.add(id));
-                totalTeamsCount += courseData.teams?.length || 0;
             });
 
-            totalStudentsCount = allStudentIds.size;
+            const { usersCount, assessedUsersCount } = await getMetaStats();
+            const totalStudentsCount = usersCount;
+            const completedAssessmentsCount = assessedUsersCount;
 
-            // Fetch actual student data for assessment completion
-            if (totalStudentsCount > 0) {
+            // Skill distribution (still best-effort from enrolled students)
+            const skillCounts: { [key: string]: number } = {
+                'Logic & Analysis': 0,
+                'Creativity': 0,
+                'Communication': 0,
+                'Leadership': 0,
+                'Technical Skills': 0,
+                'Collaboration': 0
+            };
+
+            if (allStudentIds.size > 0) {
                 const usersRef = collection(db, 'users');
-                const studentsQuery = query(
-                    usersRef,
-                    where('role', '==', 'student')
-                );
+                const studentsQuery = query(usersRef, where('role', '==', 'student'));
                 const studentsSnapshot = await getDocs(studentsQuery);
-
-                const skillCounts: { [key: string]: number } = {
-                    'Logic & Analysis': 0,
-                    'Creativity': 0,
-                    'Communication': 0,
-                    'Leadership': 0,
-                    'Technical Skills': 0,
-                    'Collaboration': 0
-                };
 
                 studentsSnapshot.forEach((doc) => {
                     const studentData = doc.data();
-                    // Only count students enrolled in this faculty's courses
-                    if (allStudentIds.has(doc.id)) {
-                        if (studentData.assessmentHistory?.length > 0) {
-                            completedAssessmentsCount++;
-                        }
-
-                        // Count skills based on student's skill profile
-                        if (studentData.skills) {
-                            if (studentData.skills.analyticalThinking?.score > 60) skillCounts['Logic & Analysis']++;
-                            if (studentData.skills.creativity?.score > 60) skillCounts['Creativity']++;
-                            if (studentData.skills.communication?.score > 60) skillCounts['Communication']++;
-                            if (studentData.skills.leadership?.score > 60) skillCounts['Leadership']++;
-                            if (studentData.skills.executionStrength?.score > 60) skillCounts['Technical Skills']++;
-                            if (studentData.skills.teamwork?.score > 60) skillCounts['Collaboration']++;
-                        }
-                    }
-                });
-
-                const avgTeamSize = totalTeamsCount > 0 ? Math.round(totalStudentsCount / totalTeamsCount) : 0;
-                const pendingAssessments = totalStudentsCount - completedAssessmentsCount;
-
-                setAnalytics({
-                    totalCourses: coursesSnapshot.size,
-                    totalStudents: totalStudentsCount,
-                    totalTeams: totalTeamsCount,
-                    averageTeamSize: avgTeamSize,
-                    completedAssessments: completedAssessmentsCount,
-                    pendingAssessments: pendingAssessments,
-                    skillDistribution: skillCounts,
-                    teamPerformance: {
-                        excellent: Math.round(totalTeamsCount * 0.19),
-                        good: Math.round(totalTeamsCount * 0.44),
-                        average: Math.round(totalTeamsCount * 0.28),
-                        needsImprovement: Math.round(totalTeamsCount * 0.09)
-                    }
-                });
-            } else {
-                // No students enrolled yet
-                setAnalytics({
-                    totalCourses: coursesSnapshot.size,
-                    totalStudents: 0,
-                    totalTeams: 0,
-                    averageTeamSize: 0,
-                    completedAssessments: 0,
-                    pendingAssessments: 0,
-                    skillDistribution: {
-                        'Logic & Analysis': 0,
-                        'Creativity': 0,
-                        'Communication': 0,
-                        'Leadership': 0,
-                        'Technical Skills': 0,
-                        'Collaboration': 0
-                    },
-                    teamPerformance: {
-                        excellent: 0,
-                        good: 0,
-                        average: 0,
-                        needsImprovement: 0
+                    if (allStudentIds.has(doc.id) && studentData.skills) {
+                        if (studentData.skills.analyticalThinking?.score > 60) skillCounts['Logic & Analysis']++;
+                        if (studentData.skills.creativity?.score > 60) skillCounts['Creativity']++;
+                        if (studentData.skills.communication?.score > 60) skillCounts['Communication']++;
+                        if (studentData.skills.leadership?.score > 60) skillCounts['Leadership']++;
+                        if (studentData.skills.executionStrength?.score > 60) skillCounts['Technical Skills']++;
+                        if (studentData.skills.teamwork?.score > 60) skillCounts['Collaboration']++;
                     }
                 });
             }
+
+            const pendingAssessments = Math.max(totalStudentsCount - completedAssessmentsCount, 0);
+            const assessmentRate = totalStudentsCount > 0
+                ? Math.round((completedAssessmentsCount / totalStudentsCount) * 100)
+                : 0;
+
+            setAnalytics({
+                totalCourses: coursesSnapshot.size,
+                totalStudents: totalStudentsCount,
+                totalTeams: totalTeamsCount,
+                assessmentRate,
+                completedAssessments: completedAssessmentsCount,
+                pendingAssessments,
+                skillDistribution: skillCounts,
+                teamPerformance: {
+                    excellent: Math.round(totalTeamsCount * 0.19),
+                    good: Math.round(totalTeamsCount * 0.44),
+                    average: Math.round(totalTeamsCount * 0.28),
+                    needsImprovement: Math.round(totalTeamsCount * 0.09)
+                }
+            });
         } catch (err: any) {
             console.error('Error fetching analytics:', err);
         } finally {
@@ -256,7 +228,7 @@ export function AnalyticsPage() {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-gray-500">Assessment Rate</p>
-                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.averageTeamSize}</p>
+                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.assessmentRate}%</p>
                                 </div>
                                 <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
                                     <TrendingUp className="w-6 h-6 text-orange-600" />
@@ -291,7 +263,7 @@ export function AnalyticsPage() {
                                         <div
                                             className="bg-green-600 h-2 rounded-full"
                                             style={{
-                                                width: `${(analytics.completedAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100}%`
+                                                width: `${(analytics.completedAssessments + analytics.pendingAssessments) > 0 ? (analytics.completedAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100 : 0}%`
                                             }}
                                         />
                                     </div>
@@ -311,7 +283,7 @@ export function AnalyticsPage() {
                                         <div
                                             className="bg-orange-600 h-2 rounded-full"
                                             style={{
-                                                width: `${(analytics.pendingAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100}%`
+                                                width: `${(analytics.completedAssessments + analytics.pendingAssessments) > 0 ? (analytics.pendingAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100 : 0}%`
                                             }}
                                         />
                                     </div>
@@ -406,7 +378,7 @@ export function AnalyticsPage() {
                             </div>
                             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                                 <p className="text-sm text-green-900">
-                                    <strong>Assessment Completion:</strong> {Math.round((analytics.completedAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100)}% of students have completed assessments.
+                                    <strong>Assessment Completion:</strong> {analytics.assessmentRate}% of students have completed assessments.
                                     {analytics.pendingAssessments > 0 && ' Send reminders to pending students.'}
                                 </p>
                             </div>
