@@ -447,8 +447,8 @@ Return ONLY the JSON array, no other text.`;
                     <Card>
                         <CardBody className="py-16 text-center">
                             <AlertCircle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-                            <h2 className="text-xl font-semibold text-gray-900 mb-2">No Skills Found</h2>
-                            <p className="text-gray-500 mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Skills Found</h2>
+                            <p className="text-gray-500 dark:text-gray-400 mb-6">
                                 Please add skills and tools to your profile first to take a skill assessment quiz.
                             </p>
                             <Button onClick={() => window.location.href = '/profile'}>
@@ -562,7 +562,7 @@ Return ONLY the JSON array, no other text.`;
                 <div className="max-w-3xl mx-auto space-y-6">
                     {/* Error Display */}
                     {error && (
-                        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                        <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg">
                             {error}
                         </div>
                     )}
@@ -718,7 +718,7 @@ Return ONLY the JSON array, no other text.`;
                 </div>
 
                 {error && (
-                    <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                    <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg">
                         {error}
                     </div>
                 )}
@@ -837,8 +837,8 @@ Return ONLY the JSON array, no other text.`;
                     <Card>
                         <CardBody className="py-12 text-center">
                             <Loader2 className="w-12 h-12 text-primary-600 animate-spin mx-auto mb-4" />
-                            <h3 className="text-lg font-medium text-gray-900 mb-2">Generating Your Quiz</h3>
-                            <p className="text-gray-500">
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Generating Your Quiz</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
                                 Our AI is creating personalized questions based on your skills...
                             </p>
                         </CardBody>

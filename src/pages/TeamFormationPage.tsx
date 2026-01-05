@@ -439,14 +439,14 @@ const TeamFormationPage: React.FC = () => {
                                 {showValidation && (
                                     <div className="mt-6 pt-6 border-t-2 border-gray-200 space-y-4">
                                         {aiResult.validation.errors.length > 0 && (
-                                            <div className="bg-white rounded-xl p-4 border-2 border-red-200">
-                                                <h4 className="text-sm font-bold text-red-800 mb-3 flex items-center">
+                                            <div className="bg-white dark:bg-gray-800/80 rounded-xl p-4 border-2 border-red-200 dark:border-red-800">
+                                                <h4 className="text-sm font-bold text-red-800 dark:text-red-300 mb-3 flex items-center">
                                                     <XCircle className="w-5 h-5 mr-2" />
                                                     Errors ({aiResult.validation.errors.length})
                                                 </h4>
                                                 <ul className="space-y-2">
                                                     {aiResult.validation.errors.map((err, i) => (
-                                                        <li key={i} className="flex items-start text-sm text-red-700 bg-red-50 p-2 rounded">
+                                                        <li key={i} className="flex items-start text-sm text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/30 p-2 rounded">
                                                             <span className="font-mono mr-2">#{i + 1}</span>
                                                             {err}
                                                         </li>
@@ -455,14 +455,14 @@ const TeamFormationPage: React.FC = () => {
                                             </div>
                                         )}
                                         {aiResult.validation.warnings.length > 0 && (
-                                            <div className="bg-white rounded-xl p-4 border-2 border-yellow-200">
-                                                <h4 className="text-sm font-bold text-yellow-800 mb-3 flex items-center">
+                                            <div className="bg-white dark:bg-gray-800/80 rounded-xl p-4 border-2 border-yellow-200 dark:border-yellow-800">
+                                                <h4 className="text-sm font-bold text-yellow-800 dark:text-yellow-300 mb-3 flex items-center">
                                                     <AlertCircle className="w-5 h-5 mr-2" />
                                                     Warnings ({aiResult.validation.warnings.length})
                                                 </h4>
                                                 <ul className="space-y-2">
                                                     {aiResult.validation.warnings.map((warn, i) => (
-                                                        <li key={i} className="flex items-start text-sm text-yellow-700 bg-yellow-50 p-2 rounded">
+                                                        <li key={i} className="flex items-start text-sm text-yellow-700 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/30 p-2 rounded">
                                                             <span className="font-mono mr-2">#{i + 1}</span>
                                                             {warn}
                                                         </li>
@@ -473,7 +473,7 @@ const TeamFormationPage: React.FC = () => {
                                         {aiResult.validation.errors.length === 0 && aiResult.validation.warnings.length === 0 && (
                                             <div className="text-center py-4">
                                                 <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-2" />
-                                                <p className="text-green-700 font-semibold">All validation checks passed perfectly!</p>
+                                                <p className="text-green-700 dark:text-green-400 font-semibold">All validation checks passed perfectly!</p>
                                             </div>
                                         )}
                                     </div>
@@ -572,9 +572,9 @@ const TeamFormationPage: React.FC = () => {
                                         >
                                             {/* Team Header with Gradient */}
                                             <div className={`p-6 bg-gradient-to-br ${idx % 4 === 0 ? 'from-blue-500 to-blue-600' :
-                                                    idx % 4 === 1 ? 'from-purple-500 to-purple-600' :
-                                                        idx % 4 === 2 ? 'from-pink-500 to-pink-600' :
-                                                            'from-indigo-500 to-indigo-600'
+                                                idx % 4 === 1 ? 'from-purple-500 to-purple-600' :
+                                                    idx % 4 === 2 ? 'from-pink-500 to-pink-600' :
+                                                        'from-indigo-500 to-indigo-600'
                                                 } text-white`}>
                                                 <div className="flex items-center justify-between">
                                                     <div>
@@ -594,17 +594,17 @@ const TeamFormationPage: React.FC = () => {
                                                     <div
                                                         key={memberIdx}
                                                         className={`border-2 rounded-xl p-4 transition-all ${swapMode
-                                                                ? 'cursor-pointer hover:bg-gradient-to-r hover:from-purple-50 dark:hover:from-purple-900/30 hover:to-pink-50 dark:hover:to-pink-900/20 hover:border-purple-300 dark:hover:border-purple-700'
-                                                                : 'border-gray-200 dark:border-gray-700'
+                                                            ? 'cursor-pointer hover:bg-gradient-to-r hover:from-purple-50 dark:hover:from-purple-900/30 hover:to-pink-50 dark:hover:to-pink-900/20 hover:border-purple-300 dark:hover:border-purple-700'
+                                                            : 'border-gray-200 dark:border-gray-700'
                                                             } ${swapFrom?.studentId === member.userId ? 'bg-purple-100 dark:bg-purple-900/50 border-purple-400 dark:border-purple-600 shadow-lg' : 'bg-gray-50 dark:bg-gray-800/50'}`}
                                                         onClick={() => swapMode && handleSwapMember(team.id, member.userId)}
                                                     >
                                                         <div className="flex items-center justify-between mb-3">
                                                             <div className="flex items-center gap-3">
                                                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${idx % 4 === 0 ? 'bg-blue-500' :
-                                                                        idx % 4 === 1 ? 'bg-purple-500' :
-                                                                            idx % 4 === 2 ? 'bg-pink-500' :
-                                                                                'bg-indigo-500'
+                                                                    idx % 4 === 1 ? 'bg-purple-500' :
+                                                                        idx % 4 === 2 ? 'bg-pink-500' :
+                                                                            'bg-indigo-500'
                                                                     }`}>
                                                                     {member.displayName.charAt(0).toUpperCase()}
                                                                 </div>
@@ -758,12 +758,12 @@ const TeamFormationPage: React.FC = () => {
                                         </button>
                                     </div>
 
-                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-2xl p-6 shadow-lg">
+                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/30 border-2 border-blue-300 dark:border-blue-700 rounded-2xl p-6 shadow-lg">
                                         <div className="flex items-start gap-3">
-                                            <Target className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                                            <Target className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
                                             <div>
-                                                <p className="font-semibold text-gray-900 mb-1">Strategy Rationale</p>
-                                                <p className="text-sm text-gray-700">{selectedResult.strategyRationale}</p>
+                                                <p className="font-semibold text-gray-900 dark:text-white mb-1">Strategy Rationale</p>
+                                                <p className="text-sm text-gray-700 dark:text-gray-300">{selectedResult.strategyRationale}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -777,9 +777,9 @@ const TeamFormationPage: React.FC = () => {
                                             >
                                                 {/* Team Header with Gradient */}
                                                 <div className={`p-6 bg-gradient-to-br ${idx % 4 === 0 ? 'from-blue-500 to-blue-600' :
-                                                        idx % 4 === 1 ? 'from-purple-500 to-purple-600' :
-                                                            idx % 4 === 2 ? 'from-pink-500 to-pink-600' :
-                                                                'from-indigo-500 to-indigo-600'
+                                                    idx % 4 === 1 ? 'from-purple-500 to-purple-600' :
+                                                        idx % 4 === 2 ? 'from-pink-500 to-pink-600' :
+                                                            'from-indigo-500 to-indigo-600'
                                                     } text-white`}>
                                                     <div className="flex items-center justify-between">
                                                         <div>
@@ -794,37 +794,37 @@ const TeamFormationPage: React.FC = () => {
                                                 </div>
 
                                                 {/* Team Members */}
-                                                <div className="p-6 bg-white space-y-3">
+                                                <div className="p-6 bg-white dark:bg-gray-900/80 space-y-3">
                                                     {team.members.map((member, memberIdx) => (
                                                         <div
                                                             key={memberIdx}
-                                                            className="border-2 border-gray-200 rounded-xl p-4 bg-gray-50"
+                                                            className="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-4 bg-gray-50 dark:bg-gray-800/50"
                                                         >
                                                             <div className="flex items-center justify-between mb-3">
                                                                 <div className="flex items-center gap-3">
                                                                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${idx % 4 === 0 ? 'bg-blue-500' :
-                                                                            idx % 4 === 1 ? 'bg-purple-500' :
-                                                                                idx % 4 === 2 ? 'bg-pink-500' :
-                                                                                    'bg-indigo-500'
+                                                                        idx % 4 === 1 ? 'bg-purple-500' :
+                                                                            idx % 4 === 2 ? 'bg-pink-500' :
+                                                                                'bg-indigo-500'
                                                                         }`}>
                                                                         {member.displayName.charAt(0).toUpperCase()}
                                                                     </div>
-                                                                    <span className="font-semibold text-gray-900">{member.displayName}</span>
+                                                                    <span className="font-semibold text-gray-900 dark:text-white">{member.displayName}</span>
                                                                 </div>
-                                                                <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 border border-blue-300">
+                                                                <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/50 dark:to-indigo-900/50 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700">
                                                                     {member.role}
                                                                 </span>
                                                             </div>
 
                                                             <div className="grid grid-cols-2 gap-2">
                                                                 {Object.entries(member.skillSnapshot).map(([skill, score]) => (
-                                                                    <div key={skill} className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-200">
-                                                                        <span className="text-xs text-gray-600 font-medium capitalize">
+                                                                    <div key={skill} className="flex items-center justify-between bg-white dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                                                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-medium capitalize">
                                                                             {skill.replace(/([A-Z])/g, ' $1').trim()}
                                                                         </span>
                                                                         <div className="flex items-center gap-1">
                                                                             <div className={`w-2 h-2 rounded-full ${getSkillColor(score)}`}></div>
-                                                                            <span className="text-sm font-bold text-gray-900">{score}</span>
+                                                                            <span className="text-sm font-bold text-gray-900 dark:text-white">{score}</span>
                                                                         </div>
                                                                     </div>
                                                                 ))}
@@ -835,8 +835,8 @@ const TeamFormationPage: React.FC = () => {
 
                                                 {/* Team Rationale Footer */}
                                                 {team.aiRationale && (
-                                                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-t-2 border-gray-200">
-                                                        <p className="text-xs text-gray-700 italic">{team.aiRationale}</p>
+                                                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800/30 border-t-2 border-gray-200 dark:border-gray-700">
+                                                        <p className="text-xs text-gray-700 dark:text-gray-300 italic">{team.aiRationale}</p>
                                                     </div>
                                                 )}
                                             </div>
@@ -844,16 +844,16 @@ const TeamFormationPage: React.FC = () => {
                                     </div>
 
                                     {selectedResult.unassignedStudents.length > 0 && (
-                                        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-400 rounded-2xl p-6 shadow-lg">
+                                        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/20 border-2 border-yellow-400 dark:border-yellow-700 rounded-2xl p-6 shadow-lg">
                                             <div className="flex items-start gap-3">
-                                                <AlertCircle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
+                                                <AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
                                                 <div className="flex-1">
-                                                    <h3 className="font-bold text-gray-900 mb-3 text-lg">Unassigned Students ({selectedResult.unassignedStudents.length})</h3>
+                                                    <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-lg">Unassigned Students ({selectedResult.unassignedStudents.length})</h3>
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                         {selectedResult.unassignedStudents.map((student) => (
-                                                            <div key={student.userId} className="bg-white border border-yellow-300 rounded-lg p-3">
-                                                                <div className="font-medium text-gray-900">{student.displayName}</div>
-                                                                <div className="text-xs text-gray-600 mt-1">Manually assign to a team</div>
+                                                            <div key={student.userId} className="bg-white dark:bg-gray-800/80 border border-yellow-300 dark:border-yellow-700 rounded-lg p-3">
+                                                                <div className="font-medium text-gray-900 dark:text-white">{student.displayName}</div>
+                                                                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">Manually assign to a team</div>
                                                             </div>
                                                         ))}
                                                     </div>

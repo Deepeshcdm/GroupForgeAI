@@ -503,66 +503,66 @@ function FacultyDashboard() {
                         {/* Quick Actions */}
                         <Card>
                             <CardHeader>
-                                <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                                     <Zap className="w-5 h-5 text-yellow-500" />
                                     Quick Actions
                                 </h2>
                             </CardHeader>
                             <CardBody className="space-y-3 p-4">
                                 <Link to="/team-formation" className="block group">
-                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 hover:border-purple-300 hover:bg-gradient-to-r hover:from-purple-50 hover:to-transparent transition-all">
-                                        <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <Users className="w-6 h-6 text-purple-600" />
+                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 hover:border-purple-300 dark:hover:border-purple-700 hover:bg-gradient-to-r hover:from-purple-50 dark:hover:from-purple-900/30 hover:to-transparent transition-all">
+                                        <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="font-semibold text-gray-900 group-hover:text-purple-700">Form Teams</p>
-                                            <p className="text-xs text-gray-500">AI-powered matching</p>
+                                            <p className="font-semibold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400">Form Teams</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">AI-powered matching</p>
                                         </div>
-                                        <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
+                                        <ArrowRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-purple-600 dark:group-hover:text-purple-400 group-hover:translate-x-1 transition-all" />
                                     </div>
                                 </Link>
 
                                 <Link to="/analytics" className="block group">
-                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-transparent transition-all">
-                                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <BarChart3 className="w-6 h-6 text-blue-600" />
+                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-700 hover:bg-gradient-to-r hover:from-blue-50 dark:hover:from-blue-900/30 hover:to-transparent transition-all">
+                                        <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <BarChart3 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="font-semibold text-gray-900 group-hover:text-blue-700">View Analytics</p>
-                                            <p className="text-xs text-gray-500">Student insights</p>
+                                            <p className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400">View Analytics</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">Student insights</p>
                                         </div>
-                                        <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                                        <ArrowRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
                                     </div>
                                 </Link>
 
                                 <Link to="/settings" className="block group">
-                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 hover:border-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-transparent transition-all">
-                                        <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <Activity className="w-6 h-6 text-gray-600" />
+                                    <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gradient-to-r hover:from-gray-50 dark:hover:from-gray-800/50 hover:to-transparent transition-all">
+                                        <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <Activity className="w-6 h-6 text-gray-600 dark:text-gray-400" />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="font-semibold text-gray-900">Settings</p>
-                                            <p className="text-xs text-gray-500">Preferences</p>
+                                            <p className="font-semibold text-gray-900 dark:text-white">Settings</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">Preferences</p>
                                         </div>
-                                        <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-gray-600 group-hover:translate-x-1 transition-all" />
+                                        <ArrowRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-gray-600 dark:group-hover:text-gray-400 group-hover:translate-x-1 transition-all" />
                                     </div>
                                 </Link>
                             </CardBody>
                         </Card>
 
                         {/* Recent Activity */}
-                        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-                            <CardHeader className="border-b border-blue-100">
-                                <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                    <Clock className="w-5 h-5 text-blue-600" />
+                        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
+                            <CardHeader className="border-b border-blue-100 dark:border-blue-800">
+                                <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                     Recent Activity
                                 </h3>
                             </CardHeader>
                             <CardBody className="p-5">
                                 <div className="text-center py-4">
                                     <Calendar className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-                                    <p className="text-sm text-gray-600">No recent activity</p>
-                                    <p className="text-xs text-gray-500 mt-1">Activity will appear here</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">No recent activity</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Activity will appear here</p>
                                 </div>
                             </CardBody>
                         </Card>
@@ -655,70 +655,70 @@ function AdminDashboard() {
 
                 {/* Enhanced Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <Card className="group hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary-200">
+                    <Card className="group hover:shadow-lg dark:hover:shadow-primary-500/10 transition-all duration-300 border-2 border-transparent hover:border-primary-200 dark:hover:border-primary-800">
                         <CardBody className="p-6">
                             <div className="flex items-start justify-between mb-3">
                                 <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <BookOpen className="w-7 h-7 text-white" />
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-500 mb-1">Institutions</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Institutions</p>
                             <div className="flex items-baseline gap-2">
-                                <div className="text-3xl font-bold text-gray-900">
+                                <div className="text-3xl font-bold text-gray-900 dark:text-white">
                                     {loading ? '...' : stats.institutions}
                                 </div>
-                                <span className="text-xs text-gray-400">registered</span>
+                                <span className="text-xs text-gray-400 dark:text-gray-500">registered</span>
                             </div>
                         </CardBody>
                     </Card>
 
-                    <Card className="group hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-accent-200">
+                    <Card className="group hover:shadow-lg dark:hover:shadow-accent-500/10 transition-all duration-300 border-2 border-transparent hover:border-accent-200 dark:hover:border-accent-800">
                         <CardBody className="p-6">
                             <div className="flex items-start justify-between mb-3">
                                 <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <Users className="w-7 h-7 text-white" />
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-500 mb-1">Total Users</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Users</p>
                             <div className="flex items-baseline gap-2">
-                                <div className="text-3xl font-bold text-gray-900">
+                                <div className="text-3xl font-bold text-gray-900 dark:text-white">
                                     {loading ? '...' : stats.totalUsers}
                                 </div>
-                                <span className="text-xs text-gray-400">active</span>
+                                <span className="text-xs text-gray-400 dark:text-gray-500">active</span>
                             </div>
                         </CardBody>
                     </Card>
 
-                    <Card className="group hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-blue-200">
+                    <Card className="group hover:shadow-lg dark:hover:shadow-blue-500/10 transition-all duration-300 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
                         <CardBody className="p-6">
                             <div className="flex items-start justify-between mb-3">
                                 <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <ClipboardCheck className="w-7 h-7 text-white" />
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-500 mb-1">Assessments</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Assessments</p>
                             <div className="flex items-baseline gap-2">
-                                <div className="text-3xl font-bold text-gray-900">
+                                <div className="text-3xl font-bold text-gray-900 dark:text-white">
                                     {loading ? '...' : stats.assessments}
                                 </div>
-                                <span className="text-xs text-gray-400">completed</span>
+                                <span className="text-xs text-gray-400 dark:text-gray-500">completed</span>
                             </div>
                         </CardBody>
                     </Card>
 
-                    <Card className="group hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-purple-200">
+                    <Card className="group hover:shadow-lg dark:hover:shadow-purple-500/10 transition-all duration-300 border-2 border-transparent hover:border-purple-200 dark:hover:border-purple-800">
                         <CardBody className="p-6">
                             <div className="flex items-start justify-between mb-3">
                                 <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                     <Target className="w-7 h-7 text-white" />
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-500 mb-1">Teams Created</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Teams Created</p>
                             <div className="flex items-baseline gap-2">
-                                <div className="text-3xl font-bold text-gray-900">
+                                <div className="text-3xl font-bold text-gray-900 dark:text-white">
                                     {loading ? '...' : stats.teamsCreated}
                                 </div>
-                                <span className="text-xs text-gray-400">total</span>
+                                <span className="text-xs text-gray-400 dark:text-gray-500">total</span>
                             </div>
                         </CardBody>
                     </Card>
@@ -726,45 +726,45 @@ function AdminDashboard() {
 
                 {/* Admin Actions */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card className="hover:shadow-lg transition-all">
-                        <CardHeader className="bg-gradient-to-r from-primary-50 to-white border-b">
-                            <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                <Users className="w-5 h-5 text-primary-600" />
+                    <Card className="hover:shadow-lg dark:hover:shadow-primary-500/10 transition-all">
+                        <CardHeader className="bg-gradient-to-r from-primary-50 to-white dark:from-primary-900/30 dark:to-gray-900/50 border-b dark:border-gray-800">
+                            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Users className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                 User Management
                             </h3>
                         </CardHeader>
                         <CardBody className="p-6">
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                                 Manage users, roles, and permissions across the platform
                             </p>
                             <Button variant="outline" className="w-full">View All Users</Button>
                         </CardBody>
                     </Card>
 
-                    <Card className="hover:shadow-lg transition-all">
-                        <CardHeader className="bg-gradient-to-r from-blue-50 to-white border-b">
-                            <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                <BarChart3 className="w-5 h-5 text-blue-600" />
+                    <Card className="hover:shadow-lg dark:hover:shadow-blue-500/10 transition-all">
+                        <CardHeader className="bg-gradient-to-r from-blue-50 to-white dark:from-blue-900/30 dark:to-gray-900/50 border-b dark:border-gray-800">
+                            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <BarChart3 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                 Analytics
                             </h3>
                         </CardHeader>
                         <CardBody className="p-6">
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                                 View detailed analytics and platform insights
                             </p>
                             <Button variant="outline" className="w-full">View Analytics</Button>
                         </CardBody>
                     </Card>
 
-                    <Card className="hover:shadow-lg transition-all">
-                        <CardHeader className="bg-gradient-to-r from-purple-50 to-white border-b">
-                            <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                <Activity className="w-5 h-5 text-purple-600" />
+                    <Card className="hover:shadow-lg dark:hover:shadow-purple-500/10 transition-all">
+                        <CardHeader className="bg-gradient-to-r from-purple-50 to-white dark:from-purple-900/30 dark:to-gray-900/50 border-b dark:border-gray-800">
+                            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Activity className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                                 System Health
                             </h3>
                         </CardHeader>
                         <CardBody className="p-6">
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                                 Monitor system performance and activity logs
                             </p>
                             <Button variant="outline" className="w-full">Check Status</Button>

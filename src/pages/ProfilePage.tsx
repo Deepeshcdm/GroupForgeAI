@@ -724,14 +724,14 @@ function Step1BasicInfo({ formData, onChange }: {
                     required
                 />
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Year of Study *
                     </label>
                     <select
                         name="year"
                         value={formData.year || ''}
                         onChange={onChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         required
                     >
                         <option value="">Select year</option>
@@ -751,8 +751,8 @@ function Step1BasicInfo({ formData, onChange }: {
                 />
             </div>
 
-            <div className="border-t pt-4 mt-6">
-                <h3 className="text-md font-medium text-gray-900 mb-4 flex items-center gap-2">
+            <div className="border-t dark:border-gray-700 pt-4 mt-6">
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <BookOpen className="w-4 h-4" />
                     Courses & Projects
                 </h3>
@@ -774,14 +774,14 @@ function Step1BasicInfo({ formData, onChange }: {
                         helperText="Topics you'd like to work on"
                     />
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Preferred Group Size
                         </label>
                         <select
                             name="preferredGroupSize"
                             value={formData.preferredGroupSize || ''}
                             onChange={onChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         >
                             <option value="">No preference</option>
                             <option value="2">2 members</option>
@@ -792,7 +792,7 @@ function Step1BasicInfo({ formData, onChange }: {
                         </select>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <Clock className="w-4 h-4 inline mr-1" />
                             Timezone
                         </label>
@@ -800,7 +800,7 @@ function Step1BasicInfo({ formData, onChange }: {
                             name="timezone"
                             value={formData.timezone}
                             onChange={onChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         >
                             <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
                             <option value="America/New_York">America/New_York (EST)</option>
@@ -826,12 +826,12 @@ function Step1BasicInfoFaculty({ formData, onChange }: {
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <User className="w-5 h-5 text-primary-600" />
+                <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center">
+                    <User className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Basic Information</h2>
-                    <p className="text-sm text-gray-500">Tell us about yourself and your professional background</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Basic Information</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Tell us about yourself and your professional background</p>
                 </div>
             </div>
 
@@ -861,14 +861,14 @@ function Step1BasicInfoFaculty({ formData, onChange }: {
                     required
                 />
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Designation *
                     </label>
                     <select
                         name="designation"
                         value={formData.designation}
                         onChange={onChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         required
                     >
                         <option value="">Select designation</option>
@@ -894,14 +894,14 @@ function Step1BasicInfoFaculty({ formData, onChange }: {
                 />
             </div>
 
-            <div className="border-t pt-4 mt-6">
-                <h3 className="text-md font-medium text-gray-900 mb-4 flex items-center gap-2">
+            <div className="border-t dark:border-gray-700 pt-4 mt-6">
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     Additional Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <Clock className="w-4 h-4 inline mr-1" />
                             Timezone
                         </label>
@@ -909,7 +909,7 @@ function Step1BasicInfoFaculty({ formData, onChange }: {
                             name="timezone"
                             value={formData.timezone}
                             onChange={onChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                         >
                             <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
                             <option value="America/New_York">America/New_York (EST)</option>
@@ -939,18 +939,18 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Briefcase className="w-5 h-5 text-primary-600" />
+                <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center">
+                    <Briefcase className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Skills & Experience</h2>
-                    <p className="text-sm text-gray-500">Select your skills and rate your proficiency</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Skills & Experience</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Select your skills and rate your proficiency</p>
                 </div>
             </div>
 
             {/* Skills Selection */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     Skills {!isFaculty && '* (Select at least one)'}
                 </label>
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -963,7 +963,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                 onClick={() => toggleSkill(skill)}
                                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${isSelected
                                     ? 'bg-primary-600 text-white'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                     }`}
                             >
                                 {skill}
@@ -974,12 +974,12 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
 
                 {/* Selected Skills with Levels */}
                 {formData.selectedSkills.length > 0 && (
-                    <div className="bg-gray-50 rounded-lg p-4 mt-4">
-                        <p className="text-sm font-medium text-gray-700 mb-3">Rate your proficiency:</p>
+                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 mt-4">
+                        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Rate your proficiency:</p>
                         <div className="space-y-3">
                             {formData.selectedSkills.map(skill => (
                                 <div key={skill.name} className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-900">{skill.name}</span>
+                                    <span className="text-sm text-gray-900 dark:text-white">{skill.name}</span>
                                     <div className="flex gap-2">
                                         {(['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map(level => (
                                             <button
@@ -987,10 +987,10 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                                 type="button"
                                                 onClick={() => updateSkillLevel(skill.name, level)}
                                                 className={`px-3 py-1 rounded text-xs font-medium capitalize ${skill.level === level
-                                                    ? level === 'beginner' ? 'bg-yellow-100 text-yellow-700' :
-                                                        level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
-                                                            'bg-green-100 text-green-700'
-                                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                                    ? level === 'beginner' ? 'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300' :
+                                                        level === 'intermediate' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' :
+                                                            'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300'
+                                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
                                                     }`}
                                             >
                                                 {level}
@@ -1006,7 +1006,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
 
             {/* Tools Selection */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     Tools & Technologies
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -1019,7 +1019,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                                 onClick={() => toggleTool(tool)}
                                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${isSelected
                                     ? 'bg-accent-600 text-white'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                                     }`}
                             >
                                 {tool}
@@ -1030,11 +1030,11 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
             </div>
 
             {/* Links */}
-            <div className="border-t pt-4 mt-6">
-                <h3 className="text-md font-medium text-gray-900 mb-4">Portfolio & Links</h3>
+            <div className="border-t dark:border-gray-700 pt-4 mt-6">
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Portfolio & Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <Github className="w-4 h-4 inline mr-1" />
                             GitHub Username
                         </label>
@@ -1046,7 +1046,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <Globe className="w-4 h-4 inline mr-1" />
                             Portfolio URL
                         </label>
@@ -1058,7 +1058,7 @@ function Step2SkillsTools({ formData, onChange, toggleSkill, updateSkillLevel, t
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             <Linkedin className="w-4 h-4 inline mr-1" />
                             LinkedIn URL
                         </label>
@@ -1108,18 +1108,18 @@ function Step3WorkStyle({ formData, onChange }: {
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <MessageSquare className="w-5 h-5 text-primary-600" />
+                <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center">
+                    <MessageSquare className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Work & Learning Style</h2>
-                    <p className="text-sm text-gray-500">Help us understand how you work best</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Work & Learning Style</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Help us understand how you work best</p>
                 </div>
             </div>
 
             {/* Learning Style */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     How do you learn best? *
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1127,8 +1127,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.learningStyle === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1140,8 +1140,8 @@ function Step3WorkStyle({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1150,7 +1150,7 @@ function Step3WorkStyle({ formData, onChange }: {
 
             {/* Work Style */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     What's your work style? *
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1158,8 +1158,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.workStyle === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1171,8 +1171,8 @@ function Step3WorkStyle({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1181,7 +1181,7 @@ function Step3WorkStyle({ formData, onChange }: {
 
             {/* Communication Preference */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     How do you prefer to communicate? *
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1189,8 +1189,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.communicationPreference === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1202,8 +1202,8 @@ function Step3WorkStyle({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1212,7 +1212,7 @@ function Step3WorkStyle({ formData, onChange }: {
 
             {/* Meeting Preference */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     Meeting preference
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1220,8 +1220,8 @@ function Step3WorkStyle({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.meetingPreference === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1233,8 +1233,8 @@ function Step3WorkStyle({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1271,18 +1271,18 @@ function Step4Goals({ formData, onChange }: {
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Target className="w-5 h-5 text-primary-600" />
+                <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center">
+                    <Target className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Goals & Preferences</h2>
-                    <p className="text-sm text-gray-500">Tell us about your goals and team preferences</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Goals & Preferences</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Tell us about your goals and team preferences</p>
                 </div>
             </div>
 
             {/* Goal Preference */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     What's your primary goal for group projects? *
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1290,8 +1290,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.goalPreference === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1303,8 +1303,8 @@ function Step4Goals({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1313,7 +1313,7 @@ function Step4Goals({ formData, onChange }: {
 
             {/* Commitment Level */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     How much time can you commit? *
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1321,8 +1321,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.commitmentLevel === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1334,8 +1334,8 @@ function Step4Goals({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1344,7 +1344,7 @@ function Step4Goals({ formData, onChange }: {
 
             {/* Team Preference */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                     Team composition preference
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -1352,8 +1352,8 @@ function Step4Goals({ formData, onChange }: {
                         <label
                             key={option.value}
                             className={`flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer transition-colors ${formData.teamPreference === option.value
-                                ? 'border-primary-500 bg-primary-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                                 }`}
                         >
                             <input
@@ -1365,8 +1365,8 @@ function Step4Goals({ formData, onChange }: {
                                 className="mt-1"
                             />
                             <div>
-                                <p className="font-medium text-gray-900">{option.label}</p>
-                                <p className="text-sm text-gray-500">{option.desc}</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{option.label}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{option.desc}</p>
                             </div>
                         </label>
                     ))}
@@ -1374,14 +1374,14 @@ function Step4Goals({ formData, onChange }: {
             </div>
 
             {/* Optional Info */}
-            <div className="border-t pt-6">
-                <h3 className="text-md font-medium text-gray-900 mb-4 flex items-center gap-2">
+            <div className="border-t dark:border-gray-700 pt-6">
+                <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     Optional: About You
                 </h3>
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Short Bio
                         </label>
                         <textarea
@@ -1390,11 +1390,11 @@ function Step4Goals({ formData, onChange }: {
                             onChange={onChange}
                             placeholder="Tell potential teammates a bit about yourself..."
                             rows={3}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Icebreaker
                         </label>
                         <Input
@@ -1406,7 +1406,7 @@ function Step4Goals({ formData, onChange }: {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Languages Spoken
                         </label>
                         <Input
@@ -1440,8 +1440,8 @@ function ProfileViewMode({ userProfile, onEdit }: {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-                        <p className="text-gray-500 mt-1">View and manage your profile information</p>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Profile</h1>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1">View and manage your profile information</p>
                     </div>
                     <Button onClick={onEdit} variant="outline">
                         <Edit2 className="w-4 h-4 mr-2" />
@@ -1461,13 +1461,13 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                 )}
                             </div>
                             <div className="flex-1">
-                                <h2 className="text-xl font-semibold text-gray-900">{userProfile?.displayName}</h2>
+                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{userProfile?.displayName}</h2>
                                 {isFaculty ? (
-                                    <p className="text-gray-500">{facultyProfile?.designation} • {userProfile?.department}</p>
+                                    <p className="text-gray-500 dark:text-gray-400">{facultyProfile?.designation} • {userProfile?.department}</p>
                                 ) : (
-                                    <p className="text-gray-500">{studentProfile?.major} • {studentProfile?.year && `Year ${studentProfile.year}`}</p>
+                                    <p className="text-gray-500 dark:text-gray-400">{studentProfile?.major} • {studentProfile?.year && `Year ${studentProfile.year}`}</p>
                                 )}
-                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                                <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
                                     <span className="flex items-center gap-1">
                                         <Mail className="w-4 h-4" />
                                         {userProfile?.email}
@@ -1478,17 +1478,17 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                     </span>
                                 </div>
                                 {isFaculty && facultyProfile?.employeeId && (
-                                    <div className="mt-2 text-sm text-gray-500">
+                                    <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                         Employee ID: {facultyProfile.employeeId}
                                     </div>
                                 )}
                                 {isFaculty && facultyProfile?.contactNumber && (
-                                    <div className="mt-1 text-sm text-gray-500">
+                                    <div className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                         Contact: {facultyProfile.contactNumber}
                                     </div>
                                 )}
                                 {!isFaculty && studentProfile?.bio && (
-                                    <p className="mt-3 text-gray-600">{studentProfile.bio}</p>
+                                    <p className="mt-3 text-gray-600 dark:text-gray-300">{studentProfile.bio}</p>
                                 )}
                             </div>
                         </div>
@@ -1499,8 +1499,8 @@ function ProfileViewMode({ userProfile, onEdit }: {
                 {!isFaculty && studentProfile?.userSkills && studentProfile.userSkills.length > 0 && (
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                                <Briefcase className="w-5 h-5 text-primary-600" />
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Briefcase className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                 Skills
                             </h3>
                         </CardHeader>
@@ -1509,9 +1509,9 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                 {studentProfile.userSkills.map(skill => (
                                     <span
                                         key={skill.name}
-                                        className={`px-3 py-1 rounded-full text-sm font-medium ${skill.level === 'advanced' ? 'bg-green-100 text-green-700' :
-                                            skill.level === 'intermediate' ? 'bg-blue-100 text-blue-700' :
-                                                'bg-yellow-100 text-yellow-700'
+                                        className={`px-3 py-1 rounded-full text-sm font-medium ${skill.level === 'advanced' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' :
+                                            skill.level === 'intermediate' ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' :
+                                                'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300'
                                             }`}
                                     >
                                         {skill.name} ({skill.level})
@@ -1526,28 +1526,28 @@ function ProfileViewMode({ userProfile, onEdit }: {
                 {!isFaculty && (
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                                <MessageSquare className="w-5 h-5 text-primary-600" />
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <MessageSquare className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                 Work & Communication Style
                             </h3>
                         </CardHeader>
                         <CardBody className="p-6">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div>
-                                    <p className="text-sm text-gray-500">Learning Style</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.learningStyle || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Learning Style</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.learningStyle || 'Not set'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500">Work Style</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.workStyle || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Work Style</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.workStyle || 'Not set'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500">Communication</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.communicationPreference || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Communication</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.communicationPreference || 'Not set'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500">Meetings</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.meetingPreference || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Meetings</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.meetingPreference || 'Not set'}</p>
                                 </div>
                             </div>
                         </CardBody>
@@ -1558,24 +1558,24 @@ function ProfileViewMode({ userProfile, onEdit }: {
                 {!isFaculty && (
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                                <Target className="w-5 h-5 text-primary-600" />
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Target className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                 Goals & Preferences
                             </h3>
                         </CardHeader>
                         <CardBody className="p-6">
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div>
-                                    <p className="text-sm text-gray-500">Primary Goal</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.goalPreference || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Primary Goal</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.goalPreference || 'Not set'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500">Commitment Level</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.commitmentLevel || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Commitment Level</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.commitmentLevel || 'Not set'}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-gray-500">Team Preference</p>
-                                    <p className="font-medium text-gray-900 capitalize">{studentProfile?.teamPreference?.replace('-', ' ') || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Team Preference</p>
+                                    <p className="font-medium text-gray-900 dark:text-white capitalize">{studentProfile?.teamPreference?.replace('-', ' ') || 'Not set'}</p>
                                 </div>
                             </div>
                         </CardBody>
@@ -1586,8 +1586,8 @@ function ProfileViewMode({ userProfile, onEdit }: {
                 {!isFaculty && (studentProfile?.githubUsername || studentProfile?.portfolioUrl || studentProfile?.linkedinUrl) && (
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                                <Globe className="w-5 h-5 text-primary-600" />
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                                <Globe className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                                 Links
                             </h3>
                         </CardHeader>
@@ -1598,7 +1598,7 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                         href={`https://github.com/${studentProfile.githubUsername}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
+                                        className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
                                     >
                                         <Github className="w-5 h-5" />
                                         {studentProfile.githubUsername}
@@ -1609,7 +1609,7 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                         href={studentProfile.linkedinUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
+                                        className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
                                     >
                                         <Linkedin className="w-5 h-5" />
                                         LinkedIn
@@ -1620,7 +1620,7 @@ function ProfileViewMode({ userProfile, onEdit }: {
                                         href={studentProfile.portfolioUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 text-gray-700 hover:text-primary-600"
+                                        className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
                                     >
                                         <Globe className="w-5 h-5" />
                                         Portfolio

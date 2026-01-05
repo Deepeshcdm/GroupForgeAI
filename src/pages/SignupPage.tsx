@@ -95,7 +95,7 @@ export function SignupPage() {
             <div className="absolute top-4 right-4">
                 <ThemeToggle />
             </div>
-            
+
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">

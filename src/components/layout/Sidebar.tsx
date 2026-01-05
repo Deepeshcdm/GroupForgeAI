@@ -121,7 +121,7 @@ export function Sidebar() {
                         </>
                     )}
                 </button>
-                
+
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center ring-2 ring-gray-100 dark:ring-gray-700">
                         {userProfile?.photoURL ? (
