@@ -234,8 +234,8 @@ export function SettingsPage() {
                                                 key={tab.id}
                                                 onClick={() => setActiveTab(tab.id)}
                                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === tab.id
-                                                        ? 'bg-primary-50 text-primary-700 font-medium dark:bg-primary-900/40 dark:text-primary-200'
-                                                        : 'text-gray-600 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800'
+                                                    ? 'bg-primary-50 text-primary-700 font-medium dark:bg-primary-900/40 dark:text-primary-200'
+                                                    : 'text-gray-600 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800'
                                                     }`}
                                             >
                                                 <Icon className="w-5 h-5" />
@@ -302,7 +302,7 @@ export function SettingsPage() {
                                         { key: 'assessmentReminders', label: 'Assessment Reminders', desc: 'Reminders for pending assessments' },
                                         { key: 'courseUpdates', label: 'Course Updates', desc: 'Updates about your courses' },
                                         { key: 'weeklyDigest', label: 'Weekly Digest', desc: 'Weekly summary of activities' }
-                                        ].map(item => (
+                                    ].map(item => (
                                         <label key={item.key} className="flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                                             <input
                                                 type="checkbox"
