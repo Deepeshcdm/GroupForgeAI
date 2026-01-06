@@ -172,11 +172,11 @@ export function AnalyticsPage() {
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header */}
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <BarChart3 className="w-7 h-7 text-primary-600" />
                         Analytics Dashboard
                     </h1>
-                    <p className="text-gray-500 mt-1">Overview of your courses, students, and team performance</p>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">Overview of your courses, students, and team performance</p>
                 </div>
 
                 {/* Key Metrics */}
@@ -185,25 +185,11 @@ export function AnalyticsPage() {
                         <CardBody className="p-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Total Courses</p>
-                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.totalCourses}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Total Courses</p>
+                                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{analytics.totalCourses}</p>
                                 </div>
-                                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                                    <BookOpen className="w-6 h-6 text-blue-600" />
-                                </div>
-                            </div>
-                        </CardBody>
-                    </Card>
-
-                    <Card>
-                        <CardBody className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm text-gray-500">Total Students</p>
-                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.totalStudents}</p>
-                                </div>
-                                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                                    <Users className="w-6 h-6 text-green-600" />
+                                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-xl flex items-center justify-center">
+                                    <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                                 </div>
                             </div>
                         </CardBody>
@@ -213,11 +199,11 @@ export function AnalyticsPage() {
                         <CardBody className="p-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Teams Formed</p>
-                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.totalTeams}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Total Students</p>
+                                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{analytics.totalStudents}</p>
                                 </div>
-                                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                                    <Target className="w-6 h-6 text-purple-600" />
+                                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/40 rounded-xl flex items-center justify-center">
+                                    <Users className="w-6 h-6 text-green-600 dark:text-green-300" />
                                 </div>
                             </div>
                         </CardBody>
@@ -227,11 +213,25 @@ export function AnalyticsPage() {
                         <CardBody className="p-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Assessment Rate</p>
-                                    <p className="text-3xl font-bold text-gray-900 mt-1">{analytics.assessmentRate}%</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Teams Formed</p>
+                                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{analytics.totalTeams}</p>
                                 </div>
-                                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                                    <TrendingUp className="w-6 h-6 text-orange-600" />
+                                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/40 rounded-xl flex items-center justify-center">
+                                    <Target className="w-6 h-6 text-purple-600 dark:text-purple-300" />
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+
+                    <Card>
+                        <CardBody className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Assessment Rate</p>
+                                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{analytics.assessmentRate}%</p>
+                                </div>
+                                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/40 rounded-xl flex items-center justify-center">
+                                    <TrendingUp className="w-6 h-6 text-orange-600 dark:text-orange-300" />
                                 </div>
                             </div>
                         </CardBody>
@@ -242,7 +242,7 @@ export function AnalyticsPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                                 <Activity className="w-5 h-5 text-primary-600" />
                                 Assessment Progress
                             </h3>
@@ -251,17 +251,17 @@ export function AnalyticsPage() {
                             <div className="space-y-4">
                                 <div>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-gray-600 flex items-center gap-2">
-                                            <CheckCircle className="w-4 h-4 text-green-600" />
+                                        <span className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-2">
+                                            <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-300" />
                                             Completed
                                         </span>
-                                        <span className="text-sm font-medium text-gray-900">
+                                        <span className="text-sm font-medium text-gray-900 dark:text-white">
                                             {analytics.completedAssessments} students
                                         </span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                                         <div
-                                            className="bg-green-600 h-2 rounded-full"
+                                            className="bg-green-600 dark:bg-green-400 h-2 rounded-full"
                                             style={{
                                                 width: `${(analytics.completedAssessments + analytics.pendingAssessments) > 0 ? (analytics.completedAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100 : 0}%`
                                             }}
@@ -271,17 +271,17 @@ export function AnalyticsPage() {
 
                                 <div>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-gray-600 flex items-center gap-2">
-                                            <Clock className="w-4 h-4 text-orange-600" />
+                                        <span className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-2">
+                                            <Clock className="w-4 h-4 text-orange-600 dark:text-orange-300" />
                                             Pending
                                         </span>
-                                        <span className="text-sm font-medium text-gray-900">
+                                        <span className="text-sm font-medium text-gray-900 dark:text-white">
                                             {analytics.pendingAssessments} students
                                         </span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                                         <div
-                                            className="bg-orange-600 h-2 rounded-full"
+                                            className="bg-orange-600 dark:bg-orange-400 h-2 rounded-full"
                                             style={{
                                                 width: `${(analytics.completedAssessments + analytics.pendingAssessments) > 0 ? (analytics.pendingAssessments / (analytics.completedAssessments + analytics.pendingAssessments)) * 100 : 0}%`
                                             }}
@@ -294,7 +294,7 @@ export function AnalyticsPage() {
 
                     <Card>
                         <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                                 <Award className="w-5 h-5 text-primary-600" />
                                 Team Performance
                             </h3>
@@ -302,26 +302,26 @@ export function AnalyticsPage() {
                         <CardBody className="p-6">
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-600">Excellent</span>
-                                    <span className="text-sm font-medium text-green-600">
+                                    <span className="text-sm text-gray-600 dark:text-gray-300">Excellent</span>
+                                    <span className="text-sm font-medium text-green-600 dark:text-green-300">
                                         {analytics.teamPerformance.excellent} teams
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-600">Good</span>
-                                    <span className="text-sm font-medium text-blue-600">
+                                    <span className="text-sm text-gray-600 dark:text-gray-300">Good</span>
+                                    <span className="text-sm font-medium text-blue-600 dark:text-blue-300">
                                         {analytics.teamPerformance.good} teams
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-600">Average</span>
-                                    <span className="text-sm font-medium text-yellow-600">
+                                    <span className="text-sm text-gray-600 dark:text-gray-300">Average</span>
+                                    <span className="text-sm font-medium text-yellow-600 dark:text-yellow-300">
                                         {analytics.teamPerformance.average} teams
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-gray-600">Needs Improvement</span>
-                                    <span className="text-sm font-medium text-red-600">
+                                    <span className="text-sm text-gray-600 dark:text-gray-300">Needs Improvement</span>
+                                    <span className="text-sm font-medium text-red-600 dark:text-red-300">
                                         {analytics.teamPerformance.needsImprovement} teams
                                     </span>
                                 </div>
@@ -333,7 +333,7 @@ export function AnalyticsPage() {
                 {/* Skill Distribution */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             <PieChart className="w-5 h-5 text-primary-600" />
                             Skill Distribution Across Students
                         </h3>
@@ -343,12 +343,12 @@ export function AnalyticsPage() {
                             {Object.entries(analytics.skillDistribution).map(([skill, count]) => (
                                 <div key={skill}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-gray-700">{skill}</span>
-                                        <span className="text-sm font-medium text-gray-900">{count} students</span>
+                                        <span className="text-sm text-gray-700 dark:text-gray-300">{skill}</span>
+                                        <span className="text-sm font-medium text-gray-900 dark:text-white">{count} students</span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
                                         <div
-                                            className="bg-primary-600 h-2 rounded-full"
+                                            className="bg-primary-600 dark:bg-primary-400 h-2 rounded-full"
                                             style={{
                                                 width: `${(count / analytics.totalStudents) * 100}%`
                                             }}
@@ -363,27 +363,27 @@ export function AnalyticsPage() {
                 {/* Insights */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             <TrendingUp className="w-5 h-5 text-primary-600" />
                             Key Insights
                         </h3>
                     </CardHeader>
                     <CardBody className="p-6">
                         <div className="space-y-4">
-                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                <p className="text-sm text-blue-900">
+                            <div className="p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg">
+                                <p className="text-sm text-blue-900 dark:text-blue-100">
                                     <strong>Communication Skills:</strong> Most prevalent skill among students ({analytics.skillDistribution['Communication'] || 0}%).
                                     Consider forming teams with diverse communication styles.
                                 </p>
                             </div>
-                            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                                <p className="text-sm text-green-900">
+                            <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-lg">
+                                <p className="text-sm text-green-900 dark:text-green-100">
                                     <strong>Assessment Completion:</strong> {analytics.assessmentRate}% of students have completed assessments.
                                     {analytics.pendingAssessments > 0 && ' Send reminders to pending students.'}
                                 </p>
                             </div>
-                            <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                                <p className="text-sm text-purple-900">
+                            <div className="p-4 bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-700 rounded-lg">
+                                <p className="text-sm text-purple-900 dark:text-purple-100">
                                     <strong>Team Performance:</strong> {analytics.teamPerformance.excellent + analytics.teamPerformance.good} teams performing above average.
                                     Consider sharing best practices from high-performing teams.
                                 </p>

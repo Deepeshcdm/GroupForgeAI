@@ -410,23 +410,23 @@ function FacultyDashboard() {
                     // 2. If courseId is "default", match by createdBy (faculty UID)
                     const teamGroupId = teamData.courseId;
                     const teamCreatedBy = teamData.createdBy;
-                    
+
                     console.log('Team courseId:', teamGroupId, 'Team createdBy:', teamCreatedBy);
                     console.log('Faculty UID:', userProfile.uid, 'Group IDs:', groupIds);
-                    
+
                     let isTeamMatched = false;
-                    
+
                     // Check if team belongs to one of the faculty's groups
                     if (teamGroupId && groupIds.includes(teamGroupId)) {
                         console.log('✓ Matched team by courseId:', teamDoc.id);
                         isTeamMatched = true;
-                    } 
+                    }
                     // Check if team was created by this faculty (courseId is "default")
                     else if (teamGroupId === 'default' && teamCreatedBy === userProfile.uid) {
                         console.log('✓ Matched team by createdBy (default courseId):', teamDoc.id);
                         isTeamMatched = true;
                     }
-                    
+
                     if (isTeamMatched) {
                         totalTeams++;
 
@@ -454,7 +454,7 @@ function FacultyDashboard() {
                 console.log('Assessment stats (meta):', { totalAssessments, completedAssessments });
 
                 // Calculate assessment rate
-                const assessmentRate = totalAssessments > 0 
+                const assessmentRate = totalAssessments > 0
                     ? Math.round((completedAssessments / totalAssessments) * 100)
                     : 0;
 
@@ -475,7 +475,7 @@ function FacultyDashboard() {
                         return dateB.getTime() - dateA.getTime();
                     })
                     .slice(0, 5);
-                
+
                 setRecentTeams(recentTeamsList);
 
                 setStats({
@@ -644,11 +644,10 @@ function FacultyDashboard() {
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                                                        course.status === 'active'
+                                                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${course.status === 'active'
                                                             ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400'
                                                             : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-400'
-                                                    }`}>
+                                                        }`}>
                                                         {course.status === 'active' ? 'Active' : 'Archived'}
                                                     </span>
                                                     <ArrowRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-purple-600 dark:group-hover:text-purple-400" />
@@ -750,13 +749,12 @@ function FacultyDashboard() {
                                             >
                                                 <div className="flex items-center justify-between mb-2">
                                                     <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{team.name}</h4>
-                                                    <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                                                        team.status === 'active'
+                                                    <span className={`text-xs font-semibold px-2 py-1 rounded ${team.status === 'active'
                                                             ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400'
                                                             : team.status === 'completed'
-                                                            ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400'
-                                                            : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-400'
-                                                    }`}>
+                                                                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400'
+                                                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-400'
+                                                        }`}>
                                                         {team.status}
                                                     </span>
                                                 </div>

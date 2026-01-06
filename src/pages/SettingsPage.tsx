@@ -200,22 +200,22 @@ export function SettingsPage() {
             <div className="max-w-5xl mx-auto space-y-6">
                 {/* Header */}
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <SettingsIcon className="w-7 h-7 text-primary-600" />
                         Settings
                     </h1>
-                    <p className="text-gray-500 mt-1">Manage your account preferences and settings</p>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your account preferences and settings</p>
                 </div>
 
                 {/* Success/Error Messages */}
                 {success && (
-                    <div className="p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-center gap-2">
+                    <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-100 rounded-lg flex items-center gap-2">
                         <CheckCircle className="w-5 h-5" />
                         {success}
                     </div>
                 )}
                 {error && (
-                    <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex items-center gap-2">
+                    <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-100 rounded-lg flex items-center gap-2">
                         <AlertCircle className="w-5 h-5" />
                         {error}
                     </div>
@@ -234,8 +234,8 @@ export function SettingsPage() {
                                                 key={tab.id}
                                                 onClick={() => setActiveTab(tab.id)}
                                                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === tab.id
-                                                        ? 'bg-primary-50 text-primary-700 font-medium'
-                                                        : 'text-gray-600 hover:bg-gray-50'
+                                                        ? 'bg-primary-50 text-primary-700 font-medium dark:bg-primary-900/40 dark:text-primary-200'
+                                                        : 'text-gray-600 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800'
                                                     }`}
                                             >
                                                 <Icon className="w-5 h-5" />
@@ -254,8 +254,8 @@ export function SettingsPage() {
                         {activeTab === 'account' && (
                             <Card>
                                 <CardHeader>
-                                    <h3 className="text-lg font-semibold text-gray-900">Account Information</h3>
-                                    <p className="text-sm text-gray-500 mt-1">Update your personal information</p>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Account Information</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Update your personal information</p>
                                 </CardHeader>
                                 <CardBody className="p-6 space-y-4">
                                     <Input
@@ -292,8 +292,8 @@ export function SettingsPage() {
                         {activeTab === 'notifications' && (
                             <Card>
                                 <CardHeader>
-                                    <h3 className="text-lg font-semibold text-gray-900">Notification Preferences</h3>
-                                    <p className="text-sm text-gray-500 mt-1">Choose what notifications you want to receive</p>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Notification Preferences</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Choose what notifications you want to receive</p>
                                 </CardHeader>
                                 <CardBody className="p-6 space-y-4">
                                     {[
@@ -302,8 +302,8 @@ export function SettingsPage() {
                                         { key: 'assessmentReminders', label: 'Assessment Reminders', desc: 'Reminders for pending assessments' },
                                         { key: 'courseUpdates', label: 'Course Updates', desc: 'Updates about your courses' },
                                         { key: 'weeklyDigest', label: 'Weekly Digest', desc: 'Weekly summary of activities' }
-                                    ].map(item => (
-                                        <label key={item.key} className="flex items-start gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                        ].map(item => (
+                                        <label key={item.key} className="flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                                             <input
                                                 type="checkbox"
                                                 checked={notifications[item.key as keyof NotificationSettings]}
@@ -311,8 +311,8 @@ export function SettingsPage() {
                                                 className="mt-1"
                                             />
                                             <div>
-                                                <p className="font-medium text-gray-900">{item.label}</p>
-                                                <p className="text-sm text-gray-500">{item.desc}</p>
+                                                <p className="font-medium text-gray-900 dark:text-white">{item.label}</p>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">{item.desc}</p>
                                             </div>
                                         </label>
                                     ))}
@@ -330,18 +330,18 @@ export function SettingsPage() {
                         {activeTab === 'privacy' && (
                             <Card>
                                 <CardHeader>
-                                    <h3 className="text-lg font-semibold text-gray-900">Privacy Settings</h3>
-                                    <p className="text-sm text-gray-500 mt-1">Control your privacy and visibility</p>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Privacy Settings</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Control your privacy and visibility</p>
                                 </CardHeader>
                                 <CardBody className="p-6 space-y-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Profile Visibility
                                         </label>
                                         <select
                                             value={privacy.profileVisibility}
                                             onChange={(e) => setPrivacy({ ...privacy, profileVisibility: e.target.value as any })}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-900 dark:text-gray-100"
                                         >
                                             <option value="public">Public - Anyone can view</option>
                                             <option value="students">Students - Only enrolled students</option>
@@ -349,7 +349,7 @@ export function SettingsPage() {
                                         </select>
                                     </div>
 
-                                    <label className="flex items-start gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <label className="flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <input
                                             type="checkbox"
                                             checked={privacy.showContactInfo}
@@ -357,12 +357,12 @@ export function SettingsPage() {
                                             className="mt-1"
                                         />
                                         <div>
-                                            <p className="font-medium text-gray-900">Show Contact Information</p>
-                                            <p className="text-sm text-gray-500">Allow students to see your contact details</p>
+                                            <p className="font-medium text-gray-900 dark:text-white">Show Contact Information</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Allow students to see your contact details</p>
                                         </div>
                                     </label>
 
-                                    <label className="flex items-start gap-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <label className="flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <input
                                             type="checkbox"
                                             checked={privacy.allowStudentMessages}
@@ -370,8 +370,8 @@ export function SettingsPage() {
                                             className="mt-1"
                                         />
                                         <div>
-                                            <p className="font-medium text-gray-900">Allow Student Messages</p>
-                                            <p className="text-sm text-gray-500">Students can send you direct messages</p>
+                                            <p className="font-medium text-gray-900 dark:text-white">Allow Student Messages</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">Students can send you direct messages</p>
                                         </div>
                                     </label>
 
@@ -389,8 +389,8 @@ export function SettingsPage() {
                         {activeTab === 'security' && (
                             <Card>
                                 <CardHeader>
-                                    <h3 className="text-lg font-semibold text-gray-900">Change Password</h3>
-                                    <p className="text-sm text-gray-500 mt-1">Update your password to keep your account secure</p>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Change Password</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Update your password to keep your account secure</p>
                                 </CardHeader>
                                 <CardBody className="p-6 space-y-4">
                                     <div className="relative">
@@ -404,7 +404,7 @@ export function SettingsPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700"
+                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
                                         >
                                             {showCurrentPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -421,7 +421,7 @@ export function SettingsPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowNewPassword(!showNewPassword)}
-                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700"
+                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
                                         >
                                             {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -438,14 +438,14 @@ export function SettingsPage() {
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700"
+                                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
                                         >
                                             {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
                                     </div>
 
-                                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                        <p className="text-sm text-blue-900">
+                                    <div className="p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg">
+                                        <p className="text-sm text-blue-900 dark:text-blue-100">
                                             <strong>Password Requirements:</strong>
                                             <ul className="list-disc list-inside mt-2 space-y-1">
                                                 <li>At least 6 characters long</li>
